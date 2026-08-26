@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+:root {
+  /* Mobarak design tokens — from approved designs */
+  --mobarak-navy: #0b2c4a;
+  --mobarak-navy-deep: #071f35;
+  --mobarak-blue: #1a56a0;
+  --mobarak-blue-cta: #1e5a9c;
+  --mobarak-orange: #e89a3c;
+  --mobarak-orange-soft: #f6e8d4;
+  --mobarak-gold: #d4a017;
+  --mobarak-green: #1f8a4c;
+  --mobarak-green-soft: #e8f6ee;
+  --mobarak-red: #c0392b;
+  --mobarak-waitlist: #d97706;
+  --mobarak-bg: #ffffff;
+  --mobarak-bg-soft: #f7f8fa;
+  --mobarak-border: #e5e7eb;
+  --mobarak-muted: #5b6b7c;
+  --background: var(--mobarak-bg);
+  --foreground: var(--mobarak-navy);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--mobarak-navy);
+  --color-navy-deep: var(--mobarak-navy-deep);
+  --color-brand-blue: var(--mobarak-blue);
+  --color-brand-cta: var(--mobarak-blue-cta);
+  --color-brand-orange: var(--mobarak-orange);
+  --color-brand-orange-soft: var(--mobarak-orange-soft);
+  --color-brand-gold: var(--mobarak-gold);
+  --color-brand-green: var(--mobarak-green);
+  --color-brand-green-soft: var(--mobarak-green-soft);
+  --color-brand-red: var(--mobarak-red);
+  --color-brand-waitlist: var(--mobarak-waitlist);
+  --color-surface: var(--mobarak-bg-soft);
+  --color-line: var(--mobarak-border);
+  --color-muted: var(--mobarak-muted);
+  --font-sans: var(--font-dm-sans);
+  --shadow-card: 0 4px 24px rgba(11, 44, 74, 0.06);
+  --radius-card: 1rem;
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+/* Logical helpers for RTL */
+.dir-rtl {
+  direction: rtl;
+}
+
+.dir-ltr {
+  direction: ltr;
+}
+
+/* Hide scrollbar utility for filter chips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area for sticky CTAs */
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
