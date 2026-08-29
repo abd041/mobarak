@@ -12,12 +12,10 @@ type Props = {
 };
 
 const variants = {
-  primary:
-    "bg-brand-cta text-white hover:bg-navy shadow-sm",
-  outline:
-    "border border-brand-cta text-brand-cta bg-white hover:bg-brand-cta/5",
+  primary: "bg-brand-cta text-white hover:bg-navy shadow-sm",
+  outline: "border border-brand-cta text-brand-cta bg-white hover:bg-brand-cta/5",
   text: "text-brand-cta hover:underline bg-transparent px-0",
-  orange: "bg-brand-orange text-white hover:bg-brand-orange/90",
+  orange: "bg-brand-orange-cta text-white hover:bg-[#a05e0e]",
 };
 
 export function Button({
@@ -30,7 +28,7 @@ export function Button({
   fullWidth,
 }: Props) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition",
+    "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cta",
     variants[variant],
     fullWidth && "w-full",
     className,

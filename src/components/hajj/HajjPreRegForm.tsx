@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { IMG } from "@/data/mock";
 import { Check, Shield } from "lucide-react";
+import { DirArrow } from "@/components/ui/DirArrow";
 
 const RESIDENCE = [
   { code: "AT", label: "Österreich", dial: "+43" },
@@ -30,6 +31,7 @@ type Person = {
 
 export function HajjPreRegForm() {
   const t = useTranslations("hajj");
+  const tSeo = useTranslations("seo");
   const tUmrah = useTranslations("umrah");
   const tCommon = useTranslations("common");
 
@@ -71,8 +73,8 @@ export function HajjPreRegForm() {
       <div className="mx-auto max-w-xl px-4 py-20 text-center">
         <h1 className="mb-3 text-3xl font-bold text-navy">{t("successTitle")}</h1>
         <p className="mb-8 text-muted">{t("successBody")}</p>
-        <Link href="/hajj-2027" className="font-semibold text-brand-cta">
-          {t("backToHajj")} →
+        <Link href="/hajj-2027" className="inline-flex items-center gap-1.5 font-semibold text-brand-cta">
+          {t("backToHajj")} <DirArrow />
         </Link>
       </div>
     );
@@ -90,14 +92,21 @@ export function HajjPreRegForm() {
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-[1440px] items-center gap-8 px-4 py-10 md:grid-cols-2 md:px-8 md:py-14">
           <div>
-            <span className="mb-3 inline-block rounded-full bg-brand-orange-soft px-3 py-1 text-xs font-bold text-brand-orange">
+            <span className="mb-3 inline-block rounded-full bg-brand-orange-soft px-3 py-1 text-xs font-bold text-brand-orange-ink">
               {t("label")}
             </span>
             <h1 className="mb-3 text-3xl font-bold text-navy md:text-4xl">{t("preRegTitle")}</h1>
             <p className="text-muted md:text-lg">{t("preRegBody")}</p>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden rounded-3xl">
-            <Image src={IMG.kaaba} alt="" fill className="object-cover" priority sizes="50vw" />
+            <Image
+              src={IMG.kaaba}
+              alt={tSeo("kaabaAlt")}
+              fill
+              className="object-cover"
+              priority
+              sizes="50vw"
+            />
           </div>
         </div>
       </section>
@@ -105,7 +114,7 @@ export function HajjPreRegForm() {
       <div className="mx-auto mb-10 grid max-w-[1440px] gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4 md:px-8">
         {benefits.map((b) => (
           <div key={b.title} className="rounded-2xl border border-line bg-white p-4 shadow-sm">
-            <Check className="mb-2 h-5 w-5 text-brand-orange" />
+            <Check className="mb-2 h-5 w-5 text-brand-orange-ink" />
             <h3 className="font-bold text-navy">{b.title}</h3>
             <p className="mt-1 text-xs text-muted">{b.body}</p>
           </div>
@@ -116,11 +125,17 @@ export function HajjPreRegForm() {
         <section className="rounded-2xl border border-line bg-white p-5 md:p-6">
           <h2 className="font-bold text-navy">{t("travellerCount")}</h2>
           <p className="mb-4 text-sm text-muted">{t("travellerCountHint")}</p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+          <div
+            className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6"
+            role="radiogroup"
+            aria-label={t("travellerCount")}
+          >
             {[1, 2, 3, 4, 5, 6].map((n) => (
               <button
                 key={n}
                 type="button"
+                role="radio"
+                aria-checked={count === n}
                 onClick={() => setCount(n)}
                 className={`rounded-xl border px-3 py-4 text-center transition ${
                   count === n
@@ -154,7 +169,7 @@ export function HajjPreRegForm() {
           <div className="space-y-4">
             {persons.map((p, i) => (
               <div key={i} className="rounded-xl bg-surface p-4">
-                <p className="mb-3 text-sm font-semibold text-brand-orange">
+                <p className="mb-3 text-sm font-semibold text-brand-orange-ink">
                   {t("person")} {i + 1}
                 </p>
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
@@ -214,11 +229,12 @@ export function HajjPreRegForm() {
           <div className="grid gap-3 md:grid-cols-2">
             <label className="block text-sm">
               <span className="mb-1 block font-medium">{tUmrah("phone")}</span>
-              <div className="flex gap-2">
+              <div className="dir-ltr-keep flex gap-2">
                 <select
                   value={dial}
                   onChange={(e) => setDial(e.target.value)}
                   className="rounded-lg border border-line px-2 py-2"
+                  aria-label={tUmrah("phone")}
                 >
                   {RESIDENCE.map((r) => (
                     <option key={r.code} value={r.dial}>
@@ -231,6 +247,7 @@ export function HajjPreRegForm() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full rounded-lg border border-line px-3 py-2"
+                  inputMode="tel"
                 />
               </div>
             </label>
@@ -287,7 +304,7 @@ export function HajjPreRegForm() {
             disabled={loading}
             className="w-full shrink-0 rounded-xl bg-brand-cta px-6 py-3.5 text-sm font-semibold disabled:opacity-60 md:w-auto"
           >
-            {loading ? tCommon("loading") : `${t("preRegCta")} →`}
+            {loading ? tCommon("loading") : <><span>{t("preRegCta")}</span> <DirArrow /></>}
           </button>
         </div>
         <p className="text-center text-xs text-muted">✓ {t("ctaFree")}</p>
@@ -319,6 +336,7 @@ function Input({
   required?: boolean;
   type?: string;
 }) {
+  const keepLtr = type === "email" || type === "tel";
   return (
     <label className="block text-sm">
       <span className="mb-1 block font-medium">{label}</span>
@@ -327,7 +345,7 @@ function Input({
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-line px-3 py-2"
+        className={`w-full rounded-lg border border-line px-3 py-2${keepLtr ? " dir-ltr-keep" : ""}`}
       />
     </label>
   );

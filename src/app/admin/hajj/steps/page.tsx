@@ -27,7 +27,13 @@ export default function AdminHajjStepsPage() {
           ))}
         </div>
       </div>
-      <p className="text-sm text-muted">Bearbeiten/Sortieren ist Demo-UI – Persistenz folgt im Backend.</p>
+      <p className="text-sm text-muted">
+        Schritte werden im Bereich{" "}
+        <a href="/admin/hajj" className="font-semibold text-brand-cta">
+          Hajj 2027 Inhalte
+        </a>{" "}
+        bearbeitet und gespeichert.
+      </p>
     </div>
   );
 }

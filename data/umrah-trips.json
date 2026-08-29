@@ -1,0 +1,593 @@
+{
+  "version": 1,
+  "trips": [
+    {
+      "id": "trip-23-okt-2026",
+      "displayOrder": 10,
+      "slug": "23-oktober-2026",
+      "title": "Umrah Gruppenreise",
+      "startDate": "2026-10-23",
+      "endDate": "2026-10-31",
+      "dateLabel": "23. Okt. – 31. Okt. 2026",
+      "nights": 9,
+      "totalCapacity": 45,
+      "availableSeats": 5,
+      "waitlistEnabled": true,
+      "waitlistCapacity": 20,
+      "waitlistFull": false,
+      "status": "available",
+      "groupSize": 45,
+      "departureAirport": "Wien",
+      "airline": "Egypt Air",
+      "airlineLogo": "/brand/meta-icons/egyptair-logo-wide.png",
+      "baggageAllowance": "2 × 23 kg inklusive",
+      "prices": {
+        "quad": 1250,
+        "triple": 1350,
+        "double": 1450
+      },
+      "childPrices": {
+        "infant": 450,
+        "withoutBed": 950,
+        "withBedDiscount": 100
+      },
+      "filterTags": [
+        "oktober",
+        "herbstferien"
+      ],
+      "images": [
+        {
+          "src": "/brand/offer-hero/kaaba.png",
+          "caption": "Kaaba",
+          "sortOrder": 0
+        },
+        {
+          "src": "/brand/offer-hero/makkah.png",
+          "caption": "Hotel in Makkah",
+          "sortOrder": 1
+        },
+        {
+          "src": "/brand/offer-hero/medina.png",
+          "caption": "Hotel in Medina",
+          "sortOrder": 2
+        },
+        {
+          "src": "/brand/offer-hero/group-02.png",
+          "caption": "Hotellobby",
+          "sortOrder": 3
+        },
+        {
+          "src": "/brand/offer-hero/group-03.png",
+          "caption": "Hotellobby",
+          "sortOrder": 4
+        },
+        {
+          "src": "/brand/offer-hero/ziyarat.png",
+          "caption": "Ausflüge",
+          "sortOrder": 5
+        },
+        {
+          "src": "/brand/offer-hero/group-01.png",
+          "caption": "Gruppenfoto",
+          "sortOrder": 6
+        },
+        {
+          "src": "/brand/offer-hero/group-04.png",
+          "caption": "Gruppenfoto",
+          "sortOrder": 7
+        }
+      ],
+      "inclusions": [
+        "visa",
+        "flight",
+        "baggage",
+        "guide",
+        "religious",
+        "transfer",
+        "hotels",
+        "breakfast",
+        "excursionMakkah",
+        "excursionMedina"
+      ],
+      "guideLanguages": [
+        "ar",
+        "de",
+        "bs",
+        "tr"
+      ],
+      "medinaHotelId": "maden",
+      "makkahHotelId": "anjum",
+      "medinaStay": {
+        "nights": 3,
+        "checkIn": "2026-10-23",
+        "checkOut": "2026-10-26",
+        "dateLabel": "23. Okt. – 26. Okt. 2026"
+      },
+      "makkahStay": {
+        "nights": 6,
+        "checkIn": "2026-10-26",
+        "checkOut": "2026-10-31",
+        "dateLabel": "26. Okt. – 31. Okt. 2026"
+      },
+      "outbound": {
+        "dateLabel": "Do, 23. Oktober 2026",
+        "fromCode": "VIE",
+        "toCode": "MED",
+        "fromCity": "Wien",
+        "toCity": "Medina",
+        "departTime": "14:10",
+        "arriveTime": "19:40",
+        "duration": "4h 30m",
+        "direct": true
+      },
+      "inbound": {
+        "dateLabel": "Fr, 31. Oktober 2026",
+        "fromCode": "JED",
+        "toCode": "VIE",
+        "fromCity": "Jeddah",
+        "toCity": "Wien",
+        "departTime": "15:30",
+        "arriveTime": "20:40",
+        "duration": "5h 10m",
+        "direct": true
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Ankunft in Medina\nCheck-in im Hotel",
+          "icon": "mosque"
+        },
+        {
+          "day": 2,
+          "time": "Am Abend",
+          "title": "Rawda Besuch",
+          "icon": "moon"
+        },
+        {
+          "day": 3,
+          "time": "08:00",
+          "title": "Manoon",
+          "icon": "sun"
+        },
+        {
+          "day": 4,
+          "time": "14:30",
+          "title": "Vortrag über\ndie Umrah",
+          "icon": "book"
+        },
+        {
+          "day": 5,
+          "time": "10:00",
+          "title": "Abfahrt nach\nMakkah",
+          "icon": "bus"
+        },
+        {
+          "day": 6,
+          "time": "10:00",
+          "title": "Mina",
+          "icon": "pin"
+        },
+        {
+          "day": 7,
+          "time": "16:00",
+          "title": "Pamon,\nBesuchdon",
+          "icon": "mountain"
+        },
+        {
+          "day": 8,
+          "title": "Abfahrt nach Wien",
+          "icon": "plane"
+        },
+        {
+          "day": 9,
+          "title": "Freizeit",
+          "icon": "palm"
+        },
+        {
+          "day": 10,
+          "time": "08:00",
+          "title": "(Ausflug & Einkauf)",
+          "icon": "camera"
+        },
+        {
+          "day": 11,
+          "title": "Freizeitprogramm",
+          "icon": "mosque"
+        },
+        {
+          "day": 12,
+          "time": "ca. 12:30",
+          "title": "Gemeinsames Umrah\nmit der Gruppe",
+          "icon": "kaaba"
+        },
+        {
+          "day": 13,
+          "time": "ca. 10:00",
+          "title": "Abfahrt zu Jabal\nal Rahmah",
+          "icon": "hotel"
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Was ist in diesem Preis enthalten?",
+          "answer": "Visum, Hin- und Rückflug, Transfers, Hotels inkl. Frühstück, Gepäck (2 × 23 kg), Reiseführer und Ausflüge in Makkah & Medina — je nach Paketkonfiguration."
+        },
+        {
+          "question": "Wie sichere ich mir einen Platz?",
+          "answer": "Über die Schaltfläche „Jetzt anfragen“ senden Sie uns Ihre unverbindliche Anfrage. Wir bestätigen Verfügbarkeit und nächste Schritte persönlich."
+        },
+        {
+          "question": "Kann ich Zimmerkategorien später ändern?",
+          "answer": "Ja, solange Plätze frei sind. Vierbett-, Dreibett- und Zweibettzimmer lassen sich in der Anfrage oder nach Rücksprache anpassen."
+        }
+      ],
+      "detailNotes": {
+        "luggage": "2 × 23 kg Freigepäck pro Person inklusive. Handgepäck gemäß Airline-Regeln.",
+        "transfers": "Flughafen ↔ Hotel und Medina ↔ Makkah mit klimatisierten Gruppenbussen, inklusive.",
+        "visa": "Umrah-Visum inklusive — wir übernehmen die Beantragung und betreuen den Prozess.",
+        "tourGuide": "Erfahrene Reiseführer begleiten die Gruppe rund um die Uhr in den vereinbarten Sprachen.",
+        "religiousGuide": "Religiöse Begleitung und Unterstützung bei Ritualen vor Ort (sofern im Paket enthalten).",
+        "excursions": "Geführte Ausflüge zu den wichtigsten Orten in Makkah und Medina inklusive."
+      },
+      "seoIndexable": true
+    },
+    {
+      "id": "trip-25-nov-2026",
+      "displayOrder": 20,
+      "slug": "25-november-2026",
+      "title": "Umrah Gruppenreise",
+      "startDate": "2026-11-25",
+      "endDate": "2026-12-03",
+      "dateLabel": "25. Nov. – 3. Dez. 2026",
+      "nights": 8,
+      "totalCapacity": 45,
+      "availableSeats": 3,
+      "waitlistEnabled": true,
+      "waitlistCapacity": 15,
+      "waitlistFull": false,
+      "status": "available",
+      "groupSize": 45,
+      "departureAirport": "Wien",
+      "airline": "Egypt Air",
+      "airlineLogo": "/brand/meta-icons/egyptair-logo-wide.png",
+      "baggageAllowance": "2 × 23 kg inklusive",
+      "prices": {
+        "quad": 1290,
+        "triple": 1390,
+        "double": 1490
+      },
+      "childPrices": {
+        "infant": 450,
+        "withoutBed": 950,
+        "withBedDiscount": 100
+      },
+      "filterTags": [
+        "november",
+        "dezember"
+      ],
+      "images": [
+        {
+          "src": "/brand/offer-hero/medina.png",
+          "caption": "Medina",
+          "sortOrder": 0
+        },
+        {
+          "src": "/brand/offer-hero/medina.png",
+          "caption": "Hotel in Medina",
+          "sortOrder": 1
+        },
+        {
+          "src": "/brand/offer-hero/group-03.png",
+          "caption": "Hotellobby",
+          "sortOrder": 2
+        },
+        {
+          "src": "/brand/offer-hero/makkah.png",
+          "caption": "Hotel in Makkah",
+          "sortOrder": 3
+        },
+        {
+          "src": "/brand/offer-hero/kaaba.png",
+          "caption": "Kaaba",
+          "sortOrder": 4
+        },
+        {
+          "src": "/brand/offer-hero/ziyarat.png",
+          "caption": "Ausflüge",
+          "sortOrder": 5
+        },
+        {
+          "src": "/brand/offer-hero/group-05.png",
+          "caption": "Gruppenfoto",
+          "sortOrder": 6
+        }
+      ],
+      "inclusions": [
+        "visa",
+        "flight",
+        "baggage",
+        "guide",
+        "religious",
+        "transfer",
+        "hotels",
+        "breakfast",
+        "excursionMakkah",
+        "excursionMedina"
+      ],
+      "guideLanguages": [
+        "ar",
+        "de",
+        "bs",
+        "tr"
+      ],
+      "medinaHotelId": "anwar",
+      "makkahHotelId": "anjum",
+      "medinaStay": {
+        "nights": 3,
+        "checkIn": "2026-11-25",
+        "checkOut": "2026-11-28",
+        "dateLabel": "25. Nov – 28. Nov 2026"
+      },
+      "makkahStay": {
+        "nights": 5,
+        "checkIn": "2026-11-28",
+        "checkOut": "2026-12-03",
+        "dateLabel": "28. Nov – 03. Dez 2026"
+      },
+      "outbound": {
+        "dateLabel": "Mi, 25. November 2026",
+        "fromCode": "VIE",
+        "toCode": "MED",
+        "fromCity": "Wien",
+        "toCity": "Medina",
+        "departTime": "13:40",
+        "arriveTime": "19:10",
+        "duration": "4h 30m",
+        "direct": true
+      },
+      "inbound": {
+        "dateLabel": "Do, 03. Dezember 2026",
+        "fromCode": "JED",
+        "toCode": "VIE",
+        "fromCity": "Jeddah",
+        "toCity": "Wien",
+        "departTime": "16:00",
+        "arriveTime": "21:10",
+        "duration": "5h 10m",
+        "direct": true
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Ankunft in Medina",
+          "icon": "plane"
+        },
+        {
+          "day": 2,
+          "title": "Programm Medina",
+          "icon": "mosque"
+        },
+        {
+          "day": 3,
+          "title": "Transfer nach Makkah",
+          "icon": "bus"
+        },
+        {
+          "day": 4,
+          "title": "Umrah",
+          "icon": "kaaba"
+        },
+        {
+          "day": 5,
+          "title": "Ausflug Makkah",
+          "icon": "camera"
+        },
+        {
+          "day": 6,
+          "title": "Freier Tag",
+          "icon": "palm"
+        },
+        {
+          "day": 7,
+          "title": "Rückreise",
+          "icon": "plane"
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Was ist in diesem Preis enthalten?",
+          "answer": "Visum, Hin- und Rückflug, Transfers, Hotels inkl. Frühstück, Gepäck (2 × 23 kg), Reiseführer und Ausflüge in Makkah & Medina — je nach Paketkonfiguration."
+        },
+        {
+          "question": "Wie sichere ich mir einen Platz?",
+          "answer": "Über die Schaltfläche „Jetzt anfragen“ senden Sie uns Ihre unverbindliche Anfrage. Wir bestätigen Verfügbarkeit und nächste Schritte persönlich."
+        },
+        {
+          "question": "Kann ich Zimmerkategorien später ändern?",
+          "answer": "Ja, solange Plätze frei sind. Vierbett-, Dreibett- und Zweibettzimmer lassen sich in der Anfrage oder nach Rücksprache anpassen."
+        }
+      ],
+      "detailNotes": {
+        "luggage": "2 × 23 kg Freigepäck pro Person inklusive. Handgepäck gemäß Airline-Regeln.",
+        "transfers": "Flughafen ↔ Hotel und Medina ↔ Makkah mit klimatisierten Gruppenbussen, inklusive.",
+        "visa": "Umrah-Visum inklusive — wir übernehmen die Beantragung und betreuen den Prozess.",
+        "tourGuide": "Erfahrene Reiseführer begleiten die Gruppe rund um die Uhr in den vereinbarten Sprachen.",
+        "religiousGuide": "Religiöse Begleitung und Unterstützung bei Ritualen vor Ort (sofern im Paket enthalten).",
+        "excursions": "Geführte Ausflüge zu den wichtigsten Orten in Makkah und Medina inklusive."
+      },
+      "seoIndexable": true
+    },
+    {
+      "id": "trip-28-dez-2026",
+      "displayOrder": 30,
+      "slug": "28-dezember-2026",
+      "title": "Umrah Gruppenreise",
+      "startDate": "2026-12-28",
+      "endDate": "2027-01-06",
+      "dateLabel": "28. Dez. 2026 – 6. Jän. 2027",
+      "nights": 9,
+      "totalCapacity": 45,
+      "availableSeats": 0,
+      "waitlistEnabled": true,
+      "waitlistCapacity": 10,
+      "waitlistFull": true,
+      "status": "waitlist_full",
+      "groupSize": 45,
+      "departureAirport": "Wien",
+      "airline": "Egypt Air",
+      "airlineLogo": "/brand/meta-icons/egyptair-logo-wide.png",
+      "baggageAllowance": "2 × 23 kg inklusive",
+      "prices": {
+        "quad": 1390,
+        "triple": 1490,
+        "double": 1590
+      },
+      "childPrices": {
+        "infant": 450,
+        "withoutBed": 950,
+        "withBedDiscount": 100
+      },
+      "filterTags": [
+        "dezember",
+        "jaenner",
+        "weihnachtsferien"
+      ],
+      "images": [
+        {
+          "src": "/brand/offer-hero/makkah.png",
+          "caption": "Hotel in Makkah",
+          "sortOrder": 0
+        },
+        {
+          "src": "/brand/offer-hero/kaaba.png",
+          "caption": "Kaaba",
+          "sortOrder": 1
+        },
+        {
+          "src": "/brand/offer-hero/group-02.png",
+          "caption": "Hotellobby",
+          "sortOrder": 2
+        },
+        {
+          "src": "/brand/offer-hero/medina.png",
+          "caption": "Hotel in Medina",
+          "sortOrder": 3
+        },
+        {
+          "src": "/brand/offer-hero/ziyarat.png",
+          "caption": "Ausflüge",
+          "sortOrder": 4
+        },
+        {
+          "src": "/brand/offer-hero/group-05.png",
+          "caption": "Gruppenfoto",
+          "sortOrder": 5
+        },
+        {
+          "src": "/brand/offer-hero/group-06.png",
+          "caption": "Gruppenfoto",
+          "sortOrder": 6
+        }
+      ],
+      "inclusions": [
+        "visa",
+        "flight",
+        "baggage",
+        "guide",
+        "religious",
+        "transfer",
+        "hotels",
+        "breakfast",
+        "excursionMakkah",
+        "excursionMedina"
+      ],
+      "guideLanguages": [
+        "ar",
+        "de",
+        "bs",
+        "tr"
+      ],
+      "medinaHotelId": "maden",
+      "makkahHotelId": "anjum",
+      "medinaStay": {
+        "nights": 3,
+        "checkIn": "2026-12-28",
+        "checkOut": "2026-12-31",
+        "dateLabel": "28. Dez – 31. Dez 2026"
+      },
+      "makkahStay": {
+        "nights": 6,
+        "checkIn": "2026-12-31",
+        "checkOut": "2027-01-06",
+        "dateLabel": "31. Dez 2026 – 06. Jan 2027"
+      },
+      "outbound": {
+        "dateLabel": "Mo, 28. Dezember 2026",
+        "fromCode": "VIE",
+        "toCode": "MED",
+        "fromCity": "Wien",
+        "toCity": "Medina",
+        "departTime": "14:10",
+        "arriveTime": "19:40",
+        "duration": "4h 30m",
+        "direct": true
+      },
+      "inbound": {
+        "dateLabel": "Di, 06. Januar 2027",
+        "fromCode": "JED",
+        "toCode": "VIE",
+        "fromCity": "Jeddah",
+        "toCity": "Wien",
+        "departTime": "15:30",
+        "arriveTime": "20:40",
+        "duration": "5h 10m",
+        "direct": true
+      },
+      "itinerary": [
+        {
+          "day": 1,
+          "title": "Ankunft Medina",
+          "icon": "plane"
+        },
+        {
+          "day": 3,
+          "title": "Transfer Makkah",
+          "icon": "bus"
+        },
+        {
+          "day": 4,
+          "title": "Umrah",
+          "icon": "kaaba"
+        },
+        {
+          "day": 9,
+          "title": "Rückreise",
+          "icon": "plane"
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Was ist in diesem Preis enthalten?",
+          "answer": "Visum, Hin- und Rückflug, Transfers, Hotels inkl. Frühstück, Gepäck (2 × 23 kg), Reiseführer und Ausflüge in Makkah & Medina — je nach Paketkonfiguration."
+        },
+        {
+          "question": "Wie sichere ich mir einen Platz?",
+          "answer": "Über die Schaltfläche „Jetzt anfragen“ senden Sie uns Ihre unverbindliche Anfrage. Wir bestätigen Verfügbarkeit und nächste Schritte persönlich."
+        },
+        {
+          "question": "Kann ich Zimmerkategorien später ändern?",
+          "answer": "Ja, solange Plätze frei sind. Vierbett-, Dreibett- und Zweibettzimmer lassen sich in der Anfrage oder nach Rücksprache anpassen."
+        }
+      ],
+      "detailNotes": {
+        "luggage": "2 × 23 kg Freigepäck pro Person inklusive. Handgepäck gemäß Airline-Regeln.",
+        "transfers": "Flughafen ↔ Hotel und Medina ↔ Makkah mit klimatisierten Gruppenbussen, inklusive.",
+        "visa": "Umrah-Visum inklusive — wir übernehmen die Beantragung und betreuen den Prozess.",
+        "tourGuide": "Erfahrene Reiseführer begleiten die Gruppe rund um die Uhr in den vereinbarten Sprachen.",
+        "religiousGuide": "Religiöse Begleitung und Unterstützung bei Ritualen vor Ort (sofern im Paket enthalten).",
+        "excursions": "Geführte Ausflüge zu den wichtigsten Orten in Makkah und Medina inklusive."
+      },
+      "seoIndexable": true
+    }
+  ]
+}

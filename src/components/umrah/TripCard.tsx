@@ -1,188 +1,148 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Footprints, Languages, Star } from "lucide-react";
-import { Link } from "@/i18n/navigation";
 import type { Hotel, UmrahTrip } from "@/data/mock";
-import { formatEuro } from "@/lib/utils";
+import { resolveTrip } from "@/lib/trip-availability";
+import type { PeriodFilterKey } from "@/lib/listing-period-filters";
 import { AvailabilityBadge } from "@/components/umrah/AvailabilityBadge";
+import { TripCardGallery } from "@/components/umrah/TripCardGallery";
+import { TripCardHotelStays } from "@/components/umrah/TripCardHotelStays";
+import { TripCardInclusions } from "@/components/umrah/TripCardInclusions";
+import { TripCardNightsBadge } from "@/components/umrah/TripCardNightsBadge";
+import { TripCardOfferCta } from "@/components/umrah/TripCardOfferCta";
+import { TripCardPrices } from "@/components/umrah/TripCardPrices";
+import { TripCardTravelDates } from "@/components/umrah/TripCardTravelDates";
+import { cn } from "@/lib/utils";
 
+const LISTING_CARD_SHELL =
+  "flex h-full w-full min-h-0 min-w-0 max-w-full flex-col overflow-hidden rounded-[16px] border border-[#E8EBEF] bg-white shadow-[0_2px_10px_rgba(9,30,66,0.05)] md:rounded-[14px]";
+
+/**
+ * Umrah listing / homepage offer card.
+ *
+ * Listing layout:
+ * - Mobile + desktop: vertical card — large swipeable gallery on top, compare block below
+ * - Stacked cards on mobile for quick departure comparison
+ *
+ * Content hierarchy:
+ * 1. Availability + nights (on image)
+ * 2. Image gallery
+ * 3. Travel dates
+ * 4. Medina & Makkah hotels
+ * 5. Included services
+ * 6. Prices
+ * 7. More information CTA
+ */
 export function TripCard({
   trip,
   medina,
   makkah,
   variant = "grid",
+  listingFilter = "all",
+  galleryInView,
+  preloadLead,
 }: {
   trip: UmrahTrip;
   medina: Hotel;
   makkah: Hotel;
   variant?: "grid" | "home" | "mobile-split";
+  listingFilter?: PeriodFilterKey;
+  /** Defer gallery images until the card is near the viewport (listing grid). */
+  galleryInView?: boolean;
+  /** High-priority preload for the first slide (first listing card only). */
+  preloadLead?: boolean;
 }) {
   const t = useTranslations("umrah");
-  const tCommon = useTranslations("common");
-  const [imgIndex, setImgIndex] = useState(0);
-  const image = trip.images[imgIndex] ?? trip.images[0];
+  const [liveTrip, setLiveTrip] = useState(trip);
+  const isListing = variant === "grid";
 
-  const prev = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setImgIndex((i) => (i - 1 + trip.images.length) % trip.images.length);
-  };
-  const next = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setImgIndex((i) => (i + 1) % trip.images.length);
-  };
+  useEffect(() => {
+    const sync = () => setLiveTrip(resolveTrip(trip));
+    sync();
+    window.addEventListener("mobarak-availability", sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("mobarak-availability", sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, [trip]);
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[var(--shadow-card)]">
-      <div className="relative aspect-[4/3] overflow-hidden bg-surface">
-        <Image
-          src={image.src}
-          alt={image.caption}
-          fill
-          className="object-cover"
-          sizes="(max-width:768px) 100vw, 33vw"
+    <article
+      data-offer-card
+      className={cn(
+        isListing
+          ? LISTING_CARD_SHELL
+          : "flex h-full flex-col overflow-hidden rounded-[14px] border border-[#E8EBEF] bg-white shadow-[0_6px_22px_rgba(9,30,66,0.07)]",
+      )}
+    >
+      {/* 1–2 Availability + image */}
+      <TripCardGallery
+        images={liveTrip.images}
+        prominence={isListing || variant === "home" ? "listing" : "default"}
+        layout="default"
+        galleryInView={galleryInView}
+        preloadLead={preloadLead}
+        nightsBadge={<TripCardNightsBadge trip={liveTrip} compact={isListing} />}
+        badges={
+          <div
+            className={cn(
+              "absolute z-10 flex flex-col gap-1",
+              isListing ? "start-1.5 top-1.5 md:start-3 md:top-3 md:gap-1.5" : "start-3 top-3 gap-1.5",
+            )}
+          >
+            <AvailabilityBadge trip={liveTrip} compact={isListing} />
+            {liveTrip.departureAirport ? (
+              <span
+                className={cn(
+                  "inline-flex w-fit shrink-0 whitespace-nowrap rounded-full border border-[#E8A23A]/55 bg-white/95 font-semibold leading-none text-brand-orange-ink shadow-sm",
+                  isListing
+                    ? "px-1.5 py-0.5 text-[9px] md:px-2.5 md:py-1 md:text-[11px]"
+                    : "px-2.5 py-1 text-[11px]",
+                )}
+              >
+                {t("flightsFrom", { airport: liveTrip.departureAirport })}
+              </span>
+            ) : null}
+          </div>
+        }
+      />
+
+      <div className={cn(isListing && "flex min-w-0 flex-1 flex-col")}>
+        {/* 3 Travel dates */}
+        <TripCardTravelDates trip={liveTrip} prominence={isListing ? "listing" : "default"} />
+
+        {/* 4 Medina & Makkah */}
+        <TripCardHotelStays
+          trip={liveTrip}
+          medina={medina}
+          makkah={makkah}
+          listingFilter={listingFilter}
+          prominence={isListing ? "listing" : "default"}
         />
-        <div className="absolute start-3 top-3 z-10 flex flex-col gap-1">
-          <AvailabilityBadge trip={trip} />
-        </div>
-        <span className="absolute end-3 top-3 z-10 rounded-md bg-white/95 px-2 py-1 text-xs font-bold text-brand-cta">
-          {tCommon("nights", { count: trip.nights })}
-        </span>
-        <span className="absolute bottom-3 start-3 z-10 rounded bg-black/55 px-2 py-1 text-xs text-white">
-          {image.caption}
-        </span>
-        <button
-          type="button"
-          onClick={prev}
-          className="absolute start-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-1.5 shadow"
-          aria-label="Previous"
-        >
-          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
-        </button>
-        <button
-          type="button"
-          onClick={next}
-          className="absolute end-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-1.5 shadow"
-          aria-label="Next"
-        >
-          <ChevronRight className="h-4 w-4 rtl:rotate-180" />
-        </button>
-        <div className="absolute inset-x-0 bottom-2 z-10 flex justify-center gap-1">
-          {trip.images.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1.5 w-1.5 rounded-full ${i === imgIndex ? "bg-white" : "bg-white/50"}`}
-            />
-          ))}
-        </div>
-      </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <p className="text-base font-bold text-navy">{trip.dateLabel}</p>
-          <span className="shrink-0 text-sm text-muted">
-            {tCommon("nights", { count: trip.nights })}
-          </span>
-        </div>
+        {/* 5–7 Included services, prices, CTA — stacked like reference */}
+        <TripCardInclusions
+          trip={liveTrip}
+          prominence={isListing || variant === "home" ? "listing" : "default"}
+        />
 
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <HotelMini
-            hotel={medina}
-            label={t("medina")}
-            walking={t("walkingTo", { minutes: medina.walkingMinutes, mosque: t("nabawi") })}
+        <div className="mt-auto flex flex-col gap-3 border-t border-[#EEF0F3] px-3 py-3 md:gap-3.5 md:px-4 md:py-4">
+          <TripCardPrices
+            trip={liveTrip}
+            prominence={isListing || variant === "home" ? "listing" : "default"}
+            embedded
+            className="w-full"
           />
-          <HotelMini
-            hotel={makkah}
-            label={t("makkah")}
-            walking={t("walkingTo", { minutes: makkah.walkingMinutes, mosque: t("haram") })}
+          <TripCardOfferCta
+            trip={liveTrip}
+            listingFilter={listingFilter}
+            prominence={isListing || variant === "home" ? "listing" : "default"}
+            fullWidth
           />
         </div>
-
-        <div className="flex items-center gap-2 text-xs text-navy/80">
-          <Languages className="h-3.5 w-3.5 shrink-0 text-brand-orange" />
-          <span>
-            <span className="font-semibold">{t("guideLanguages")}: </span>
-            {t("guideLanguagesValue")}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-3 gap-2 text-center text-[11px] leading-tight text-navy/70">
-          <span>{t("visaIncl")}</span>
-          <span>{t("flightIncl")}</span>
-          <span>{t("baggageIncl")}</span>
-          <span>{t("guideIncl")}</span>
-          <span>{t("hotelsIncl")}</span>
-          <span>{t("transferIncl")}</span>
-        </div>
-
-        <div className="mt-auto grid grid-cols-3 gap-2">
-          <PriceBox label={t("room4")} price={trip.prices.quad} per={tCommon("perPerson")} />
-          <PriceBox label={t("room3")} price={trip.prices.triple} per={tCommon("perPerson")} />
-          <PriceBox label={t("room2")} price={trip.prices.double} per={tCommon("perPerson")} />
-        </div>
-
-        <Link
-          href={`/umrah/gruppenreise/${trip.slug}`}
-          className="mt-1 inline-flex w-full items-center justify-center rounded-xl bg-brand-cta px-4 py-3 text-sm font-semibold text-white hover:bg-navy"
-        >
-          {tCommon("moreInfoTrip")} →
-        </Link>
       </div>
     </article>
-  );
-}
-
-function HotelMini({
-  hotel,
-  label,
-  walking,
-}: {
-  hotel: Hotel;
-  label: string;
-  walking: string;
-}) {
-  return (
-    <div className="rounded-lg bg-surface p-2">
-      <p className="font-semibold text-navy">
-        {label} ({hotel.nights}N)
-      </p>
-      <p className="text-navy/80">
-        {hotel.checkIn} – {hotel.checkOut}
-      </p>
-      <p className="mt-1 flex items-center gap-1 font-medium text-navy">
-        {hotel.name}{" "}
-        <span className="inline-flex text-brand-gold">
-          {Array.from({ length: hotel.stars }).map((_, i) => (
-            <Star key={i} className="h-3 w-3 fill-brand-gold text-brand-gold" />
-          ))}
-        </span>
-      </p>
-      <p className="mt-1 flex items-start gap-1 text-[10px] text-muted">
-        <Footprints className="mt-0.5 h-3 w-3 shrink-0 text-brand-orange" />
-        {walking}
-      </p>
-    </div>
-  );
-}
-
-function PriceBox({
-  label,
-  price,
-  per,
-}: {
-  label: string;
-  price: number;
-  per: string;
-}) {
-  return (
-    <div className="rounded-lg border border-line px-1.5 py-2">
-      <p className="text-[10px] leading-tight text-navy/70">{label}</p>
-      <p className="text-sm font-bold text-brand-green">{formatEuro(price)}</p>
-      <p className="text-[10px] text-muted">{per}</p>
-    </div>
   );
 }

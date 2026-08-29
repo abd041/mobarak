@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { NextIntlClientProvider } from "next-intl";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import {
   LayoutDashboard,
   Home,
@@ -13,6 +15,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import deMessages from "../../../messages/de.json";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -30,58 +33,62 @@ const NAV = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-surface text-navy" dir="ltr" lang="de">
-      <aside className="hidden w-64 shrink-0 border-e border-line bg-white md:flex md:flex-col">
-        <div className="border-b border-line px-5 py-5">
-          <p className="text-xs font-bold tracking-wide text-brand-orange">MOBARAK</p>
-          <p className="text-sm font-semibold">Admin Panel</p>
-        </div>
-        <nav className="flex-1 space-y-1 p-3">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-navy/80 hover:bg-surface hover:text-navy"
-            >
-              <item.icon className="h-4 w-4" />
-              {item.label}
+    <NextIntlClientProvider locale="de" messages={deMessages}>
+      <div className="flex min-h-screen bg-surface text-navy" dir="ltr" lang="de">
+        <aside className="hidden w-64 shrink-0 border-e border-line bg-white md:flex md:flex-col">
+          <div className="border-b border-line px-5 py-5">
+            <Link href="/admin" className="inline-flex rounded-sm">
+              <BrandLogo height={48} priority />
             </Link>
-          ))}
-        </nav>
-        <div className="border-t border-line p-3">
-          <Link
-            href="/admin/login"
-            className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-muted hover:bg-surface"
-          >
-            <LogOut className="h-4 w-4" />
-            Abmelden
-          </Link>
-        </div>
-      </aside>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-line bg-white px-4 py-3 md:px-6">
-          <div className="md:hidden">
-            <p className="text-sm font-bold">Mobarak Admin</p>
+            <p className="mt-2 text-xs font-semibold text-muted">Admin Panel</p>
           </div>
-          <p className="text-sm text-muted">Demo UI – keine Backend-Verbindung</p>
-          <span className="rounded-full bg-brand-orange-soft px-3 py-1 text-xs font-semibold text-brand-orange">
-            Admin
-          </span>
-        </header>
-        <div className="no-scrollbar flex gap-2 overflow-x-auto border-b border-line bg-white px-3 py-2 md:hidden">
-          {NAV.map((item) => (
+          <nav className="flex-1 space-y-1 p-3">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-navy/80 hover:bg-surface hover:text-navy"
+              >
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="border-t border-line p-3">
             <Link
-              key={item.href}
-              href={item.href}
-              className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs font-medium"
+              href="/admin/login"
+              className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-muted hover:bg-surface"
             >
-              {item.label}
+              <LogOut className="h-4 w-4" />
+              Abmelden
             </Link>
-          ))}
+          </div>
+        </aside>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          <header className="flex items-center justify-between border-b border-line bg-white px-4 py-3 md:px-6">
+            <div className="md:hidden">
+              <BrandLogo height={36} />
+            </div>
+            <p className="text-sm text-muted">Angebote & Hotels werden serverseitig gespeichert</p>
+            <span className="rounded-full bg-brand-orange-soft px-3 py-1 text-xs font-semibold text-brand-orange">
+              Admin
+            </span>
+          </header>
+          <div className="no-scrollbar flex gap-2 overflow-x-auto border-b border-line bg-white px-3 py-2 md:hidden">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="shrink-0 rounded-full border border-line px-3 py-1.5 text-xs font-medium"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <main className="flex-1 p-4 md:p-8">{children}</main>
         </div>
-        <main className="flex-1 p-4 md:p-8">{children}</main>
       </div>
-    </div>
+    </NextIntlClientProvider>
   );
 }

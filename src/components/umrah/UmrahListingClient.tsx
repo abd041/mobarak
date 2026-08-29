@@ -1,130 +1,154 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { TripCard } from "@/components/umrah/TripCard";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { UmrahListingEmptyState } from "@/components/umrah/UmrahListingEmptyState";
+import { UmrahListingFilters } from "@/components/umrah/UmrahListingFilters";
+import { UmrahListingMetaBar } from "@/components/umrah/UmrahListingMetaBar";
+import { UmrahListingGrid } from "@/components/umrah/UmrahListingGrid";
 import { Container } from "@/components/ui/Container";
+import type { Hotel, UmrahTrip } from "@/data/mock";
+import { getHotel } from "@/data/mock";
+import { useHotels } from "@/hooks/useHotels";
+import { useTrips } from "@/hooks/useTrips";
+import { resolveHotel } from "@/lib/hotel-catalog";
+import type { PeriodFilterKey } from "@/lib/listing-period-filters";
+import { filterTripsByPeriod } from "@/lib/trip-period-filters";
 import {
-  FILTER_KEYS,
-  FILTER_LABELS_DE,
-  getHotel,
-  IMG,
-  trips as allTrips,
-} from "@/data/mock";
+  DEFAULT_TRIP_LISTING_SORT,
+  getResolvedTripsForListing,
+  sortTripsForListing,
+  type TripListingSortKey,
+} from "@/lib/trip-listing-sort";
+import {
+  LISTING_FILTER_QUERY_KEY,
+  parseListingPeriodFilter,
+} from "@/lib/trip-listing-url";
+import { TRIPS_DATA_EVENT } from "@/lib/trips-events";
 
-type SortKey = "next" | "priceAsc" | "priceDesc" | "seats";
+function UmrahListingClientInner({
+  initialTrips,
+  initialHotels,
+}: {
+  initialTrips?: UmrahTrip[];
+  initialHotels?: Hotel[];
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { trips: allTrips } = useTrips(initialTrips);
+  const { hotels, getHotelById } = useHotels(initialHotels);
 
-export function UmrahListingClient() {
-  const t = useTranslations("umrah");
-  const [filter, setFilter] = useState<(typeof FILTER_KEYS)[number]>("all");
-  const [sort, setSort] = useState<SortKey>("next");
+  const filterFromUrl = useMemo(
+    () => parseListingPeriodFilter(searchParams.get(LISTING_FILTER_QUERY_KEY)),
+    [searchParams],
+  );
+
+  const [filter, setFilter] = useState<PeriodFilterKey>(filterFromUrl);
+  const [sort, setSort] = useState<TripListingSortKey>(DEFAULT_TRIP_LISTING_SORT);
+  const [dataRevision, setDataRevision] = useState(0);
+
+  useEffect(() => {
+    setFilter(filterFromUrl);
+  }, [filterFromUrl]);
+
+  useEffect(() => {
+    const sync = () => setDataRevision((value) => value + 1);
+    window.addEventListener("mobarak-availability", sync);
+    window.addEventListener(TRIPS_DATA_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("mobarak-availability", sync);
+      window.removeEventListener(TRIPS_DATA_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
+
+  const onFilterChange = useCallback(
+    (next: PeriodFilterKey) => {
+      setFilter(next);
+
+      const params = new URLSearchParams(searchParams.toString());
+      if (next === "all") {
+        params.delete(LISTING_FILTER_QUERY_KEY);
+      } else {
+        params.set(LISTING_FILTER_QUERY_KEY, next);
+      }
+
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
+
+  const resolveTripHotel = useCallback(
+    (trip: UmrahTrip, city: "medina" | "makkah") => {
+      const id = city === "medina" ? trip.medinaHotelId : trip.makkahHotelId;
+      const fromApi = getHotelById(id);
+      if (fromApi) return fromApi;
+      return resolveHotel(getHotel(id));
+    },
+    [getHotelById, hotels],
+  );
 
   const filtered = useMemo(() => {
-    let list = [...allTrips];
-    if (filter !== "all") {
-      list = list.filter((trip) => trip.filterTags.includes(filter));
-    }
-    list.sort((a, b) => {
-      if (sort === "priceAsc") return a.prices.quad - b.prices.quad;
-      if (sort === "priceDesc") return b.prices.quad - a.prices.quad;
-      if (sort === "seats") return b.availableSeats - a.availableSeats;
-      return a.startDate.localeCompare(b.startDate);
-    });
-    return list;
-  }, [filter, sort]);
-
-  const inclusions = [
-    t("visaIncl"),
-    t("flightIncl"),
-    t("baggageIncl"),
-    t("guideIncl"),
-    t("religiousIncl"),
-    t("hotelsIncl"),
-    t("breakfastIncl"),
-    t("transferIncl"),
-    t("excursionsIncl"),
-  ];
+    const resolved = getResolvedTripsForListing(allTrips);
+    const list = filterTripsByPeriod(resolved, filter);
+    return sortTripsForListing(list, sort);
+  }, [allTrips, filter, sort, dataRevision]);
 
   return (
     <>
-      <section className="relative overflow-hidden bg-white">
-        <Container className="grid items-center gap-8 py-10 md:grid-cols-2 md:py-14">
-          <div>
-            <h1 className="mb-3 text-3xl font-bold text-navy md:text-4xl">{t("listingTitle")}</h1>
-            <p className="mb-6 text-lg text-muted">{t("listingSubtitle")}</p>
-            <div className="grid grid-cols-2 gap-2 text-xs text-navy/80 sm:grid-cols-3">
-              {inclusions.map((item) => (
-                <span key={item} className="rounded-lg bg-surface px-2 py-2">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl">
-            <Image src={IMG.kaaba} alt="" fill className="object-cover" sizes="50vw" priority />
-          </div>
-        </Container>
-      </section>
+      <UmrahListingFilters filter={filter} onFilterChange={onFilterChange} />
+      <UmrahListingMetaBar
+        resultCount={filtered.length}
+        sort={sort}
+        onSortChange={setSort}
+        showSort={filtered.length > 0}
+      />
 
-      <Container className="pb-16">
-        <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto pb-2">
-          {FILTER_KEYS.map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setFilter(key)}
-              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition ${
-                filter === key
-                  ? "border-brand-orange bg-brand-orange-soft text-brand-orange"
-                  : "border-line bg-white text-navy"
-              }`}
-            >
-              {key === "all" ? t("filterAll") : FILTER_LABELS_DE[key]}
-            </button>
+      <Container className="min-w-0 pb-12 pt-4 sm:pb-12 sm:pt-5">
+        {filtered.length === 0 ? (
+          <UmrahListingEmptyState filter={filter} onShowAllDates={() => onFilterChange("all")} />
+        ) : (
+          <UmrahListingGrid
+            trips={filtered}
+            listingFilter={filter}
+            getMedinaHotel={(trip) => resolveTripHotel(trip, "medina")}
+            getMakkahHotel={(trip) => resolveTripHotel(trip, "makkah")}
+          />
+        )}
+      </Container>
+    </>
+  );
+}
+
+export function UmrahListingClient({
+  initialTrips,
+  initialHotels,
+}: {
+  initialTrips?: UmrahTrip[];
+  initialHotels?: Hotel[];
+} = {}) {
+  return (
+    <Suspense fallback={<UmrahListingClientFallback />}>
+      <UmrahListingClientInner initialTrips={initialTrips} initialHotels={initialHotels} />
+    </Suspense>
+  );
+}
+
+function UmrahListingClientFallback() {
+  return (
+    <>
+      <div className="border-b border-line bg-white py-8" aria-hidden />
+      <Container className="pb-12 pt-3 sm:pb-12 sm:pt-5">
+        <div className="mb-5 h-10 animate-pulse rounded-lg bg-surface md:mb-6" />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="h-[32rem] animate-pulse rounded-[16px] bg-surface md:h-[28rem]" />
           ))}
         </div>
-
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-semibold text-navy">{t("found", { count: filtered.length })}</p>
-          <label className="flex items-center gap-2 text-sm text-navy">
-            {t("sortBy")}
-            <select
-              className="rounded-lg border border-line px-3 py-2"
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortKey)}
-            >
-              <option value="next">{t("sortNext")}</option>
-              <option value="priceAsc">{t("sortPriceAsc")}</option>
-              <option value="priceDesc">{t("sortPriceDesc")}</option>
-              <option value="seats">{t("sortSeats")}</option>
-            </select>
-          </label>
-        </div>
-
-        {filtered.length === 0 ? (
-          <div className="rounded-2xl border border-line bg-surface p-10 text-center">
-            <p className="mb-4 text-navy">{t("emptyFilter")}</p>
-            <button
-              type="button"
-              onClick={() => setFilter("all")}
-              className="font-semibold text-brand-cta hover:underline"
-            >
-              {t("otherDates")}
-            </button>
-          </div>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((trip) => (
-              <TripCard
-                key={trip.id}
-                trip={trip}
-                medina={getHotel(trip.medinaHotelId)}
-                makkah={getHotel(trip.makkahHotelId)}
-              />
-            ))}
-          </div>
-        )}
       </Container>
     </>
   );

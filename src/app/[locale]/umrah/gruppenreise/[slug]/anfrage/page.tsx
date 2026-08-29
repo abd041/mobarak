@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { InquiryForm } from "@/components/umrah/InquiryForm";
-import { getHotel, getTrip, trips } from "@/data/mock";
+import { TripFlowProvider } from "@/components/umrah/TripFlowProvider";
+import { getHotel } from "@/data/mock";
+import { getHotelByIdFromStore } from "@/lib/hotels-store.server";
+import { pageMetadata } from "@/lib/page-metadata";
+import { getAllTripsFromStore, getTripBySlugFromStore } from "@/lib/trips-store.server";
 
-export function generateStaticParams() {
-  return trips.map((t) => ({ slug: t.slug }));
+export async function generateStaticParams() {
+  const allTrips = await getAllTripsFromStore();
+  return allTrips.map((t) => ({ slug: t.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return pageMetadata(locale, "inquiry", {
+    path: `/umrah/gruppenreise/${slug}/anfrage`,
+  });
 }
 
 export default async function InquiryPage({
@@ -14,14 +31,16 @@ export default async function InquiryPage({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const trip = getTrip(slug);
+  const trip = await getTripBySlugFromStore(slug);
   if (!trip) notFound();
 
   return (
-    <InquiryForm
-      trip={trip}
-      medina={getHotel(trip.medinaHotelId)}
-      makkah={getHotel(trip.makkahHotelId)}
-    />
+    <TripFlowProvider trip={trip}>
+      <InquiryForm
+        trip={trip}
+        medina={(await getHotelByIdFromStore(trip.medinaHotelId)) ?? getHotel(trip.medinaHotelId)}
+        makkah={(await getHotelByIdFromStore(trip.makkahHotelId)) ?? getHotel(trip.makkahHotelId)}
+      />
+    </TripFlowProvider>
   );
 }

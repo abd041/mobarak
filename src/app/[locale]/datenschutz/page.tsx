@@ -1,7 +1,22 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { ComingSoon } from "@/components/ui/ComingSoon";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return pageMetadata(locale, "privacy");
+}
+
+export default async function PrivacyPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   setRequestLocale(locale);
   return <ComingSoon />;

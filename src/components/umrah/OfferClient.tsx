@@ -1,8 +1,13 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { DirArrow } from "@/components/ui/DirArrow";
+import { useTripInquiryCtaCopy } from "@/components/umrah/detail/TripInquiryCtaCopy";
+import { useTripFlowContext } from "@/components/umrah/TripFlowProvider";
+import { resolveTrip } from "@/lib/trip-availability";
 import type { Hotel, UmrahTrip } from "@/data/mock";
+import { cn } from "@/lib/utils";
 
 export function OfferClient({
   trip,
@@ -13,18 +18,42 @@ export function OfferClient({
   makkah: Hotel;
   children: React.ReactNode;
 }) {
-  const tCommon = useTranslations("common");
+  const [liveTrip, setLiveTrip] = useState(trip);
+
+  useEffect(() => {
+    const sync = () => setLiveTrip(resolveTrip(trip));
+    sync();
+    window.addEventListener("mobarak-availability", sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("mobarak-availability", sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, [trip]);
+
+  const cta = useTripInquiryCtaCopy(liveTrip);
+  const flow = useTripFlowContext();
 
   return (
     <>
-      {children}
-      {/* Mobile sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 p-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] safe-bottom md:hidden">
+      <div className="trip-mobile-page pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))] lg:pb-0">
+        {children}
+      </div>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/98 px-4 pt-3 shadow-[0_-8px_24px_rgba(9,36,92,0.1)] safe-bottom lg:hidden">
         <Link
-          href={`/umrah/gruppenreise/${trip.slug}/anfrage`}
-          className="flex w-full items-center justify-center rounded-xl bg-brand-cta py-3.5 text-sm font-semibold text-white"
+          href={flow.inquiryPath}
+          className={cn(
+            "flex min-h-[52px] w-full items-center justify-center gap-1.5 rounded-xl text-[15px] font-bold text-white transition",
+            cta.mode === "waitlist"
+              ? "bg-brand-orange-cta hover:brightness-95"
+              : cta.mode === "full"
+                ? "bg-navy hover:bg-navy/90"
+                : "bg-brand-cta hover:bg-navy",
+          )}
         >
-          {tCommon("inquireNow")} →
+          {cta.buttonLabel}
+          <DirArrow />
         </Link>
       </div>
     </>
