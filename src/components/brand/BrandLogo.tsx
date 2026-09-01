@@ -26,8 +26,8 @@ export function BrandLogo({
       height={height}
       priority={priority}
       quality={IQ.logo}
-      sizes={`${width}px`}
-      className={cn("h-auto w-auto object-contain", className)}
+      sizes={`${Math.max(width, 180)}px`}
+      className={cn("h-auto w-auto object-contain object-left", className)}
       style={{ height, width: "auto", maxHeight: height }}
     />
   );

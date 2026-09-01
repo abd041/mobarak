@@ -1,61 +1,89 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Check, Heart } from "lucide-react";
+import { Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 
+/**
+ * Why / Promise — two HTML cards only; clean roza.png mosque background (no baked UI).
+ * Mobile: why + mosque + promise linked as one unit (no gaps).
+ */
 export async function HomeWhyPromise() {
   const t = await getTranslations("home");
   const why = [t("why1"), t("why2"), t("why3"), t("why4"), t("why5")];
 
   return (
-    <section className="bg-[#F7F8FA] py-8 md:py-10">
-      <Container className="lg:px-9">
-        <div className="grid overflow-hidden rounded-[14px] bg-white shadow-[0_6px_24px_rgba(9,30,66,0.08)] lg:grid-cols-[1.15fr_0.7fr_1.1fr] lg:items-stretch">
-          {/* Left — Why Mobarak */}
-          <div className="flex flex-col justify-center px-6 py-6 sm:px-8 sm:py-7 lg:px-8 lg:py-7 xl:px-10">
-            <h2 className="mb-4 text-[13px] font-extrabold tracking-[0.06em] text-[#0A1B3D] uppercase sm:text-[14px] lg:mb-3.5 lg:text-[14px]">
-              {t("whyTitle")}
-            </h2>
-            <ul className="flex flex-col gap-2.5">
-              {why.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2.5 text-[12.5px] leading-[1.4] text-[#2F3F4F] sm:text-[13px]"
-                >
-                  <span className="mt-[2px] flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-full bg-[#E8913A]">
-                    <Check className="h-2.5 w-2.5 text-white" strokeWidth={3.5} />
-                  </span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <section className="relative isolate w-full overflow-hidden bg-[#F7F8FA] lg:bg-white">
+      {/* Full-bleed roza only on desktop — center column shows through between cards */}
+      <div className="pointer-events-none absolute inset-0 z-0 hidden lg:block">
+        <Image
+          src="/brand/why-roza-bg.png"
+          alt=""
+          fill
+          quality={90}
+          priority={false}
+          className="object-cover"
+          style={{ objectPosition: "62% 42%" }}
+          sizes="100vw"
+          loading="lazy"
+          aria-hidden
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[linear-gradient(90deg,#ffffff_0%,rgba(255,255,255,0.75)_6%,rgba(255,255,255,0.2)_14%,transparent_22%,transparent_78%,rgba(255,255,255,0.2)_86%,rgba(255,255,255,0.75)_94%,#ffffff_100%)]"
+        />
+      </div>
 
-          {/* Center image — fills column; dome centered, finial visible */}
-          <div className="relative min-h-[180px] w-full overflow-hidden lg:min-h-[260px]">
-            <Image
-              src="/brand/why-promise-roza.jpg"
-              alt={t("whyImageAlt")}
-              fill
-              quality={75}
-              className="h-full w-full object-cover object-[50%_28%]"
-              sizes="(max-width:1024px) 100vw, 280px"
-              loading="lazy"
-            />
-          </div>
+      <Container className="relative z-10 px-5 py-5 sm:px-8 sm:py-6 lg:max-w-[1220px] lg:px-7 lg:py-5 xl:px-9 xl:py-6">
+        <div className="grid w-full grid-cols-1 gap-0 lg:grid-cols-[minmax(0,420px)_minmax(120px,1fr)_minmax(0,360px)] lg:items-center lg:gap-5 xl:gap-7">
+          {/* Mobile: one linked stack. Desktop: children join the grid via contents. */}
+          <div className="overflow-hidden rounded-[18px] shadow-[0_10px_28px_rgba(9,30,66,0.12)] lg:contents lg:overflow-visible lg:rounded-none lg:shadow-none">
+            <article className="relative z-10 flex h-fit flex-col justify-center bg-white px-5 py-5 sm:px-6 sm:py-6 lg:rounded-[18px] lg:px-[26px] lg:py-6 lg:shadow-[0_10px_28px_rgba(9,30,66,0.12)]">
+              <h2 className="mb-3.5 text-[13px] font-extrabold tracking-[0.08em] text-[#0A1B3D] uppercase sm:mb-4 sm:text-[15px] lg:text-[16px] lg:tracking-[0.06em]">
+                {t("whyTitle")}
+              </h2>
+              <ul className="flex flex-col gap-2.5">
+                {why.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 text-[13px] leading-[1.35] text-[#2A3544] sm:items-center sm:text-[14px] sm:leading-none"
+                  >
+                    <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#E8913A] sm:mt-0">
+                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3.5} />
+                    </span>
+                    <span className="min-w-0 lg:whitespace-nowrap">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
 
-          {/* Right — Our Promise */}
-          <div className="flex flex-col justify-center px-6 py-6 sm:px-8 sm:py-7 lg:px-8 lg:py-7 xl:px-10">
-            <h2 className="mb-3 text-[13px] font-extrabold tracking-[0.06em] text-[#0A1B3D] uppercase sm:text-[14px] lg:mb-3 lg:text-[14px]">
-              {t("promiseTitle")}
-            </h2>
-            <p className="text-[12.5px] leading-[1.5] text-[#2F3F4F] sm:text-[13px]">
-              {t("promiseBody")}
-            </p>
-            <p className="mt-4 flex items-center gap-2 text-[13px] font-bold text-[#0A1B3D] sm:text-[13.5px] lg:mt-5">
-              <Heart className="h-3.5 w-3.5 fill-[#E8913A] text-[#E8913A]" />
-              {t("promiseSign")}
-            </p>
+            {/* Mobile: mosque strip — flush between cards */}
+            <div className="relative h-[120px] overflow-hidden sm:h-[140px] lg:hidden">
+              <Image
+                src="/brand/why-roza-bg.png"
+                alt={t("whyImageAlt")}
+                fill
+                quality={85}
+                className="object-cover"
+                style={{ objectPosition: "50% 38%" }}
+                sizes="(max-width: 1024px) 100vw, 0px"
+                loading="lazy"
+              />
+            </div>
+
+            {/* Desktop center — mosque from section bg */}
+            <div className="relative hidden lg:block" aria-hidden />
+
+            <article className="relative z-10 flex h-fit flex-col justify-center bg-white px-5 py-4 sm:px-6 sm:py-5 lg:rounded-[18px] lg:px-[26px] lg:py-3.5 lg:shadow-[0_10px_28px_rgba(9,30,66,0.12)]">
+              <h2 className="mb-2.5 text-[13px] font-extrabold tracking-[0.08em] text-[#0A1B3D] uppercase sm:mb-3 sm:text-[15px] lg:text-[16px] lg:tracking-[0.06em]">
+                {t("promiseTitle")}
+              </h2>
+              <p className="text-[13px] leading-[1.55] text-[#2A3544] sm:text-[14px] sm:leading-[1.5]">
+                {t("promiseBody")}
+              </p>
+              <p className="mt-3 text-[13px] font-bold text-[#0A1B3D] sm:mt-2.5 sm:text-[14px]">
+                – {t("promiseSign")}
+              </p>
+            </article>
           </div>
         </div>
       </Container>

@@ -1,0 +1,256 @@
+heroServiceTransfer
+  de: Transfer
+  en: Transfers
+  ar: التنقلات
+  bs: Transferi
+  tr: Transferler
+
+heroBody
+  de: Sie planen – wir organisieren.
+Wir kümmern uns um Flüge, Hotels, Visum und Transfers – ganz nach Ihren Wünschen.
+  en: You plan – we organise.
+We take care of flights, hotels, visa and transfers – tailored to your wishes.
+  ar: أنت تخطط – ونحن ننظم.
+نهتم بالرحلات والفنادق والتأشيرة والتنقلات – وفق رغباتك.
+  bs: Vi planirate – mi organizujemo.
+Brinemo o letovima, hotelima, vizi i transferima – prema vašim željama.
+  tr: Siz planlayın – biz organize edelim.
+Uçuşlar, oteller, vize ve transferler – isteklerinize göre biz hallederiz.
+
+monthLabel
+  de: Monat auswählen
+  en: Select month
+  ar: اختر الشهر
+  bs: Odaberite mjesec
+  tr: Ay seçin
+
+monthPlaceholder
+  de: Monat auswählen
+  en: Select month
+  ar: اختر الشهر
+  bs: Odaberite mjesec
+  tr: Ay seçin
+
+dayLabel
+  de: Tag auswählen
+  en: Select day
+  ar: اختر اليوم
+  bs: Odaberite dan
+  tr: Gün seçin
+
+dayPrev
+  de: Frühere Tage
+  en: Earlier days
+  ar: أيام سابقة
+  bs: Raniji dani
+  tr: Önceki günler
+
+dayNext
+  de: Spätere Tage
+  en: Later days
+  ar: أيام لاحقة
+  bs: Kasniji dani
+  tr: Sonraki günler
+
+flexibilityLabel
+  de: Ich bin flexibel
+  en: I am flexible
+  ar: أنا مرن
+  bs: Fleksibilan sam
+  tr: Esneğim
+
+continueCta
+  de: Weiter zur Anfrage
+  en: Continue to enquiry
+  ar: متابعة إلى الطلب
+  bs: Nastavi na upit
+  tr: Talebe devam et
+
+continueBanner
+  de: Im nächsten Schritt ergänzen Sie die Angaben zu den Reisenden und Ihre Kontaktdaten.
+  en: In the next step, add the traveller details and your contact information.
+  ar: في الخطوة التالية، أضف بيانات المسافرين ومعلومات التواصل الخاصة بك.
+  bs: U sljedećem koraku unesite podatke o putnicima i svoje kontakt podatke.
+  tr: Sonraki adımda yolcu bilgilerini ve iletişim bilgilerinizi ekleyin.
+
+howItWorksTitle
+  de: So funktioniert es
+  en: How it works
+  ar: كيف يعمل
+  bs: Kako funkcioniše
+  tr: Nasıl çalışır
+
+howStep1Title
+  de: Anfrage senden
+  en: Send enquiry
+  ar: إرسال الطلب
+  bs: Pošaljite upit
+  tr: Talep gönderin
+
+howStep2Title
+  de: Angebot erhalten
+  en: Receive offer
+  ar: استلام العرض
+  bs: Primite ponudu
+  tr: Teklif alın
+
+howStep3Title
+  de: Reisen & genießen
+  en: Travel & enjoy
+  ar: السفر والاستمتاع
+  bs: Putujte i uživajte
+  tr: Seyahat edin
+
+howStep1Body
+  de: Teilen Sie uns Ihre Wünsche mit.
+  en: Share your wishes with us.
+  ar: أخبرونا برغباتكم.
+  bs: Podijelite nam svoje želje.
+  tr: İsteklerinizi bizimle paylaşın.
+
+howStep2Body
+  de: Wir erstellen ein individuelles Angebot für Sie.
+  en: We prepare an individual offer for you.
+  ar: نُعد لكم عرضاً فردياً.
+  bs: Pripremamo individualnu ponudu za vas.
+  tr: Sizin için bireysel bir teklif hazırlarız.
+
+howStep3Body
+  de: Wir kümmern uns um den Rest.
+  en: We take care of the rest.
+  ar: نحن نهتم بالباقي.
+  bs: Mi se brinemo o ostalom.
+  tr: Gerisini biz hallederiz.
+
+benefitsTitle
+  de: Ihre Vorteile
+  en: Your benefits
+  ar: مزاياكم
+  bs: Vaše prednosti
+  tr: Avantajlarınız
+
+benefit1
+  de: Individuelle Reise nach Ihren Wünschen
+  en: Individual journey tailored to your wishes
+  ar: رحلة فردية وفق رغباتكم
+  bs: Individualno putovanje prema vašim željama
+  tr: İsteklerinize göre bireysel seyahat
+
+benefit2
+  de: Persönliche Beratung durch Experten
+  en: Personal advice from experts
+  ar: استشارة شخصية من خبراء
+  bs: Lično savjetovanje stručnjaka
+  tr: Uzmanlardan kişisel danışmanlık
+
+benefit3
+  de: Faire Preise & transparente Angebote
+  en: Fair prices & transparent offers
+  ar: أسعار عادلة وعروض شفافة
+  bs: Poštene cijene i transparentne ponude
+  tr: Adil fiyatlar ve şeffaf teklifler
+
+benefit4
+  de: Sichere und zuverlässige Abwicklung
+  en: Safe and reliable processing
+  ar: معالجة آمنة وموثوقة
+  bs: Sigurna i pouzdana obrada
+  tr: Güvenli ve güvenilir işlem
+
+trust1
+  de: Persönliche Beratung durch Experten
+  en: Personal advice from experts
+  ar: استشارة شخصية من خبراء
+  bs: Lično savjetovanje stručnjaka
+  tr: Uzmanlardan kişisel danışmanlık
+
+trust2
+  de: Komplettservice aus einer Hand
+  en: Full service from one source
+  ar: خدمة شاملة من مصدر واحد
+  bs: Kompletna usluga iz jedne ruke
+  tr: Tek elden komple hizmet
+
+trust3
+  de: Sichere & transparente Abwicklung
+  en: Secure & transparent processing
+  ar: معالجة آمنة وشفافة
+  bs: Sigurna i transparentna obrada
+  tr: Güvenli ve şeffaf işlem
+
+trust4
+  de: 100 % unverbindliche Anfrage
+  en: 100% non-binding enquiry
+  ar: طلب غير ملزم 100٪
+  bs: 100% neobavezni upit
+  tr: %100 bağlayıcı olmayan talep
+
+step5Title
+  de: Nächte
+  en: Nights
+  ar: الليالي
+  bs: Noći
+  tr: Gece sayısı
+
+step5Hint
+  de: Wie viele Nächte möchten Sie in den Städten verbringen?
+  en: How many nights would you like to spend in each city?
+  ar: كم ليلة تريدون قضاءها في كل مدينة؟
+  bs: Koliko noći želite provesti u gradovima?
+  tr: Her şehirde kaç gece kalmak istiyorsunuz?
+
+step6Title
+  de: Reisebeginn
+  en: Start of travel
+  ar: بداية الرحلة
+  bs: Početak putovanja
+  tr: Seyahat başlangıcı
+
+step6Hint
+  de: Wann soll Ihre Reise beginnen?
+  en: When should your journey begin?
+  ar: متى يجب أن تبدأ رحلتكم؟
+  bs: Kada bi trebalo početi putovanje?
+  tr: Seyahatiniz ne zaman başlamalı?
+
+orderTitle
+  de: In welcher Reihenfolge möchten Sie reisen?
+  en: In which order would you like to travel?
+  ar: بأي ترتيب تريدون السفر؟
+  bs: Kojim redoslijedom želite putovati?
+  tr: Hangi sırayla seyahat etmek istiyorsunuz?
+
+orderMakkahFirst
+  de: Makkah zuerst
+  en: Makkah first
+  ar: مكة أولاً
+  bs: Prvo Mekka
+  tr: Önce Mekke
+
+orderMedinaFirst
+  de: Medina zuerst
+  en: Medina first
+  ar: المدينة أولاً
+  bs: Prvo Medina
+  tr: Önce Medine
+
+infoCardTitle
+  de: Wichtige Infos
+  en: Important information
+  ar: معلومات مهمة
+  bs: Važne informacije
+  tr: Önemli bilgiler
+
+infoCardNote
+  de: Wir erstellen Ihnen ein individuelles Angebot nach Ihren Angaben.
+  en: We will prepare an individual offer based on your details.
+  ar: نُعد لكم عرضاً فردياً وفق بياناتكم.
+  bs: Pripremit ćemo vam individualnu ponudu na osnovu vaših podataka.
+  tr: Bilgilerinize göre size bireysel bir teklif hazırlarız.
+
+childBedQuestion
+  de: Benötigt dieses Kind ein Bett im Hotel?
+  en: Does this child need a bed in the hotel?
+  ar: هل يحتاج هذا الطفل إلى سرير في الفندق؟
+  bs: Da li ovo dijete treba krevet u hotelu?
+  tr: Bu çocuğun otelde yatağa ihtiyacı var mı?

@@ -8,7 +8,7 @@ import { getDetailInclusionItems } from "@/lib/trip-inclusions";
 import { IQ } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
-/** Inklusive Leistungen — 3-column grid on mobile; horizontal bar on desktop. */
+/** Inklusive Leistungen — premium fieldset bar matching offer-page reference. */
 export function TripInclusionsSection({ trip }: { trip: UmrahTrip }) {
   const t = useTranslations("umrah");
   const [items, setItems] = useState(() => getDetailInclusionItems(trip));
@@ -28,26 +28,51 @@ export function TripInclusionsSection({ trip }: { trip: UmrahTrip }) {
 
   return (
     <section id="inclusions" className="trip-section scroll-mt-24">
-      <div className="mobarak-card relative px-3 pb-7 pt-11 sm:px-4">
+      <div className="relative rounded-[16px] border border-[#E4EAF2] bg-white px-3 pb-6 pt-10 shadow-[0_4px_18px_rgba(9,36,92,0.06)] sm:px-4 sm:pb-7 sm:pt-11">
+        {/* Title interrupts the top border */}
         <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center">
-          <div className="-translate-y-1/2 flex w-full max-w-md items-center gap-3 bg-white px-4 sm:max-w-lg">
-            <div className="h-px flex-1 bg-line" />
-            <h2 className="shrink-0 text-lg font-bold text-navy sm:text-xl">{t("inclusions")}</h2>
-            <div className="h-px flex-1 bg-line" />
+          <div className="-translate-y-1/2 flex max-w-[min(100%,22rem)] items-center gap-3 bg-white px-3 sm:max-w-md sm:px-4">
+            <span className="h-px flex-1 bg-[#E4EAF2]" aria-hidden />
+            <h2 className="shrink-0 text-[16px] font-bold tracking-[-0.01em] text-[#051033] sm:text-[18px]">
+              {t("inclusions")}
+            </h2>
+            <span className="h-px flex-1 bg-[#E4EAF2]" aria-hidden />
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-x-2 gap-y-5 pt-1 lg:flex lg:overflow-visible lg:pt-0">
+        {/* Mobile / tablet: compact grid */}
+        <ul className="grid grid-cols-3 gap-x-2 gap-y-5 pt-1 sm:grid-cols-5 lg:hidden">
+          {items.map(({ id, icon, labelKey }) => (
+            <li key={id} className="flex flex-col items-center px-1 text-center">
+              <div className="relative h-11 w-11 sm:h-12 sm:w-12">
+                <Image
+                  src={icon}
+                  alt=""
+                  fill
+                  className="object-contain"
+                  sizes="48px"
+                  quality={IQ.thumb}
+                />
+              </div>
+              <p className="mt-2.5 max-w-[7.5rem] text-[10px] font-semibold leading-snug text-[#051033] sm:text-[11px]">
+                {t(labelKey)}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        {/* Desktop: single premium row with floating mid-height dividers */}
+        <ul className="hidden lg:flex lg:items-stretch lg:justify-between lg:gap-0 lg:px-1 lg:pt-1">
           {items.map(({ id, icon, labelKey }, idx) => (
-            <div
+            <li
               key={id}
               className={cn(
-                "flex flex-col items-center px-1 py-2 text-center sm:px-2",
-                "lg:min-w-0 lg:flex-1 lg:py-3",
-                idx < items.length - 1 && "lg:border-e lg:border-line",
+                "relative flex min-w-0 flex-1 flex-col items-center px-2 py-3 text-center xl:px-2.5",
+                idx < items.length - 1 &&
+                  "after:absolute after:end-0 after:top-1/2 after:h-[3.25rem] after:w-px after:-translate-y-1/2 after:bg-[#E4EAF2] after:content-['']",
               )}
             >
-              <div className="relative h-11 w-11 sm:h-12 sm:w-12 lg:h-14 lg:w-14">
+              <div className="relative h-[52px] w-[52px] xl:h-14 xl:w-14">
                 <Image
                   src={icon}
                   alt=""
@@ -57,12 +82,12 @@ export function TripInclusionsSection({ trip }: { trip: UmrahTrip }) {
                   quality={IQ.thumb}
                 />
               </div>
-              <p className="mt-2.5 max-w-[7.5rem] text-[10px] leading-snug font-semibold text-navy sm:mt-3 sm:max-w-[8.5rem] sm:text-[12px]">
+              <p className="mt-3 max-w-[6.75rem] text-[11px] font-semibold leading-snug text-[#051033] xl:max-w-[7.5rem] xl:text-[12px]">
                 {t(labelKey)}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

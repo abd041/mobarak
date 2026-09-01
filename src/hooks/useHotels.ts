@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Hotel } from "@/data/mock";
 import { hotels as seedHotels } from "@/data/mock";
-import { resolveHotel } from "@/lib/hotel-catalog";
+import { resolveHotel, setRuntimeHotels } from "@/lib/hotel-catalog";
 import { HOTELS_DATA_EVENT } from "@/lib/trips-events";
 
 type HotelsState = {
@@ -24,6 +24,7 @@ export function useHotels(initialHotels?: Hotel[]) {
       const res = await fetch("/api/hotels", { cache: "no-store" });
       if (!res.ok) throw new Error("fetch_failed");
       const data = (await res.json()) as { hotels: Hotel[] };
+      setRuntimeHotels(data.hotels);
       setState({ hotels: data.hotels, loading: false, error: null });
     } catch {
       setState((prev) => ({

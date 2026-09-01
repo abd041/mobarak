@@ -46,7 +46,7 @@ export function ReviewsSection({ reviews }: { reviews: GoogleReview[] }) {
         <div className="rounded-[16px] border border-[#E9EAEE] bg-white px-4 py-5 shadow-[0_4px_18px_rgba(9,30,66,0.045)] lg:px-0 lg:py-0">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-[0.85fr_1.15fr_1.15fr_1.15fr_0.7fr] lg:gap-0">
             <div className="flex flex-col justify-center px-2 lg:min-h-36 lg:border-e lg:border-[#E6E8EC] lg:px-7 lg:py-6">
-              <GoogleWordmark className="mb-2.5 h-5 w-auto" />
+              <GoogleWordmark className="mb-[10px] h-[22px] w-auto" />
               <div className="flex items-center gap-2.5">
                 <span className="text-[28px] leading-none font-extrabold tracking-tight text-[#091B3B]">
                   {googleStats.rating.toFixed(1).replace(".", ",")}

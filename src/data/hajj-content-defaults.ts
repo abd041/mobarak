@@ -1,4 +1,6 @@
-import { hajjFaqs, hajjJourney, hajjProcess } from "@/data/hajj";
+import type { Locale } from "@/data/mock";
+import type { HajjPreRegContent } from "@/data/hajj-pre-reg-content";
+import { buildDefaultHajjContent as buildLocaleHajjContent } from "@/data/hajj/locales";
 import type { HajjSeoContent } from "@/data/hajj-seo-blocks";
 
 export type { HajjSeoBlock, HajjSeoBlockType, HajjSeoContent } from "@/data/hajj-seo-blocks";
@@ -52,7 +54,10 @@ export type HajjExperienceSlide = {
   imageSrc: string;
 };
 
-export type HajjPageContent = {
+export type { HajjPassportTypeOption } from "@/data/hajj-passport-types";
+export type { HajjPreRegContent } from "@/data/hajj-pre-reg-content";
+
+export type HajjPageContentCore = {
   hero: {
     label: string;
     title: string;
@@ -83,6 +88,7 @@ export type HajjPageContent = {
   journey: {
     eyebrow: string;
     title: string;
+    logisticsNote?: string;
     steps: HajjJourneyStep[];
   };
   seo: HajjSeoContent;
@@ -90,6 +96,8 @@ export type HajjPageContent = {
     stat: string;
     heading: string;
     body: string;
+    /** Optional section headline above the 30+ block */
+    title?: string;
     slides: HajjExperienceSlide[];
   };
   finalCta: {
@@ -103,143 +111,10 @@ export type HajjPageContent = {
   faqs: HajjFaqItem[];
 };
 
-const JOURNEY_IMAGES = [
-  "/brand/offer-hero/group-01.png",
-  "/brand/offer-hero/group-02.png",
-  "/brand/offer-hero/medina.png",
-  "/brand/offer-hero/ziyarat.png",
-  "/brand/offer-hero/group-03.png",
-  "/brand/offer-hero/makkah.png",
-  "/brand/offer-hero/kaaba.png",
-  "/brand/offer-hero/group-04.png",
-  "/brand/offer-hero/group-05.png",
-  "/brand/offer-hero/kaaba.png",
-  "/brand/offer-hero/group-06.png",
-  "/brand/offer-hero/makkah.png",
-  "/brand/offer-hero/group-05.png",
-  "/brand/offer-hero/kaaba.png",
-  "/brand/offer-hero/makkah.png",
-  "/brand/offer-hero/kaaba.png",
-  "/brand/offer-hero/kaaba.png",
-  "/brand/offer-hero/group-photo.png",
-] as const;
+export type HajjPageContent = HajjPageContentCore & {
+  preReg: HajjPreRegContent;
+};
 
-const EXPERIENCE_SLIDES: HajjExperienceSlide[] = [
-  { id: "exp-1990", label: "1990er Jahre", imageSrc: "/brand/offer-hero/group-01.png" },
-  { id: "exp-2000", label: "2000er Jahre", imageSrc: "/brand/offer-hero/group-02.png" },
-  { id: "exp-2010", label: "2010er Jahre", imageSrc: "/brand/offer-hero/group-05.png" },
-  { id: "exp-today", label: "Heute", imageSrc: "/brand/offer-hero/group-photo.png" },
-];
-
-export function buildDefaultHajjContent(): HajjPageContent {
-  return {
-    hero: {
-      label: "HAJJ 2027",
-      title: "Deine Hajj-Reise.",
-      titleLine2: "Von Anfang an begleitet.",
-      body: "Seit über 30 Jahren begleiten wir Pilger auf ihrer wichtigsten Reise – von der Vorbereitung bis zur Betreuung während des Hajj in Saudi-Arabien.",
-      imageSrc: "/brand/hero-bg.png",
-      benefits: [
-        "Unterstützung bei der Registrierung",
-        "Passende Hajj-Programme",
-        "Persönliche Reiseleitung",
-        "Religiöse Begleitung",
-        "Betreuung in Saudi-Arabien",
-        "Gemeinsam als Gruppe",
-      ],
-      cta: "Für Hajj 2027 vormerken",
-      ctaFree: "Kostenlos & unverbindlich",
-      ctaNoPay: "Keine Zahlung erforderlich",
-    },
-    status: {
-      title: "Hajj 2027 – aktueller Stand",
-      body: "Die finalen Programme, Preise und Termine für Hajj 2027 stehen derzeit noch nicht fest. Sobald wichtige Informationen zur Registrierung, zu verfügbaren Programmen und zur Buchungsphase veröffentlicht werden, informieren wir unsere vorgemerkten Pilger.",
-      cta: "Jetzt kostenlos vormerken",
-      note: "Unverbindlich & kostenlos",
-    },
-    why: {
-      eyebrow: "WARUM MOBARAK?",
-      title: "Hajj ist mehr als eine Reise.",
-      subtitle:
-        "Gerade bei einer einmaligen Reise wie dem Hajj ist persönliche Erfahrung entscheidend.",
-      cards: [
-        {
-          id: "why-1",
-          icon: "experience",
-          title: "30+ Jahre Erfahrung",
-          body: "Seit über drei Jahrzehnten begleiten wir Pilger beim Hajj und kennen die organisatorischen und praktischen Herausforderungen dieser besonderen Reise.",
-        },
-        {
-          id: "why-2",
-          icon: "support",
-          title: "Persönliche Unterstützung",
-          body: "Wir begleiten dich bereits vor der Reise und unterstützen dich bei den notwendigen Schritten der Vorbereitung.",
-        },
-        {
-          id: "why-3",
-          icon: "religious",
-          title: "Religiöse Begleitung",
-          body: "Unsere erfahrenen Reiseleiter und religiösen Begleiter bereiten die Gruppe auf die Hajj-Riten vor und begleiten sie während der Reise.",
-        },
-        {
-          id: "why-4",
-          icon: "group",
-          title: "Gemeinsam als Gruppe",
-          body: "Bei den entscheidenden Stationen des Hajj bewegen wir uns organisiert als Gruppe und lassen unsere Pilger nicht allein.",
-        },
-        {
-          id: "why-5",
-          icon: "onsite",
-          title: "Betreuung vor Ort",
-          body: "Wir sind während des Hajj in Saudi-Arabien für dich da und unterstützen unsere Pilger in allen wichtigen Situationen.",
-        },
-        {
-          id: "why-6",
-          icon: "languages",
-          title: "Mehrsprachige Betreuung",
-          body: "Deutsch · Arabisch · Bosnisch · Türkisch – je nach Gruppe.",
-        },
-      ],
-    },
-    process: {
-      title: "Von der Vormerkung bis zur Hajj-Reise",
-      steps: hajjProcess.map((step) => ({ ...step })),
-    },
-    journey: {
-      eyebrow: "DEINE HAJJ-REISE MIT UNS",
-      title: "Von der Ankunft bis zum Abschieds-Tawaf",
-      steps: hajjJourney.map((step, index) => ({
-        ...step,
-        imageSrc: JOURNEY_IMAGES[index] ?? "/brand/offer-hero/kaaba.png",
-      })),
-    },
-    seo: {
-      title: "Hajj 2027 mit Mobarak – persönlich begleitet von Anfang bis Ende",
-      blocks: [],
-    },
-    experience: {
-      stat: "30+",
-      heading: "JAHRE ERFAHRUNG MIT HAJJ & UMRAH",
-      body: "Tausende Pilger haben uns auf ihrer wichtigsten Reise ihr Vertrauen geschenkt.",
-      slides: EXPERIENCE_SLIDES.map((slide) => ({ ...slide })),
-    },
-    finalCta: {
-      title: "Der Hajj beginnt nicht erst in Makkah.",
-      body: "Er beginnt mit der richtigen Vorbereitung. Wir begleiten dich auf diesem Weg.",
-      imageSrc: "/brand/offer-hero/group-photo.png",
-      features: [
-        "30+ Jahre Erfahrung",
-        "Persönliche Betreuung",
-        "Religiöse Begleitung",
-        "Gemeinsam als Gruppe",
-      ],
-      cta: "Für Hajj 2027 vormerken",
-      ctaFree: "Kostenlos & unverbindlich",
-    },
-    faqs: hajjFaqs.map((faq, index) => ({
-      id: `faq-${index + 1}`,
-      question: faq.q,
-      answer: faq.a,
-    })),
-  };
+export function buildDefaultHajjContent(locale: Locale = "de", year?: number): HajjPageContent {
+  return buildLocaleHajjContent(locale, year);
 }

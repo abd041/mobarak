@@ -67,3 +67,17 @@ export async function pageMetadata(
     indexable: cfg.indexable !== false,
   });
 }
+
+export function hajjPreRegPageMetadata(
+  locale: string,
+  input: { path: string; title: string; description: string; ogImage?: string },
+): Metadata {
+  return buildPageMetadata({
+    locale,
+    path: input.path,
+    title: input.title,
+    description: input.description,
+    ogImage: input.ogImage,
+    indexable: false,
+  });
+}

@@ -1,7 +1,7 @@
 import type { FlightLeg, UmrahTrip } from "@/data/mock";
 
 export const DEFAULT_AIRLINE_LOGO = "/brand/meta-icons/egyptair-logo-wide.png";
-export const FLIGHT_PANEL_VISUAL = "/brand/meta-icons/plane-airline.png";
+export const FLIGHT_PANEL_VISUAL = "/brand/flights-panel-plane.png";
 
 export type TripFlightOverride = {
   airline?: string;

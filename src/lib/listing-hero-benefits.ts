@@ -24,7 +24,7 @@ const benefitById = Object.fromEntries(
   LISTING_HERO_BENEFITS.map((item) => [item.id, item]),
 ) as Record<string, ListingHeroBenefit>;
 
-/** Row 1 — five services (Visum … Religiöse Begleitung). */
+/** Row 1 — five services (Visum … Religiöse Begleitung). Desktop. */
 export const LISTING_HERO_BENEFIT_ROW_1: ListingHeroBenefit[] = [
   benefitById.visa!,
   benefitById.flight!,
@@ -33,7 +33,7 @@ export const LISTING_HERO_BENEFIT_ROW_1: ListingHeroBenefit[] = [
   benefitById.religious!,
 ];
 
-/** Row 2 — four services (Hotels … Ausflüge). */
+/** Row 2 — four services (Hotels … Ausflüge). Desktop. */
 export const LISTING_HERO_BENEFIT_ROW_2: ListingHeroBenefit[] = [
   benefitById.hotels!,
   benefitById.breakfast!,
@@ -46,5 +46,24 @@ export const LISTING_HERO_BENEFIT_ROWS = [
   LISTING_HERO_BENEFIT_ROW_2,
 ] as const;
 
-export const LISTING_HERO_IMAGE_MEDINA = "/brand/offer-hero/medina.png";
-export const LISTING_HERO_IMAGE_MAKKAH = "/brand/offer-hero/makkah.png";
+/** Mobile — 4 on top, 5 on bottom (section sits below the hero photo). */
+export const LISTING_HERO_BENEFIT_ROWS_MOBILE = [
+  [
+    benefitById.visa!,
+    benefitById.flight!,
+    benefitById.baggage!,
+    benefitById.guide!,
+  ],
+  [
+    benefitById.religious!,
+    benefitById.hotels!,
+    benefitById.breakfast!,
+    benefitById.transfer!,
+    benefitById.excursions!,
+  ],
+] as const;
+
+export const LISTING_HERO_IMAGE = "/brand/umrah-listing-hero.png";
+
+export const LISTING_HERO_IMAGE_MEDINA = "/brand/offer-hero/hero-bg-2.png";
+export const LISTING_HERO_IMAGE_MAKKAH = "/brand/offer-hero/hero-bg-kaaba.png";

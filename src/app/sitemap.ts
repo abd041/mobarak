@@ -2,12 +2,13 @@ import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/routing";
 import { SITE_URL, localizedPath, isTripSeoIndexable } from "@/lib/seo";
 import { getAllTripsFromStore } from "@/lib/trips-store.server";
+import { listHajjCampaigns } from "@/lib/hajj-campaign-store.server";
+import { hajjCampaignLandingPath } from "@/data/hajj-campaign-types";
 
 const STATIC_PATHS = [
   "/",
   "/umrah-gruppenreisen",
   "/individuelle-umrah",
-  "/hajj-2027",
   "/visum-service",
   "/ueber-uns",
   "/kontakt",
@@ -21,9 +22,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
   const now = new Date();
   const trips = await getAllTripsFromStore();
+  const hajjCampaigns = (await listHajjCampaigns()).filter((c) => c.status === "active");
+  const hajjPaths = hajjCampaigns.map((c) => hajjCampaignLandingPath(c.slug));
 
   for (const locale of locales) {
-    for (const path of STATIC_PATHS) {
+    for (const path of [...STATIC_PATHS, ...hajjPaths]) {
       entries.push({
         url: `${SITE_URL}${localizedPath(locale, path)}`,
         lastModified: now,

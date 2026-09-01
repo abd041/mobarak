@@ -1,6 +1,16 @@
 import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+/**
+ * Admin language policy (spec 18):
+ * Internal system / Admin / Login UI is **always German**.
+ * Customer inquiry language (`customer_language`) never switches this shell —
+ * it only drives customer-facing PDFs (and future outbound messages).
+ *
+ * Arabic inquiry → German Admin → Arabic PDF
+ * German inquiry → German Admin → German PDF
+ * English inquiry → German Admin → English PDF
+ */
 import {
   LayoutDashboard,
   Home,
@@ -14,6 +24,9 @@ import {
   Image as ImageIcon,
   Settings,
   LogOut,
+  FileText,
+  MessageSquare,
+  Stamp,
 } from "lucide-react";
 import deMessages from "../../../messages/de.json";
 
@@ -21,9 +34,13 @@ const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/homepage", label: "Startseite", icon: Home },
   { href: "/admin/umrah/trips", label: "Umrah Reisen", icon: Plane },
+  { href: "/admin/individual-umrah", label: "Individuelle Umrah", icon: FileText },
+  { href: "/admin/visum-service", label: "Visum Service", icon: Stamp },
   { href: "/admin/hotels", label: "Hotels", icon: Hotel },
+  { href: "/admin/airlines", label: "Airlines", icon: Plane },
   { href: "/admin/inquiries/umrah", label: "Umrah Anfragen", icon: Inbox },
-  { href: "/admin/hajj", label: "Hajj 2027 Inhalte", icon: BookOpen },
+  { href: "/admin/inquiries/individual-umrah", label: "Indiv. Umrah Anfragen", icon: MessageSquare },
+  { href: "/admin/hajj", label: "Hajj Kampagnen", icon: BookOpen },
   { href: "/admin/hajj/steps", label: "Hajj Schritte", icon: ListOrdered },
   { href: "/admin/inquiries/hajj", label: "Hajj Voranmeldungen", icon: Users },
   { href: "/admin/partners", label: "Partner", icon: Award },
@@ -40,7 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin" className="inline-flex rounded-sm">
               <BrandLogo height={48} priority />
             </Link>
-            <p className="mt-2 text-xs font-semibold text-muted">Admin Panel</p>
+            <p className="mt-2 text-xs font-semibold text-muted">Admin-Bereich</p>
           </div>
           <nav className="flex-1 space-y-1 p-3">
             {NAV.map((item) => (
@@ -70,7 +87,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="md:hidden">
               <BrandLogo height={36} />
             </div>
-            <p className="text-sm text-muted">Angebote & Hotels werden serverseitig gespeichert</p>
+            <p className="text-sm text-muted">
+              Admin-Oberfläche immer auf Deutsch · Angebote &amp; Hotels lokal gespeichert
+            </p>
             <span className="rounded-full bg-brand-orange-soft px-3 py-1 text-xs font-semibold text-brand-orange">
               Admin
             </span>

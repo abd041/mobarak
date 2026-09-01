@@ -46,8 +46,14 @@ export function sortTripsForListing(
   return list;
 }
 
-/** Resolve admin overrides before filtering or sorting the listing. */
-export function getResolvedTripsForListing(trips: UmrahTrip[]): UmrahTrip[] {
-  if (typeof window === "undefined") return trips;
+/** Resolve admin overrides before filtering or sorting the listing.
+ * Only call with `applyClientOverrides: true` after mount — localStorage
+ * overrides differ from SSR and would cause hydration mismatches.
+ */
+export function getResolvedTripsForListing(
+  trips: UmrahTrip[],
+  options?: { applyClientOverrides?: boolean },
+): UmrahTrip[] {
+  if (!options?.applyClientOverrides) return trips;
   return trips.map(resolveTrip);
 }

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import type { HotelCatalogFields } from "@/lib/hotel-catalog";
+import {
+  normalizeHotelCatalogFields,
+  type HotelCatalogFields,
+} from "@/lib/hotel-catalog";
 import { saveHotelCatalogFields } from "@/lib/hotels-store.server";
 
 export async function PUT(
@@ -8,14 +11,17 @@ export async function PUT(
 ) {
   const { id } = await params;
 
-  let body: HotelCatalogFields;
+  let body: Partial<HotelCatalogFields> & { image?: string; breakfast?: boolean };
   try {
-    body = (await request.json()) as HotelCatalogFields;
+    body = (await request.json()) as Partial<HotelCatalogFields> & {
+      image?: string;
+      breakfast?: boolean;
+    };
   } catch {
     return NextResponse.json({ error: "invalid_json" }, { status: 400 });
   }
 
-  const hotel = await saveHotelCatalogFields(id, body);
+  const hotel = await saveHotelCatalogFields(id, normalizeHotelCatalogFields(body));
   if (!hotel) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }

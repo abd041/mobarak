@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import type { HajjPageContent } from "@/data/hajj-content-defaults";
 import type { HajjSeoBlock } from "@/data/hajj-seo-blocks";
+import { HAJJ_DESKTOP_CTA_BLOCK, isHajjPreRegHref } from "@/lib/hajj-cta";
 import { cn } from "@/lib/utils";
 
 function SeoBlock({ block }: { block: HajjSeoBlock }) {
@@ -38,9 +39,10 @@ function SeoBlock({ block }: { block: HajjSeoBlock }) {
           ))}
         </ul>
       );
-    case "internalLink":
+    case "internalLink": {
+      const desktopOnly = isHajjPreRegHref(block.href);
       return (
-        <p>
+        <p className={desktopOnly ? HAJJ_DESKTOP_CTA_BLOCK : undefined}>
           <Link
             href={block.href}
             className="text-[15px] font-semibold text-brand-cta underline decoration-brand-cta/30 underline-offset-2 transition hover:text-brand-orange-ink md:text-[16px]"
@@ -49,6 +51,7 @@ function SeoBlock({ block }: { block: HajjSeoBlock }) {
           </Link>
         </p>
       );
+    }
     case "faqRef":
       return (
         <p>
@@ -79,6 +82,8 @@ export function HajjSeoSection({ content }: { content: HajjPageContent["seo"] })
     }
   });
 
+  if (blocks.length === 0) return null;
+
   return (
     <section id="hajj-seo" className="border-t border-line bg-[#FAFBFC] py-14 md:py-16 lg:py-20">
       <Container>
@@ -86,13 +91,11 @@ export function HajjSeoSection({ content }: { content: HajjPageContent["seo"] })
           <h2 className="text-[24px] font-bold leading-snug tracking-[-0.02em] text-navy md:text-[28px]">
             {content.title}
           </h2>
-          {blocks.length > 0 ? (
-            <div className={cn("mt-6 space-y-5 md:mt-8 md:space-y-6")}>
-              {blocks.map((block) => (
-                <SeoBlock key={block.id} block={block} />
-              ))}
-            </div>
-          ) : null}
+          <div className={cn("mt-6 space-y-5 md:mt-8 md:space-y-6")}>
+            {blocks.map((block) => (
+              <SeoBlock key={block.id} block={block} />
+            ))}
+          </div>
         </div>
       </Container>
     </section>

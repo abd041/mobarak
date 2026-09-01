@@ -3,7 +3,7 @@
 import { useCallback, useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { OFFER_HERO_SLIDES } from "@/lib/offer-hero-slides";
 import { cn } from "@/lib/utils";
 
@@ -74,7 +74,7 @@ export function TripOfferHeroSlider({
               quality={85}
               sizes="100vw"
               draggable={false}
-              className="offer-hero-image pointer-events-none object-cover object-center select-none lg:object-[center_42%]"
+              className="offer-hero-image pointer-events-none object-cover object-[58%_center] select-none lg:object-[62%_42%]"
             />
           </div>
         );
@@ -83,17 +83,8 @@ export function TripOfferHeroSlider({
       <div className="offer-hero-fade pointer-events-none absolute inset-0 z-[2] hidden lg:block" aria-hidden />
       <div className="offer-hero-mobile-scrim pointer-events-none absolute inset-0 z-[2] lg:hidden" aria-hidden />
 
-      {/* Slider controls */}
-      <div className="pointer-events-none absolute inset-0 z-20">
-        <button
-          type="button"
-          onClick={goPrev}
-          className="offer-hero-slider-prev pointer-events-auto absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-navy shadow-card transition hover:bg-white sm:h-12 sm:w-12"
-          aria-label={tCommon("previousImage")}
-        >
-          <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
-        </button>
-
+      {/* Desktop next only — mobile uses dots + swipe (no arrow) */}
+      <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
         <button
           type="button"
           onClick={goNext}
@@ -102,33 +93,6 @@ export function TripOfferHeroSlider({
         >
           <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
         </button>
-
-        <div
-          className="pointer-events-auto absolute inset-x-0 bottom-4 flex justify-center gap-2 sm:bottom-5"
-          role="tablist"
-          aria-label={t("heroSliderDots")}
-        >
-          {OFFER_HERO_SLIDES.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              aria-selected={index === active}
-              aria-label={tCommon("goToImage", { n: index + 1 })}
-              onClick={() => goTo(index)}
-              className="flex h-7 w-7 items-center justify-center rounded-full"
-            >
-              <span
-                className={cn(
-                  "block rounded-full transition-all",
-                  index === active
-                    ? "h-2 w-2 bg-[var(--mobarak-primary)]"
-                    : "h-2 w-2 bg-white/85 shadow-sm",
-                )}
-              />
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   );

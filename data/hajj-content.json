@@ -163,7 +163,7 @@
               "Informationen zum Transfer",
               "Weiterer Tagesablauf"
             ],
-            "imageSrc": "/brand/offer-hero/group-01.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j02",
@@ -178,7 +178,7 @@
               "Begleitung durch das Team",
               "Informationen zur Ankunft im Hotel"
             ],
-            "imageSrc": "/brand/offer-hero/group-02.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-2.png"
           },
           {
             "id": "j03",
@@ -195,7 +195,7 @@
               "Ansprechpartner",
               "Informationen zur Masjid an-Nabawi"
             ],
-            "imageSrc": "/brand/offer-hero/medina.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-2.png"
           },
           {
             "id": "j04",
@@ -212,7 +212,7 @@
               "Persönliche Ibadah",
               "Treffpunkte der Gruppe"
             ],
-            "imageSrc": "/brand/offer-hero/ziyarat.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-4.png"
           },
           {
             "id": "j05",
@@ -229,7 +229,7 @@
               "Vorbereitung auf Ihram",
               "Informationen zum Miqat"
             ],
-            "imageSrc": "/brand/offer-hero/group-03.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           },
           {
             "id": "j06",
@@ -246,7 +246,7 @@
               "Praktische Hinweise",
               "Weiterfahrt nach Makkah"
             ],
-            "imageSrc": "/brand/offer-hero/makkah.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           },
           {
             "id": "j07",
@@ -263,7 +263,7 @@
               "Ansprechpartner",
               "Weiterer Reiseablauf"
             ],
-            "imageSrc": "/brand/offer-hero/kaaba.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j08",
@@ -282,7 +282,7 @@
               "Treffpunkte",
               "Was mitgenommen werden sollte"
             ],
-            "imageSrc": "/brand/offer-hero/group-04.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-4.png"
           },
           {
             "id": "j09",
@@ -300,7 +300,7 @@
               "Vorbereitung auf Arafat"
             ],
             "highlight": false,
-            "imageSrc": "/brand/offer-hero/group-05.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j10",
@@ -320,7 +320,7 @@
               "Vorbereitung auf die Weiterreise nach Muzdalifah"
             ],
             "highlight": true,
-            "imageSrc": "/brand/offer-hero/kaaba.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j11",
@@ -335,7 +335,7 @@
               "Transferinformationen",
               "Informationen für Muzdalifah"
             ],
-            "imageSrc": "/brand/offer-hero/group-06.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-2.png"
           },
           {
             "id": "j12",
@@ -351,7 +351,7 @@
               "Gruppentreffpunkte",
               "Nächste Abfahrt"
             ],
-            "imageSrc": "/brand/offer-hero/makkah.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           },
           {
             "id": "j13",
@@ -366,7 +366,7 @@
               "Jamarat-Informationen",
               "Weitere Hajj-Riten"
             ],
-            "imageSrc": "/brand/offer-hero/group-05.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j14",
@@ -383,7 +383,7 @@
               "Tawaf al-Ifadah",
               "Weitere notwendige Riten"
             ],
-            "imageSrc": "/brand/offer-hero/kaaba.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j15",
@@ -400,7 +400,7 @@
               "Religiöse Begleitung",
               "Persönliche Ansprechpartner"
             ],
-            "imageSrc": "/brand/offer-hero/makkah.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           },
           {
             "id": "j16",
@@ -409,7 +409,7 @@
             "modalTitle": "Zurück nach Makkah",
             "short": "Rückkehr nach Makkah.",
             "full": "Nach den intensiven Hajj-Tagen erfolgt entsprechend dem Reiseprogramm die Rückkehr nach Makkah.\n\nWir koordinieren den Transfer und informieren über die nächsten Programmpunkte sowie den weiteren Aufenthalt.",
-            "imageSrc": "/brand/offer-hero/kaaba.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j17",
@@ -424,7 +424,7 @@
               "Religiöse Hinweise",
               "Vorbereitung auf die Abreise"
             ],
-            "imageSrc": "/brand/offer-hero/kaaba.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "j18",
@@ -441,7 +441,7 @@
               "Ansprechpartner",
               "Rückflug"
             ],
-            "imageSrc": "/brand/offer-hero/group-photo.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           }
         ]
       },
@@ -457,29 +457,29 @@
           {
             "id": "exp-1990",
             "label": "1990er Jahre",
-            "imageSrc": "/brand/offer-hero/group-01.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "exp-2000",
             "label": "2000er Jahre",
-            "imageSrc": "/brand/offer-hero/group-02.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-2.png"
           },
           {
             "id": "exp-2010",
             "label": "2010er Jahre",
-            "imageSrc": "/brand/offer-hero/group-05.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
           },
           {
             "id": "exp-today",
             "label": "Heute",
-            "imageSrc": "/brand/offer-hero/group-photo.png"
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png"
           }
         ]
       },
       "finalCta": {
         "title": "Der Hajj beginnt nicht erst in Makkah.",
         "body": "Er beginnt mit der richtigen Vorbereitung. Wir begleiten dich auf diesem Weg.",
-        "imageSrc": "/brand/offer-hero/group-photo.png",
+        "imageSrc": "/brand/offer-hero/hero-bg-3.png",
         "features": [
           "30+ Jahre Erfahrung",
           "Persönliche Betreuung",

@@ -56,6 +56,7 @@ export function TripCard({
   const t = useTranslations("umrah");
   const [liveTrip, setLiveTrip] = useState(trip);
   const isListing = variant === "grid";
+  const compact = isListing || variant === "home";
 
   useEffect(() => {
     const sync = () => setLiveTrip(resolveTrip(trip));
@@ -80,26 +81,26 @@ export function TripCard({
       {/* 1–2 Availability + image */}
       <TripCardGallery
         images={liveTrip.images}
-        prominence={isListing || variant === "home" ? "listing" : "default"}
+        prominence={compact ? "listing" : "default"}
         layout="default"
         galleryInView={galleryInView}
         preloadLead={preloadLead}
-        nightsBadge={<TripCardNightsBadge trip={liveTrip} compact={isListing} />}
+        nightsBadge={<TripCardNightsBadge trip={liveTrip} compact={compact} />}
         badges={
           <div
             className={cn(
               "absolute z-10 flex flex-col gap-1",
-              isListing ? "start-1.5 top-1.5 md:start-3 md:top-3 md:gap-1.5" : "start-3 top-3 gap-1.5",
+              compact ? "start-2.5 top-2.5 md:start-[12px] md:top-[12px] md:gap-[6px]" : "start-[12px] top-[12px] gap-[6px]",
             )}
           >
-            <AvailabilityBadge trip={liveTrip} compact={isListing} />
+            <AvailabilityBadge trip={liveTrip} compact={compact} />
             {liveTrip.departureAirport ? (
               <span
                 className={cn(
                   "inline-flex w-fit shrink-0 whitespace-nowrap rounded-full border border-[#E8A23A]/55 bg-white/95 font-semibold leading-none text-brand-orange-ink shadow-sm",
-                  isListing
-                    ? "px-1.5 py-0.5 text-[9px] md:px-2.5 md:py-1 md:text-[11px]"
-                    : "px-2.5 py-1 text-[11px]",
+                  compact
+                    ? "px-[6px] py-[3px] text-[9px] md:px-[10px] md:py-[4px] md:text-[11px]"
+                    : "px-[10px] py-[4px] text-[11px]",
                 )}
               >
                 {t("flightsFrom", { airport: liveTrip.departureAirport })}
@@ -111,7 +112,7 @@ export function TripCard({
 
       <div className={cn(isListing && "flex min-w-0 flex-1 flex-col")}>
         {/* 3 Travel dates */}
-        <TripCardTravelDates trip={liveTrip} prominence={isListing ? "listing" : "default"} />
+        <TripCardTravelDates trip={liveTrip} prominence={compact ? "listing" : "default"} />
 
         {/* 4 Medina & Makkah */}
         <TripCardHotelStays
@@ -119,26 +120,23 @@ export function TripCard({
           medina={medina}
           makkah={makkah}
           listingFilter={listingFilter}
-          prominence={isListing ? "listing" : "default"}
+          prominence={compact ? "listing" : "default"}
         />
 
         {/* 5–7 Included services, prices, CTA — stacked like reference */}
-        <TripCardInclusions
-          trip={liveTrip}
-          prominence={isListing || variant === "home" ? "listing" : "default"}
-        />
+        <TripCardInclusions trip={liveTrip} prominence={compact ? "listing" : "default"} />
 
-        <div className="mt-auto flex flex-col gap-3 border-t border-[#EEF0F3] px-3 py-3 md:gap-3.5 md:px-4 md:py-4">
+        <div className="mt-auto flex flex-col gap-3 border-t border-[#EEF0F3] px-4 py-3 md:gap-[14px] md:px-[16px] md:py-[16px]">
           <TripCardPrices
             trip={liveTrip}
-            prominence={isListing || variant === "home" ? "listing" : "default"}
+            prominence={compact ? "listing" : "default"}
             embedded
             className="w-full"
           />
           <TripCardOfferCta
             trip={liveTrip}
             listingFilter={listingFilter}
-            prominence={isListing || variant === "home" ? "listing" : "default"}
+            prominence={compact ? "listing" : "default"}
             fullWidth
           />
         </div>

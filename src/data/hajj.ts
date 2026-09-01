@@ -57,8 +57,8 @@ export const hajjProcess = [
     num: "08",
     title: "Abflug",
     short:
-      "Unsere gemeinsame Reise beginnt. Du erhältst alle Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf.",
-    full: "Unsere gemeinsame Reise beginnt. Du erhältst alle Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf.",
+      "Unsere gemeinsame Reise beginnt. Du erhältst Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf entsprechend dem bestätigten Reiseprogramm.",
+    full: "Unsere gemeinsame Reise beginnt. Du erhältst Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf entsprechend dem bestätigten Reiseprogramm.",
   },
   {
     id: "p09",
@@ -72,8 +72,8 @@ export const hajjProcess = [
     num: "10",
     title: "Betreuung vor Ort",
     short:
-      "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe persönlich in Saudi-Arabien.",
-    full: "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe persönlich in Saudi-Arabien.",
+      "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe in Saudi-Arabien – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
+    full: "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe in Saudi-Arabien – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
   },
 ];
 
@@ -84,7 +84,7 @@ export const hajjJourney = [
     title: "Ankunft in Saudi-Arabien",
     modalTitle: "Willkommen in Saudi-Arabien",
     short: "Empfang am Flughafen und erste wichtige Informationen.",
-    full: "Nach der Landung beginnt unsere Betreuung direkt vor Ort. Unsere Reiseleitung informiert die Gruppe über die nächsten Schritte und koordiniert den weiteren Ablauf.\n\nJe nach finalem Hajj-Programm organisieren wir gemeinsam die vorgesehenen Transfers und Treffpunkte.",
+    full: "Nach der Landung beginnt unsere Betreuung direkt vor Ort. Unsere Reiseleitung informiert die Gruppe über die nächsten Schritte und koordiniert den weiteren Ablauf.\n\nJe nach finalem Hajj-Programm und den offiziellen Vorgaben organisieren wir gemeinsam die vorgesehenen Transfers und Treffpunkte.",
     checks: [
       "Treffpunkt der Gruppe",
       "Informationen zur Einreise",
@@ -100,7 +100,7 @@ export const hajjJourney = [
     title: "Transfer zum Hotel",
     modalTitle: "Gemeinsam zum Hotel",
     short: "Gemeinsamer Transfer zum vorgesehenen Hotel.",
-    full: "Nach der Ankunft koordinieren wir den Transfer der Gruppe zum vorgesehenen Hotel. Unsere Reiseleiter informieren über Treffpunkt, Buszuordnung und den weiteren Ablauf.\n\nGerade nach einer langen Anreise ist uns wichtig, dass die Gruppe organisiert zusammenbleibt und jeder weiß, an wen er sich wenden kann.",
+    full: "Nach der Ankunft koordinieren wir den Transfer der Gruppe zum vorgesehenen Hotel. Unsere Reiseleiter informieren über Treffpunkt, Buszuordnung und den weiteren Ablauf.\n\nGerade nach einer langen Anreise unterstützen wir die Gruppe beim Zusammenfinden – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben. Jeder weiß, an wen er sich wenden kann.",
     checks: [
       "Bus- und Gruppeneinteilung",
       "Gepäckkoordination",
@@ -146,9 +146,9 @@ export const hajjJourney = [
     title: "Transfer Medina → Makkah",
     modalTitle: "Von Medina nach Makkah",
     short: "Gemeinsame Weiterreise Richtung Makkah.",
-    full: "Die Weiterreise von Medina nach Makkah ist ein wichtiger Übergang unserer Hajj-Reise.\n\nUnsere Reiseleitung informiert die Gruppe rechtzeitig über Abfahrt, Gepäck, Treffpunkt und die Vorbereitung auf den Ihram.",
+    full: "Die Weiterreise von Medina nach Makkah ist ein wichtiger Übergang unserer Hajj-Reise.\n\nUnsere Reiseleitung informiert die Gruppe über den voraussichtlichen Ablauf, Gepäck, Treffpunkt und die Vorbereitung auf den Ihram – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
     checks: [
-      "Abfahrtszeit",
+      "Geplanter Ablauf",
       "Treffpunkt",
       "Gepäck",
       "Bus-/Transferinformation",
@@ -232,7 +232,7 @@ export const hajjJourney = [
     short: "Der wichtigste Tag des Hajj.",
     full: "Der Tag von Arafat gehört zu den bedeutendsten Momenten des gesamten Hajj. An diesem besonderen Tag möchten wir unseren Pilgern ermöglichen, sich möglichst auf ihre Ibadah zu konzentrieren.\n\nUnsere Reiseleitung und religiöse Begleitung organisieren die Gruppe entsprechend den offiziellen Vorgaben und informieren über Treffpunkte und den weiteren Tagesablauf.",
     modalNote:
-      "Es kann nicht zugesichert werden, dass alle Pilger zu jedem Moment physisch zusammenbleiben. Offizielle Vorgaben zu Transport und Besucherführung haben stets Vorrang.",
+      "Begleitung und Transport erfolgen entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben. Es kann nicht zugesichert werden, dass alle Pilger zu jedem Moment physisch zusammenbleiben.",
     checks: [
       "Gemeinsame Gruppenorganisation",
       "Klare Treffpunkte",
@@ -269,7 +269,7 @@ export const hajjJourney = [
       "Aufenthalt in Muzdalifah",
       "Vorbereitung auf Jamarat",
       "Gruppentreffpunkte",
-      "Nächste Abfahrt",
+      "Weiterer Ablauf (nach Programm)",
     ],
   },
   {
@@ -278,7 +278,7 @@ export const hajjJourney = [
     title: "Transfer nach Mina",
     modalTitle: "Zurück nach Mina",
     short: "Weiterreise am folgenden Morgen.",
-    full: "Nach Muzdalifah führt der Weg wieder in Richtung Mina.\n\nUnser Team informiert die Gruppe über Abfahrtszeiten, Treffpunkte und den Ablauf der kommenden Riten.",
+    full: "Nach Muzdalifah führt der Weg wieder in Richtung Mina.\n\nUnser Team informiert die Gruppe über den voraussichtlichen Ablauf, Treffpunkte und die kommenden Riten – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
     checks: ["Transfer", "Treffpunkt", "Jamarat-Informationen", "Weitere Hajj-Riten"],
   },
   {
@@ -289,7 +289,7 @@ export const hajjJourney = [
     short: "Steinigung und weitere wichtige Riten.",
     full: "Die Tage rund um Jamarat erfordern besonders gute Organisation und klare Informationen.\n\nUnsere Pilger erhalten Informationen zum vorgesehenen Zeitfenster und zur Gruppenorganisation entsprechend dem finalen Hajj-Programm.",
     modalNote:
-      "Reihenfolge und Zeiten der einzelnen Riten richten sich nach dem finalen Hajj-Programm und können je nach Buchung variieren.",
+      "Reihenfolge und Zeiten der einzelnen Riten richten sich nach dem finalen Hajj-Programm und den offiziellen Vorgaben und können je nach Buchung variieren.",
     checks: [
       "Jamarat",
       "Hady",
@@ -305,7 +305,7 @@ export const hajjJourney = [
     dayLabel: "11.–13. Dhul Hijjah",
     modalTitle: "Die Tage von Tashreeq",
     short: "Weitere Tage in Mina und Fortsetzung der Hajj-Riten.",
-    full: "Auch während der Tage von Tashreeq bleibt unsere Gruppe organisatorisch und religiös begleitet.\n\nUnsere Reiseleitung informiert täglich über die nächsten Programmpunkte, Treffpunkte und vorgesehenen Zeiten.",
+    full: "Auch während der Tage von Tashreeq bleibt unsere Gruppe organisatorisch und religiös begleitet.\n\nUnsere Reiseleitung informiert täglich über die nächsten Programmpunkte und Treffpunkte – entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
     checks: [
       "Mina",
       "Jamarat",
@@ -361,5 +361,9 @@ export const hajjFaqs = [
   {
     q: "Muss ich später ein Mobarak-Programm buchen?",
     a: "Nein. Nach Veröffentlichung der Programme entscheiden Sie frei, ob Sie unser Programm oder ein anderes wählen.",
+  },
+  {
+    q: "Sind Zeiten und Routen während des Hajj bereits festgelegt?",
+    a: "Die genauen Hajj-Abläufe hängen von offiziellen saudi-arabischen Regelungen, dem finalen Paket, dem Transportplan, der Mashair-Organisation, der Menschenmengensteuerung und der Gruppeneinteilung ab. Bis das finale Hajj-Programm bestätigt ist, nennen wir keine verbindlichen Abfahrtszeiten oder garantierten Bewegungsrouten. Unsere Begleitung erfolgt entsprechend dem finalen Hajj-Programm und den offiziellen Vorgaben.",
   },
 ];

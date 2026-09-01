@@ -1,9 +1,20 @@
-import { CalendarDays, Moon, Plane, PlaneTakeoff, Users } from "lucide-react";
+import Image from "next/image";
+import {
+  CalendarRange,
+  Clock3,
+  Plane,
+  PlaneTakeoff,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
 import { TripHotelCard } from "@/components/umrah/detail/TripHotelCard";
 import { TripInclusionsSection } from "@/components/umrah/detail/TripInclusionsSection";
 import { TripItinerarySection } from "@/components/umrah/detail/TripItinerarySection";
 import type { Hotel as HotelType, UmrahTrip } from "@/data/mock";
+import { DEFAULT_AIRLINE_LOGO } from "@/lib/trip-flights";
 import { getTripHotelStayDateLabels } from "@/lib/trip-inquiry";
+import { IQ } from "@/lib/images";
+import { cn } from "@/lib/utils";
 
 export { TripDetailBookingCta } from "@/components/umrah/detail/TripDetailBookingCta";
 
@@ -12,6 +23,28 @@ export { TripDetailBookingCta } from "@/components/umrah/detail/TripDetailBookin
 type TFn = ((key: string, values?: Record<string, string | number | Date>) => string) & {
   rich?: unknown;
 };
+
+/** Soft gradient chip + gold ring — premium meta icon treatment */
+function MetaPremiumIcon({ Icon }: { Icon: LucideIcon }) {
+  return (
+    <span className="relative flex h-11 w-11 shrink-0 items-center justify-center">
+      <span
+        className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.95),rgba(232,240,252,0.9)_45%,rgba(210,224,245,0.75)_100%)] shadow-[0_4px_14px_rgba(9,36,92,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-[#C5A35A]/35"
+        aria-hidden
+      />
+      <span
+        className="absolute inset-[3px] rounded-full bg-gradient-to-br from-white via-[#F4F8FD] to-[#E3ECF8] ring-1 ring-white/80"
+        aria-hidden
+      />
+      <Icon
+        className="relative z-[1] h-[19px] w-[19px] text-[#09245C]"
+        strokeWidth={1.85}
+        absoluteStrokeWidth
+        aria-hidden
+      />
+    </span>
+  );
+}
 
 export function TripDetailMetaBar({
   trip,
@@ -22,59 +55,85 @@ export function TripDetailMetaBar({
   t: TFn;
   tCommon: TFn;
 }) {
+  const airlineLogo = trip.airlineLogo || DEFAULT_AIRLINE_LOGO;
+
   const items = [
     {
-      Icon: Moon,
+      id: "duration",
+      Icon: Clock3,
       label: t("duration"),
       value: tCommon("nights", { count: trip.nights }),
     },
     {
-      Icon: CalendarDays,
+      id: "period",
+      Icon: CalendarRange,
       label: t("period"),
       value: trip.dateLabel,
     },
     {
-      Icon: Users,
+      id: "group",
+      Icon: UsersRound,
       label: t("groupSize"),
       value: t("maxPersons", { count: trip.groupSize }),
     },
     {
+      id: "airport",
       Icon: PlaneTakeoff,
       label: t("departureAirport"),
       value: trip.outbound.fromCity,
-    },
-    {
-      Icon: Plane,
-      label: t("airline"),
-      value: trip.airline,
     },
   ] as const;
 
   return (
     <section id="overview-meta" className="trip-section scroll-mt-24">
       <h2 className="mb-4 text-lg font-bold text-navy lg:hidden">{t("tripOverview")}</h2>
-      <div className="mobarak-card overflow-hidden">
-        <div className="grid grid-cols-2 divide-x divide-y divide-line sm:grid-cols-3 lg:grid-cols-5 lg:divide-y-0">
-          {items.map(({ Icon, label, value }) => (
+      <div className="overflow-hidden rounded-[14px] border border-[#E4EAF2] bg-[#F7F9FC] shadow-[0_2px_10px_rgba(9,36,92,0.04)]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5">
+          {items.map(({ id, Icon, label, value }, index) => (
             <div
-              key={label}
-              className="flex min-w-0 flex-1 items-center gap-3 px-4 py-4 sm:gap-3.5 sm:px-5 sm:py-5"
+              key={id}
+              className={cn(
+                "relative flex min-w-0 items-center gap-3 border-b border-[#E4EAF2] px-4 py-4 sm:gap-3.5 sm:px-5 sm:py-5 lg:border-b-0",
+                index > 0 && "sm:border-s sm:border-[#E4EAF2] lg:border-s-0",
+                index > 0 &&
+                  "lg:before:absolute lg:before:inset-y-4 lg:before:start-0 lg:before:w-px lg:before:bg-[#D8E0EC]",
+              )}
             >
-              <Icon
-                className="h-5 w-5 shrink-0 text-navy sm:h-[22px] sm:w-[22px]"
-                strokeWidth={1.75}
-                aria-hidden
-              />
+              <MetaPremiumIcon Icon={Icon} />
               <div className="min-w-0">
-                <p className="text-[12px] font-bold leading-tight text-navy sm:text-[13px]">
+                <p className="text-[12px] font-bold leading-tight text-[#051033] sm:text-[13px]">
                   {label}
                 </p>
-                <p className="mt-0.5 text-[12px] font-medium leading-snug text-navy/85 sm:text-[13px]">
+                <p className="mt-0.5 text-[12px] font-medium leading-snug text-[#3D4F5F] sm:text-[13px]">
                   {value}
                 </p>
               </div>
             </div>
           ))}
+
+          <div
+            className={cn(
+              "relative flex min-w-0 items-center gap-3 px-4 py-4 sm:col-span-3 sm:border-t sm:border-[#E4EAF2] sm:gap-3.5 sm:px-5 sm:py-5 lg:col-span-1 lg:border-t-0",
+              "lg:before:absolute lg:before:inset-y-4 lg:before:start-0 lg:before:w-px lg:before:bg-[#D8E0EC]",
+            )}
+          >
+            <MetaPremiumIcon Icon={Plane} />
+            <div className="min-w-0">
+              <p className="text-[12px] font-bold leading-tight text-[#051033] sm:text-[13px]">
+                {t("airline")}
+              </p>
+              <div className="relative mt-1 h-5 w-[6.5rem] sm:h-6 sm:w-[7.5rem]">
+                <Image
+                  src={airlineLogo}
+                  alt={trip.airline}
+                  fill
+                  className="object-contain object-left"
+                  sizes="120px"
+                  quality={IQ.content}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

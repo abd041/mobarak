@@ -48,6 +48,12 @@ function UmrahListingClientInner({
   const [filter, setFilter] = useState<PeriodFilterKey>(filterFromUrl);
   const [sort, setSort] = useState<TripListingSortKey>(DEFAULT_TRIP_LISTING_SORT);
   const [dataRevision, setDataRevision] = useState(0);
+  /** Defer localStorage trip overrides until after hydration. */
+  const [overridesReady, setOverridesReady] = useState(false);
+
+  useEffect(() => {
+    setOverridesReady(true);
+  }, []);
 
   useEffect(() => {
     setFilter(filterFromUrl);
@@ -93,10 +99,12 @@ function UmrahListingClientInner({
   );
 
   const filtered = useMemo(() => {
-    const resolved = getResolvedTripsForListing(allTrips);
+    const resolved = getResolvedTripsForListing(allTrips, {
+      applyClientOverrides: overridesReady,
+    });
     const list = filterTripsByPeriod(resolved, filter);
     return sortTripsForListing(list, sort);
-  }, [allTrips, filter, sort, dataRevision]);
+  }, [allTrips, filter, sort, dataRevision, overridesReady]);
 
   return (
     <>

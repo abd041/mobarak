@@ -24,27 +24,22 @@ export function TripCardTravelDates({
   return (
     <div
       className={cn(
-        "flex gap-2 border-b border-[#EEF0F3] bg-white",
+        "flex items-center justify-between gap-[10px] border-b border-[#EEF0F3] bg-white",
         isListing
-          ? "flex-col items-start gap-1 px-3 py-3 sm:flex-row sm:items-center sm:justify-between md:px-4 md:py-4"
-          : "items-center justify-between px-3.5 py-3 sm:px-4 sm:py-3.5",
+          ? "px-4 py-3 md:px-[16px] md:py-[14px]"
+          : "ps-[22px] pe-[14px] py-[12px] sm:px-[16px]",
       )}
     >
       <p
         className={cn(
-          "flex min-w-0 items-center gap-1.5 leading-tight text-[#0A1B3D]",
+          "flex min-w-0 items-center gap-[8px] leading-tight text-[#0A1B3D]",
           isListing
-            ? "text-[15px] font-extrabold tracking-[-0.02em] sm:text-[16px] md:gap-2 md:text-[17px] lg:text-[18px]"
+            ? "text-[15px] font-extrabold tracking-[-0.02em] md:text-[16px]"
             : "text-[15px] font-bold tracking-[-0.01em] sm:text-[16px]",
         )}
       >
         <CalendarDays
-          className={cn(
-            "shrink-0 text-[#0A1B3D]",
-            isListing
-              ? "h-4 w-4 md:h-[1.15rem] md:w-[1.15rem] lg:h-5 lg:w-5"
-              : "h-4 w-4 sm:h-[1.05rem] sm:w-[1.05rem]",
-          )}
+          className="h-[18px] w-[18px] shrink-0 text-[#0A1B3D] md:h-[20px] md:w-[20px]"
           strokeWidth={2.25}
           aria-hidden
         />
@@ -53,10 +48,10 @@ export function TripCardTravelDates({
       {nights > 0 ? (
         <span
           className={cn(
-            "text-[#0A1B3D] sm:shrink-0",
+            "shrink-0 whitespace-nowrap text-[#0A1B3D]",
             isListing
-              ? "text-[13px] font-extrabold tracking-[-0.01em] sm:whitespace-nowrap md:text-[16px] lg:text-[17px]"
-              : "shrink-0 text-[14px] font-bold sm:text-[15px]",
+              ? "text-[14px] font-extrabold tracking-[-0.01em] md:text-[16px]"
+              : "text-[14px] font-bold sm:text-[15px]",
           )}
         >
           {tCommon("nights", { count: nights })}

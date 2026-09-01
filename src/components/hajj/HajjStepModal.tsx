@@ -55,20 +55,23 @@ export function HajjStepModal({
   const titleId = `hajj-step-title-${step.id}`;
   const descId = `hajj-step-body-${step.id}`;
   const modalHeading = step.modalTitle ?? step.title;
-  const categoryLabel = step.dayLabel ?? step.num;
+  const eyebrowLabel = step.dayLabel ?? step.num;
+  const mobileHeading = step.dayLabel ? step.title : modalHeading;
   const bodyParagraphs = step.full.split(/\n\n+/).filter(Boolean);
 
   return (
     <div
-      className="fixed inset-0 z-100 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4"
+      className="fixed inset-0 z-100 flex items-end justify-center bg-black/50 lg:items-center lg:p-4"
       onClick={onClose}
     >
       <div
         ref={dialogRef}
         dir={isRtl ? "rtl" : "ltr"}
         className={cn(
-          "relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-2xl bg-white text-start shadow-xl sm:max-h-[90vh] sm:rounded-2xl",
-          hasImage ? "max-w-4xl" : "max-w-2xl",
+          "relative flex w-full flex-col overflow-hidden bg-white text-start shadow-xl",
+          "h-[92dvh] max-h-[92dvh] rounded-t-2xl",
+          "lg:h-auto lg:max-h-[90vh] lg:rounded-2xl",
+          hasImage ? "lg:max-w-4xl" : "lg:max-w-2xl",
         )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -80,27 +83,22 @@ export function HajjStepModal({
         <button
           type="button"
           data-dialog-close
-          className={cn(
-            "absolute end-3 top-3 z-20 rounded-full p-2 transition",
-            hasImage
-              ? "bg-white/95 text-navy shadow-md hover:bg-white"
-              : "text-navy hover:bg-surface",
-          )}
+          className="absolute end-3 top-3 z-20 rounded-full bg-white/95 p-2 text-navy shadow-md transition hover:bg-white"
           onClick={onClose}
           aria-label={tCommon("close")}
         >
           <X className="h-5 w-5" aria-hidden />
         </button>
 
-        <div className={cn("flex min-h-0 flex-1 flex-col", hasImage && "md:flex-row")}>
+        <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
           {hasImage ? (
-            <div className="relative aspect-[16/10] w-full shrink-0 bg-surface md:aspect-auto md:min-h-[320px] md:w-[44%] lg:min-h-[400px]">
+            <div className="relative aspect-[16/10] w-full shrink-0 bg-surface sm:aspect-[5/3] lg:aspect-auto lg:min-h-[400px] lg:w-[44%]">
               <Image
                 src={step.imageSrc!}
                 alt=""
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 44vw"
+                sizes="(max-width: 1024px) 100vw, 44vw"
                 quality={IQ.content}
                 priority
               />
@@ -108,21 +106,33 @@ export function HajjStepModal({
           ) : null}
 
           <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-            <div className="flex-1 overflow-y-auto p-6 pe-12 md:p-8 md:pe-14">
-              <p className="text-[11px] font-bold tracking-[0.12em] text-brand-orange-ink uppercase">
-                {categoryLabel}
+            <div
+              className={cn(
+                "flex-1 overflow-y-auto overscroll-contain px-5 pb-5",
+                hasImage ? "pt-5" : "pt-14",
+                "lg:p-8 lg:pe-14",
+              )}
+            >
+              <p className="text-[12px] font-bold tracking-[0.08em] text-brand-orange-ink uppercase lg:text-[11px] lg:tracking-[0.12em]">
+                {eyebrowLabel}
               </p>
               <h3
                 id={titleId}
-                className="mt-2 text-[22px] font-bold leading-snug text-navy md:text-[26px]"
+                className="mt-2 text-[22px] font-bold leading-snug text-navy lg:text-[26px]"
               >
-                {modalHeading}
+                <span className="lg:hidden">{mobileHeading}</span>
+                <span className="hidden lg:inline">{modalHeading}</span>
               </h3>
-              <div id={descId} className="mt-4 space-y-4 text-[15px] leading-[1.7] text-navy/90">
+
+              <div
+                id={descId}
+                className="mt-4 space-y-4 text-[15px] leading-[1.7] text-navy/90 lg:mt-4"
+              >
                 {bodyParagraphs.map((paragraph, paragraphIndex) => (
                   <p key={paragraphIndex}>{paragraph}</p>
                 ))}
               </div>
+
               {step.checks?.length ? (
                 <ul className="mt-5 space-y-2.5">
                   {step.checks.map((item) => (
@@ -136,6 +146,7 @@ export function HajjStepModal({
                   ))}
                 </ul>
               ) : null}
+
               {step.modalNote ? (
                 <p className="mt-5 rounded-xl border border-line bg-surface px-4 py-3 text-[13px] leading-relaxed text-muted">
                   <span className="font-semibold text-navy">{tHajj("modalImportant")}: </span>
@@ -145,25 +156,29 @@ export function HajjStepModal({
             </div>
 
             {hasMultiple ? (
-              <div className="flex shrink-0 items-center justify-between gap-4 border-t border-line px-5 py-4 md:px-8">
-                <button
-                  type="button"
-                  onClick={goPrev}
-                  disabled={index === 0}
-                  className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy transition hover:text-brand-orange-ink disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  <DirBackArrow />
-                  {tHajj("modalPrevStep")}
-                </button>
-                <button
-                  type="button"
-                  onClick={goNext}
-                  disabled={index >= steps.length - 1}
-                  className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy transition hover:text-brand-orange-ink disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  {tHajj("modalNextStep")}
-                  <DirArrow />
-                </button>
+              <div className="safe-bottom shrink-0 border-t border-line bg-white px-4 py-3 lg:px-8 lg:py-4">
+                <div className="flex items-center justify-between gap-4">
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    disabled={index === 0}
+                    className="inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-navy transition hover:text-brand-orange-ink disabled:cursor-not-allowed disabled:opacity-40 lg:text-[13px]"
+                  >
+                    <DirBackArrow />
+                    <span className="lg:hidden">{tCommon("previous")}</span>
+                    <span className="hidden lg:inline">{tHajj("modalPrevStep")}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    disabled={index >= steps.length - 1}
+                    className="inline-flex min-h-11 items-center gap-1.5 text-[14px] font-semibold text-navy transition hover:text-brand-orange-ink disabled:cursor-not-allowed disabled:opacity-40 lg:text-[13px]"
+                  >
+                    <span className="lg:hidden">{tCommon("next")}</span>
+                    <span className="hidden lg:inline">{tHajj("modalNextStep")}</span>
+                    <DirArrow />
+                  </button>
+                </div>
               </div>
             ) : null}
           </div>

@@ -1,0 +1,38 @@
+---
+description: Visum Service page — screenshots are final visual lock; SEO only below form
+globs: src/components/visum/**/*,src/app/**/visum-service/**/*,src/data/visum-*.ts,src/app/admin/visum-service/**
+alwaysApply: false
+---
+
+# Visum Service — §41 Visual Lock
+
+The two approved screenshots (desktop + mobile) are the **final visual references** for the upper page.
+
+## Do not change (conversion / upper page)
+
+Keep as close as possible to the screenshots:
+
+- Header (compact on mobile)
+- Hero — Visum für Saudi Arabien + visa sticker
+- 3 benefits (Zuverlässig / Schnell / Einfach)
+- Infos zu unseren Visum-Services
+- Touristen Visum + Umrah Visum cards
+- Visum Anfrage Formular
+- Trust elements
+
+Do **not** redesign, restyle, or insert new blocks into this conversion area.
+
+## Only major addition (below the form design)
+
+A complete **SEO / information** section **underneath** the existing form + trust UI:
+
+1. Saudi Arabia Visa (main SEO heading + intro)
+2. Tourist Visa
+3. Umrah Visa
+4. Saudi Arabia Entry Requirements
+
+Plus optional FAQ / links / rules notices — all **Admin-manageable** via `/admin/visum-service` (CMS + visa rules). Never hard-code visa regulations in React.
+
+## Conflict rule
+
+If a request would change the screenshot-matching conversion UI, stop and ask rather than inventing a new layout.

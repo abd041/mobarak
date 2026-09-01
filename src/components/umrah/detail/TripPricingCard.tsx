@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, User } from "lucide-react";
+import { User } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DirArrow } from "@/components/ui/DirArrow";
@@ -14,7 +14,6 @@ import {
   formatTripPriceLabel,
   getTripPriceDisplayMode,
 } from "@/lib/trip-price-display";
-import { scrollToSection } from "@/lib/scroll-to-section";
 import { cn } from "@/lib/utils";
 
 export function TripPricingCard({
@@ -33,6 +32,7 @@ export function TripPricingCard({
   const flow = useTripFlowContext();
   const priceMode = getTripPriceDisplayMode(trip);
   const priceFromLabel = tCommon("from");
+  const perPerson = tCommon("perPerson");
   const intlLocale =
     locale === "de" ? "de-AT" : locale === "ar" ? "ar-SA" : locale === "bs" ? "bs-BA" : "en-GB";
 
@@ -45,15 +45,15 @@ export function TripPricingCard({
   return (
     <div
       className={cn(
-        "rounded-[20px] border border-line bg-white shadow-[0_16px_48px_rgba(9,36,92,0.12)]",
-        compact ? "px-4 py-4" : "px-5 py-6 sm:px-6 sm:py-8",
+        "rounded-[20px] border border-[#EEF0F3] bg-white shadow-[0_16px_44px_rgba(9,36,92,0.12)]",
+        compact ? "px-4 pt-5 pb-5" : "px-5 pt-5 pb-5 sm:px-6 sm:pt-5 sm:pb-5",
         className,
       )}
     >
       <h2
         className={cn(
-          "border-b border-line font-bold leading-none text-navy",
-          compact ? "pb-3 text-[15px]" : "pb-4 text-[17px] lg:pb-6",
+          "border-b border-[#E6E9EE] font-bold leading-none text-[#051033]",
+          compact ? "pb-3 text-[15px]" : "pb-3.5 text-[16px] lg:text-[17px]",
         )}
       >
         {t("pricePerPerson")}
@@ -64,70 +64,73 @@ export function TripPricingCard({
           <li
             key={row.key}
             className={cn(
-              "flex items-start justify-between gap-4",
-              compact ? "py-3" : "py-4 lg:py-[1.35rem]",
-              i < prices.length - 1 && "border-b border-line",
+              "flex items-center justify-between gap-3",
+              compact ? "py-3.5" : "py-3.5 lg:py-3.5",
+              i < prices.length - 1 && "border-b border-[#E6E9EE]",
             )}
           >
-            <div className="flex min-w-0 flex-1 items-start gap-3">
+            <div className="flex min-w-0 flex-1 items-center gap-2.5">
               <User
-                className={cn("mt-0.5 shrink-0 text-navy", compact ? "h-4 w-4" : "h-[19px] w-[19px]")}
-                strokeWidth={1.75}
+                className={cn(
+                  "shrink-0 text-[#5B6B7C]",
+                  compact ? "h-4 w-4" : "h-[18px] w-[18px] lg:h-5 lg:w-5 lg:text-[#051033]",
+                )}
+                strokeWidth={1.6}
                 aria-hidden
               />
-              <span
-                className={cn(
-                  "font-semibold leading-snug text-navy",
-                  compact ? "text-[12px]" : "text-[13px] lg:text-[14px]",
-                )}
-              >
-                {row.label}
+              <span className="flex min-w-0 flex-col gap-0.5">
+                <span
+                  className={cn(
+                    "font-bold leading-snug text-[#051033]",
+                    compact ? "text-[12px]" : "text-[13px] lg:text-[14px]",
+                  )}
+                >
+                  {row.label}
+                </span>
+                <span
+                  className={cn(
+                    "font-medium leading-none text-[#8A96A3]",
+                    compact ? "text-[11px]" : "text-[12px]",
+                  )}
+                >
+                  {perPerson}
+                </span>
               </span>
             </div>
-            <div className="shrink-0 text-end">
-              <p
-                className={cn(
-                  "font-extrabold leading-none tracking-[-0.02em] text-[var(--mobarak-price-green)]",
-                  compact ? "text-[18px]" : "text-[21px] lg:text-[22px]",
-                )}
-              >
-                {formatTripPriceLabel(row.amount, priceMode, priceFromLabel, intlLocale)}
-              </p>
-              <p className="mt-1 text-[12px] leading-none text-muted">{tCommon("perPerson")}</p>
-            </div>
+            <p
+              className={cn(
+                "shrink-0 font-extrabold leading-none tracking-[-0.02em] text-[var(--mobarak-price-green)]",
+                compact ? "text-[18px]" : "text-[20px] lg:text-[22px]",
+              )}
+            >
+              {formatTripPriceLabel(row.amount, priceMode, priceFromLabel, intlLocale)}
+            </p>
           </li>
         ))}
       </ul>
 
-      <button
-        type="button"
-        onClick={() => scrollToSection("hotels", 80)}
-        className="mt-5 flex w-full items-center justify-center gap-1 py-3 text-[13px] font-semibold text-brand-cta lg:hidden"
-      >
-        {t("moreOfferInfo")}
-        <ChevronDown className="h-4 w-4" strokeWidth={2.25} aria-hidden />
-      </button>
-
       <Link
         href={flow.inquiryPath}
         className={cn(
-          "hidden w-full items-center justify-center gap-2 rounded-xl px-4 font-bold text-white transition hover:brightness-95 lg:flex",
-          compact ? "mt-4 min-h-[46px] py-3 text-[14px]" : "mt-7 min-h-[52px] py-4 text-[15px] lg:mt-8",
+          "mt-5 flex w-full items-center justify-center rounded-[14px] px-4 font-bold text-white shadow-[0_8px_20px_rgba(30,90,156,0.28)] transition hover:brightness-[0.97]",
+          compact ? "min-h-[46px] py-3 text-[14px]" : "min-h-[50px] py-3.5 text-[15px]",
           cta.mode === "waitlist"
             ? "bg-brand-orange-cta"
             : cta.mode === "full"
               ? "bg-navy"
-              : "bg-[var(--mobarak-primary)]",
+              : "bg-[linear-gradient(180deg,#3B82F6_0%,#1E5A9C_100%)]",
         )}
       >
-        {cta.buttonLabel}
-        <DirArrow />
+        <span className="inline-flex items-center gap-1.5">
+          {cta.buttonLabel}
+          <DirArrow className="ms-0" />
+        </span>
       </Link>
 
       <TripInquiryCtaBenefits
         trip={trip}
-        className={cn("hidden space-y-2 lg:block", compact ? "mt-3" : "mt-5 lg:mt-6 lg:space-y-3")}
-        itemClassName="text-[12px] leading-snug"
+        className={cn("mt-3.5 space-y-2 lg:mt-4", compact && "mt-3")}
+        itemClassName="text-[12px] leading-snug text-[#051033]"
       />
     </div>
   );

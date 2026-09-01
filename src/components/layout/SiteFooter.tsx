@@ -73,16 +73,16 @@ export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-[#E9EAEE] bg-white text-[#0A1B3D]">
       <Container className="lg:px-9">
-        <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:py-14">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-10 py-12 lg:grid-cols-4 lg:gap-8 lg:py-14">
           {/* Brand */}
-          <div className="max-w-xs">
+          <div className="col-span-2 max-w-xs lg:col-span-1">
             <div className="mb-4">
               {settings.logoSrc.startsWith("data:") ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={settings.logoSrc}
                   alt={BRAND_LOGO.alt}
-                  className="h-14 w-auto object-contain"
+                  className="h-[72px] w-auto object-contain sm:h-20"
                 />
               ) : (
                 <Image
@@ -91,7 +91,7 @@ export function SiteFooter() {
                   width={BRAND_LOGO.width}
                   height={BRAND_LOGO.height}
                   quality={80}
-                  className="h-14 w-auto object-contain"
+                  className="h-[72px] w-auto object-contain sm:h-20"
                 />
               )}
             </div>
@@ -117,9 +117,9 @@ export function SiteFooter() {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="min-w-0">
             <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">{t("services")}</h3>
-            <ul className="space-y-2.5 text-[14px] text-[#5B6B7C]">
+            <ul className="space-y-2.5 text-[13px] text-[#5B6B7C] sm:text-[14px]">
               {services.map((s) => (
                 <li key={s.id}>
                   <FooterAnchor href={s.href}>{s.label}</FooterAnchor>
@@ -129,11 +129,11 @@ export function SiteFooter() {
           </div>
 
           {/* Important links */}
-          <div>
+          <div className="min-w-0">
             <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">
               {t("importantLinks")}
             </h3>
-            <ul className="space-y-2.5 text-[14px] text-[#5B6B7C]">
+            <ul className="space-y-2.5 text-[13px] text-[#5B6B7C] sm:text-[14px]">
               {links.map((s) => (
                 <li key={s.id}>
                   <FooterAnchor href={s.href}>{s.label}</FooterAnchor>
@@ -143,7 +143,7 @@ export function SiteFooter() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="col-span-2 min-w-0 lg:col-span-1">
             <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">{t("contact")}</h3>
             <ul className="space-y-3 text-[14px] text-[#5B6B7C]">
               {settings.phone && (

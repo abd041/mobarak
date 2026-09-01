@@ -1,0 +1,6 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 64" role="img" aria-label="Pegasus Airlines">
+  <rect width="200" height="64" rx="8" fill="#fff"/>
+  <circle cx="28" cy="32" r="14" fill="#F7A600"/>
+  <path d="M22 36c4-10 12-14 18-14" fill="none" stroke="#0A1B3D" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="52" y="38" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0A1B3D">Pegasus</text>
+</svg>

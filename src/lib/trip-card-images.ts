@@ -7,55 +7,55 @@ import { normalizeTripGallery } from "@/lib/trip-gallery";
  */
 export const TRIP_CARD_PHOTOS = {
   kaaba: {
-    src: "/brand/offer-hero/kaaba.png",
+    src: "/brand/offer-hero/hero-bg-kaaba.png",
     caption: "Kaaba",
   },
   medina: {
-    src: "/brand/offer-hero/medina.png",
+    src: "/brand/offer-hero/hero-bg-2.png",
     caption: "Medina",
   },
   makkahHotel: {
-    src: "/brand/offer-hero/makkah.png",
+    src: "/brand/offer-hero/hero-bg-3.png",
     caption: "Hotel in Makkah",
   },
   medinaHotel: {
-    src: "/brand/offer-hero/medina.png",
+    src: "/brand/offer-hero/hero-bg-2.png",
     caption: "Hotel in Medina",
   },
   lobbyMakkah: {
-    src: "/brand/offer-hero/group-02.png",
+    src: "/brand/offer-hero/hero-bg-4.png",
     caption: "Hotellobby",
   },
   lobbyMedina: {
-    src: "/brand/offer-hero/group-03.png",
+    src: "/brand/offer-hero/hero-bg-3.png",
     caption: "Hotellobby",
   },
   groupExcursion: {
-    src: "/brand/offer-hero/ziyarat.png",
+    src: "/brand/offer-hero/hero-bg-4.png",
     caption: "Ausflüge",
   },
   excursionMakkah: {
-    src: "/brand/offer-hero/ziyarat.png",
+    src: "/brand/offer-hero/hero-bg-4.png",
     caption: "Ausflüge",
   },
   mobarakGroup: {
-    src: "/brand/offer-hero/group-photo.png",
+    src: "/brand/offer-hero/hero-bg-3.png",
     caption: "Gruppenfoto",
   },
   mobarakGroup01: {
-    src: "/brand/offer-hero/group-01.png",
+    src: "/brand/offer-hero/hero-bg-kaaba.png",
     caption: "Gruppenfoto",
   },
   mobarakGroup02: {
-    src: "/brand/offer-hero/group-04.png",
+    src: "/brand/offer-hero/hero-bg-2.png",
     caption: "Gruppenfoto",
   },
   mobarakGroup03: {
-    src: "/brand/offer-hero/group-05.png",
+    src: "/brand/offer-hero/hero-bg-3.png",
     caption: "Gruppenfoto",
   },
   mobarakGroup04: {
-    src: "/brand/offer-hero/group-06.png",
+    src: "/brand/offer-hero/hero-bg-4.png",
     caption: "Gruppenfoto",
   },
 } as const satisfies Record<string, Omit<TripImage, "sortOrder">>;

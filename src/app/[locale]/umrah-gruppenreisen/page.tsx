@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { MobarakTrustBar } from "@/components/shared/MobarakTrustBar";
 import { UmrahListingClient } from "@/components/umrah/UmrahListingClient";
 import { UmrahListingHero } from "@/components/umrah/UmrahListingHero";
-import { UmrahListingInclusions } from "@/components/umrah/UmrahListingInclusions";
 import { PERIOD_FILTER_LABEL_KEYS } from "@/lib/listing-period-filters";
 import { getAllHotelsFromStore } from "@/lib/hotels-store.server";
 import { pageMetadata } from "@/lib/page-metadata";
@@ -55,7 +54,6 @@ export default async function UmrahListingPage({
   return (
     <div className="min-w-0 max-w-full overflow-x-clip">
       <UmrahListingHero />
-      <UmrahListingInclusions />
       <UmrahListingClient initialTrips={initialTrips} initialHotels={initialHotels} />
       <MobarakTrustBar variant="listing" />
     </div>

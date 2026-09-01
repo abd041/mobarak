@@ -33,9 +33,9 @@ export function NewsletterForm() {
   }
 
   return (
-    <div className="w-full max-w-none shrink-0 md:max-w-[380px] lg:max-w-[400px]">
+    <div className="w-full shrink-0 md:max-w-[420px] lg:max-w-[440px]">
       <form
-        className="flex w-full flex-col items-stretch gap-2.5 sm:flex-row"
+        className="flex w-full flex-col items-stretch gap-[10px] sm:flex-row sm:items-center"
         onSubmit={onSubmit}
         noValidate={false}
       >
@@ -55,23 +55,23 @@ export function NewsletterForm() {
           }}
           placeholder={t("newsletterPlaceholder")}
           disabled={pending}
-          className="dir-ltr-keep min-h-12 min-w-0 flex-1 rounded-[8px] border border-[#D9DEE5] bg-white px-3.5 py-3 text-[14px] text-[#1A2332] placeholder:text-[#6B7A89] focus:border-brand-orange-cta disabled:opacity-60 md:px-4 md:py-3"
+          className="dir-ltr-keep min-h-[48px] min-w-0 flex-1 rounded-[10px] border border-[#D5DBE3] bg-white px-[14px] py-[12px] text-[14px] text-[#0A1B3D] placeholder:text-[#8A97A6] shadow-[inset_0_1px_2px_rgba(9,30,66,0.03)] transition focus:border-[#E8913A] focus:outline-none focus:ring-2 focus:ring-[#E8913A]/25 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-[8px] bg-brand-orange-cta px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-[#a05e0e] disabled:opacity-60 sm:px-6"
+          className="inline-flex min-h-[48px] shrink-0 items-center justify-center rounded-[10px] bg-[#E8913A] px-[22px] py-[12px] text-[14px] font-bold text-white shadow-[0_2px_8px_rgba(232,145,58,0.35)] transition hover:bg-[#d07d2a] disabled:opacity-60 sm:px-[26px]"
         >
           {pending ? t("newsletterSubmitting") : t("newsletterCta")}
         </button>
       </form>
       {status === "success" && (
-        <p className="mt-2 text-[12px] font-medium text-[#1F8A4C]" role="status">
+        <p className="mt-[8px] text-[12px] font-medium text-[#1F8A4C]" role="status">
           {t("newsletterSuccess")}
         </p>
       )}
       {status === "error" && (
-        <p className="mt-2 text-[12px] font-medium text-red-600" role="alert">
+        <p className="mt-[8px] text-[12px] font-medium text-red-600" role="alert">
           {t("newsletterError")}
         </p>
       )}

@@ -26,16 +26,17 @@ export function UmrahListingSort({
   const t = useTranslations("umrah");
 
   return (
-    <div className={cn("flex w-full min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-2", className)}>
+    <div className={cn("flex min-w-0 shrink-0 items-center justify-end gap-1.5 sm:gap-2", className)}>
       <label
         htmlFor="umrah-listing-sort"
-        className="shrink-0 text-[13px] font-medium text-navy sm:text-[14px]"
+        className="hidden shrink-0 text-[13px] font-medium text-navy sm:inline sm:text-[14px]"
       >
         {t("sortBy")}
       </label>
       <select
         id="umrah-listing-sort"
-        className="min-h-11 w-full min-w-0 rounded-lg border border-line bg-white px-2.5 py-2 text-[13px] font-semibold text-navy sm:max-w-[12.5rem] sm:px-3 sm:text-[14px]"
+        aria-label={t("sortBy")}
+        className="min-h-10 max-w-[10.5rem] min-w-0 rounded-lg border border-line bg-white px-2 py-1.5 text-[12px] font-semibold text-navy sm:min-h-11 sm:max-w-[12.5rem] sm:px-3 sm:py-2 sm:text-[14px]"
         value={sort}
         onChange={(e) => onSortChange(e.target.value as TripListingSortKey)}
       >

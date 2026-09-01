@@ -99,101 +99,410 @@ summary:focus-visible,
   unicode-bidi: isolate;
 }
 
-/* Hero: fixed background position across all viewports */
-.home-hero-bg {
-  height: min(72vw, 420px);
-  min-height: 300px;
+/* Visum Service — display headings (serif LTR; Noto Arabic on RTL) */
+.visum-display-font {
+  font-family: var(--font-visa-display), "Libre Baskerville", Georgia, serif;
 }
 
-@media (min-width: 1024px) {
-  .home-hero-bg {
-    height: 500px;
-    min-height: 500px;
+[dir="rtl"] .visum-display-font {
+  font-family: var(--font-noto-arabic), "Noto Sans Arabic", Tahoma, sans-serif;
+}
+
+/* Visum hero — left wash for copy; visa artwork stays clear on the right */
+.visum-hero-photo {
+  object-position: 42% 38%;
+}
+
+.visum-hero-scrim {
+  background: linear-gradient(
+    108deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.9) 22%,
+    rgba(255, 255, 255, 0.58) 36%,
+    rgba(255, 255, 255, 0.14) 48%,
+    transparent 56%
+  );
+}
+
+@media (max-width: 767px) {
+  .visum-hero-bg {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .visum-hero-photo {
+    object-position: 70% 38%;
+  }
+
+  .visum-hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.88) 28%,
+      rgba(255, 255, 255, 0.45) 52%,
+      rgba(255, 255, 255, 0.12) 72%,
+      transparent 100%
+    );
+  }
+
+  .visum-hero-mobile-shell {
+    min-height: min(92vw, 26.5rem);
+  }
+
+  .visum-hero-mobile-scrim {
+    background: linear-gradient(
+      108deg,
+      rgba(240, 244, 255, 0.97) 0%,
+      rgba(234, 242, 252, 0.91) 16%,
+      rgba(224, 236, 250, 0.74) 28%,
+      rgba(210, 226, 246, 0.4) 42%,
+      rgba(196, 214, 238, 0.12) 52%,
+      transparent 62%
+    );
+  }
+
+  .visum-hero-mobile-photo {
+    object-position: 68% 46%;
+  }
+
+  [dir="rtl"] .visum-service-page .visum-hero-mobile-scrim {
+    background: linear-gradient(
+      252deg,
+      rgba(240, 244, 255, 0.97) 0%,
+      rgba(234, 242, 252, 0.91) 16%,
+      rgba(224, 236, 250, 0.74) 28%,
+      rgba(210, 226, 246, 0.4) 42%,
+      rgba(196, 214, 238, 0.12) 52%,
+      transparent 62%
+    );
+  }
+
+  [dir="rtl"] .visum-service-page .visum-hero-mobile-photo {
+    object-position: 28% 42%;
+  }
+}
+
+[dir="rtl"] .visum-service-page .visum-hero-photo {
+  object-position: 58% 38%;
+}
+
+[dir="rtl"] .visum-service-page .visum-hero-scrim {
+  background: linear-gradient(
+    252deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.9) 22%,
+    rgba(255, 255, 255, 0.58) 36%,
+    rgba(255, 255, 255, 0.14) 48%,
+    transparent 56%
+  );
+}
+
+@media (max-width: 767px) {
+  [dir="rtl"] .visum-service-page .visum-hero-photo {
+    object-position: 64% 42%;
+  }
+
+  [dir="rtl"] .visum-service-page .visum-hero-scrim {
+    background: linear-gradient(
+      260deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.92) 30%,
+      rgba(255, 255, 255, 0.42) 46%,
+      transparent 60%
+    );
+  }
+}
+
+[dir="rtl"] .visum-service-page input[type="email"],
+[dir="rtl"] .visum-service-page input[type="tel"] {
+  text-align: start;
+}
+
+/* §44 — Individual Umrah: travel sequences stay LTR; form chrome uses logical sides */
+[dir="rtl"] .individual-umrah .travel-sequence,
+.individual-umrah .travel-sequence {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+[dir="rtl"] .individual-umrah input[type="email"],
+[dir="rtl"] .individual-umrah input[type="tel"] {
+  text-align: start;
+}
+
+/* All marketing heroes: section + background photo band locked to 500px */
+.home-hero-bg,
+.visum-hero-bg,
+.hajj-hero-bg,
+.hajj-prereg-hero,
+.offer-hero-bg,
+.individual-umrah-hero,
+.individual-umrah-final-hero {
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+/* Mobile Individuelle Umrah — hug content; icons + form spacing controlled in markup */
+@media (max-width: 767px) {
+  .individual-umrah-hero {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .individual-umrah-final-hero {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+/* Umrah listing hero — mobile tall band; desktop auto (title + 9 icons) */
+.umrah-listing-hero-bg {
+  height: auto;
+  min-height: 380px;
+  max-height: none;
+}
+
+@media (min-width: 768px) {
+  .umrah-listing-hero-bg {
+    height: auto;
+    min-height: 0;
+    max-height: none;
   }
 }
 
 .home-hero-photo {
-  object-position: 0 -80px;
+  /* Mobile: frame Kaaba toward center */
+  object-position: 78% -36px;
+}
+
+@media (min-width: 768px) {
+  .home-hero-photo {
+    /* Desktop unchanged — Kaaba right, text left */
+    object-position: center -100px;
+  }
 }
 
 @media (min-width: 1024px) {
   .home-hero-photo {
-    object-position: 0 -130px;
+    object-position: center -120px;
   }
 }
 
 [dir="rtl"] .home-hero-photo {
-  object-position: 100% -80px;
+  object-position: 78% -36px;
+}
+
+@media (min-width: 768px) {
+  [dir="rtl"] .home-hero-photo {
+    object-position: right -100px;
+  }
 }
 
 @media (min-width: 1024px) {
   [dir="rtl"] .home-hero-photo {
-    object-position: 100% -130px;
+    object-position: right -120px;
   }
 }
 
+/* Mobile: premium bottom → top wash (no box). Desktop: left fade. */
 .home-hero-scrim {
   background: linear-gradient(
-    to right,
+    to top,
     #ffffff 0%,
-    #ffffff 24%,
-    rgba(255, 255, 255, 0.96) 34%,
-    rgba(255, 255, 255, 0.6) 44%,
-    rgba(255, 255, 255, 0.12) 54%,
-    transparent 64%
+    rgba(255, 255, 255, 0.98) 14%,
+    rgba(255, 255, 255, 0.92) 28%,
+    rgba(255, 255, 255, 0.72) 42%,
+    rgba(255, 255, 255, 0.38) 56%,
+    rgba(255, 255, 255, 0.12) 70%,
+    transparent 84%
   );
 }
 
-[dir="rtl"] .home-hero-scrim {
-  background: linear-gradient(
-    to left,
-    #ffffff 0%,
-    #ffffff 24%,
-    rgba(255, 255, 255, 0.96) 34%,
-    rgba(255, 255, 255, 0.6) 44%,
-    rgba(255, 255, 255, 0.12) 54%,
-    transparent 64%
-  );
+@media (min-width: 768px) {
+  .home-hero-scrim {
+    background: linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 24%,
+      rgba(255, 255, 255, 0.96) 34%,
+      rgba(255, 255, 255, 0.6) 44%,
+      rgba(255, 255, 255, 0.12) 54%,
+      transparent 64%
+    );
+  }
+
+  [dir="rtl"] .home-hero-scrim {
+    background: linear-gradient(
+      to left,
+      #ffffff 0%,
+      #ffffff 24%,
+      rgba(255, 255, 255, 0.96) 34%,
+      rgba(255, 255, 255, 0.6) 44%,
+      rgba(255, 255, 255, 0.12) 54%,
+      transparent 64%
+    );
+  }
 }
 
 .umrah-listing-hero-photo {
-  object-position: center 35%;
+  object-position: 78% 36%;
 }
 
 .umrah-listing-hero-scrim {
-  background: linear-gradient(
-    to right,
-    #ffffff 0%,
-    #ffffff 22%,
-    rgba(255, 255, 255, 0.96) 36%,
-    rgba(255, 255, 255, 0.72) 48%,
-    rgba(255, 255, 255, 0.35) 60%,
-    rgba(255, 255, 255, 0.08) 72%,
-    transparent 84%
-  );
+  /* Mobile: lighter wash — Kaaba stays prominent on the right */
+  background:
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.2) 14%,
+      transparent 32%
+    ),
+    linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 22%,
+      rgba(255, 255, 255, 0.85) 36%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.08) 62%,
+      transparent 74%
+    );
+}
+
+@media (min-width: 768px) {
+  /* Desktop: solid white left, soft fade into clear Kaaba */
+  .umrah-listing-hero-scrim {
+    background: linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 42%,
+      rgba(255, 255, 255, 0.96) 52%,
+      rgba(255, 255, 255, 0.55) 64%,
+      rgba(255, 255, 255, 0.15) 76%,
+      transparent 88%
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .umrah-listing-hero-scrim {
+    background: linear-gradient(
+      to right,
+      #ffffff 0%,
+      #ffffff 44%,
+      rgba(255, 255, 255, 0.97) 54%,
+      rgba(255, 255, 255, 0.55) 66%,
+      rgba(255, 255, 255, 0.12) 78%,
+      transparent 90%
+    );
+  }
+
+  [dir="rtl"] .umrah-listing-hero-scrim {
+    background: linear-gradient(
+      to left,
+      #ffffff 0%,
+      #ffffff 44%,
+      rgba(255, 255, 255, 0.97) 54%,
+      rgba(255, 255, 255, 0.55) 66%,
+      rgba(255, 255, 255, 0.12) 78%,
+      transparent 90%
+    );
+  }
 }
 
 [dir="rtl"] .umrah-listing-hero-scrim {
-  background: linear-gradient(
-    to left,
-    #ffffff 0%,
-    #ffffff 22%,
-    rgba(255, 255, 255, 0.96) 36%,
-    rgba(255, 255, 255, 0.72) 48%,
-    rgba(255, 255, 255, 0.35) 60%,
-    rgba(255, 255, 255, 0.08) 72%,
-    transparent 84%
-  );
+  background:
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.2) 14%,
+      transparent 32%
+    ),
+    linear-gradient(
+      to left,
+      #ffffff 0%,
+      #ffffff 22%,
+      rgba(255, 255, 255, 0.85) 36%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.08) 62%,
+      transparent 74%
+    );
+}
+
+@media (min-width: 768px) {
+  [dir="rtl"] .umrah-listing-hero-scrim {
+    background: linear-gradient(
+      to left,
+      #ffffff 0%,
+      #ffffff 42%,
+      rgba(255, 255, 255, 0.96) 52%,
+      rgba(255, 255, 255, 0.55) 64%,
+      rgba(255, 255, 255, 0.15) 76%,
+      transparent 88%
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  [dir="rtl"] .umrah-listing-hero-scrim {
+    background: linear-gradient(
+      to left,
+      #ffffff 0%,
+      #ffffff 44%,
+      rgba(255, 255, 255, 0.97) 54%,
+      rgba(255, 255, 255, 0.55) 66%,
+      rgba(255, 255, 255, 0.12) 78%,
+      transparent 90%
+    );
+  }
 }
 
 .umrah-listing-benefit-icon {
   filter: brightness(0) saturate(100%);
-  opacity: 0.92;
+  opacity: 0.9;
 }
 
 /* Hajj landing — hero photo + left-to-right readability scrim */
 .hajj-hero-photo {
   object-position: center 42%;
+}
+
+/* Mobile landing: soft white wash over full-bleed photo */
+.hajj-hero-mobile-whitish {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 255, 255, 0.94) 22%,
+    rgba(255, 255, 255, 0.88) 36%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.18) 58%,
+    transparent 68%
+  );
+}
+
+/* Pre-reg mobile: high-key washed Makkah backdrop (reference) + readable text */
+.hajj-prereg-mobile-wash {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 255, 255, 0.88) 16%,
+    rgba(255, 255, 255, 0.78) 34%,
+    rgba(255, 255, 255, 0.82) 52%,
+    rgba(255, 255, 255, 0.94) 72%,
+    #ffffff 100%
+  );
+}
+
+.hajj-prereg-mobile-photo {
+  object-position: 72% 32%;
+  filter: brightness(1.06) saturate(0.65) contrast(0.9);
+}
+
+[dir="rtl"] .hajj-prereg-mobile-photo {
+  object-position: 28% 32%;
 }
 
 .hajj-hero-scrim {
@@ -250,29 +559,335 @@ summary:focus-visible,
   }
 }
 
+/* Hajj pre-registration — warm premium form page */
+.hajj-prereg {
+  --hajj-prereg-warm: #fffcf8;
+  --hajj-prereg-warm-deep: #f7f4ef;
+  background-color: var(--hajj-prereg-warm);
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    var(--hajj-prereg-warm) 14rem,
+    var(--hajj-prereg-warm-deep) 100%
+  );
+}
+
+/* §32 — Hajj pre-reg RTL: mirror hero focal point; keep phone/email fields LTR */
+[dir="rtl"] .hajj-prereg .hajj-hero-photo {
+  object-position: 42% center;
+}
+
+[dir="rtl"] .hajj-prereg form .dir-ltr-keep {
+  text-align: start;
+}
+
+.individual-umrah {
+  --individual-umrah-warm: #fffcf8;
+  --individual-umrah-warm-deep: #f7f4ef;
+  background-color: var(--individual-umrah-warm);
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    var(--individual-umrah-warm) 12rem,
+    var(--individual-umrah-warm-deep) 100%
+  );
+}
+
+@media (max-width: 767px) {
+  .individual-umrah {
+    background-color: #f3f5f7;
+    background-image: linear-gradient(180deg, #ffffff 0%, #f3f5f7 14rem, #eef1f4 100%);
+  }
+}
+
+.individual-umrah-hero-photo {
+  object-position: center 32%;
+}
+
+.individual-umrah-hero-scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 252, 248, 0.72) 0%,
+    rgba(255, 255, 255, 0.48) 42%,
+    rgba(255, 255, 255, 0.14) 72%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .individual-umrah-hero-scrim {
+    background: linear-gradient(
+      105deg,
+      rgba(255, 252, 248, 0.78) 0%,
+      rgba(255, 255, 255, 0.52) 34%,
+      rgba(255, 255, 255, 0.18) 62%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+
+  [dir="rtl"] .individual-umrah-hero-scrim {
+    background: linear-gradient(
+      255deg,
+      rgba(255, 252, 248, 0.78) 0%,
+      rgba(255, 255, 255, 0.52) 34%,
+      rgba(255, 255, 255, 0.18) 62%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+}
+
+[dir="rtl"] .individual-umrah-hero-photo {
+  object-position: 58% 32%;
+}
+
+/* Mobile wash must win over base LTR/RTL scrim — cream, not pure white */
+@media (max-width: 767px) {
+  /*
+   * Source: Kaaba sits near horizontal center of the panorama.
+   * Anchor mid-left so the Kaaba lands clearly on the RIGHT of the phone
+   * (too far left = only minaret; too far right = Kaaba on the left).
+   */
+  .individual-umrah-hero-photo {
+    object-position: 38% 42%;
+  }
+
+  .individual-umrah-hero-scrim,
+  [dir="rtl"] .individual-umrah-hero-scrim {
+    /* Cream wash for copy + icons; right stays clearer for Kaaba */
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 246, 232, 0.97) 0%,
+        rgba(255, 248, 236, 0.9) 28%,
+        rgba(255, 248, 236, 0.4) 52%,
+        rgba(255, 248, 236, 0.12) 72%,
+        rgba(255, 248, 236, 0.05) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 246, 232, 0.12) 0%,
+        rgba(255, 248, 236, 0.04) 40%,
+        rgba(255, 246, 232, 0.55) 78%,
+        rgba(255, 244, 228, 0.94) 100%
+      );
+  }
+
+  [dir="rtl"] .individual-umrah-hero-photo {
+    object-position: 62% 42%;
+  }
+
+  [dir="rtl"] .individual-umrah-hero-scrim {
+    background:
+      linear-gradient(
+        270deg,
+        rgba(255, 246, 232, 0.97) 0%,
+        rgba(255, 248, 236, 0.9) 28%,
+        rgba(255, 248, 236, 0.4) 52%,
+        rgba(255, 248, 236, 0.12) 72%,
+        rgba(255, 248, 236, 0.05) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 246, 232, 0.12) 0%,
+        rgba(255, 248, 236, 0.04) 40%,
+        rgba(255, 246, 232, 0.55) 78%,
+        rgba(255, 244, 228, 0.94) 100%
+      );
+  }
+}
+
+/* Step 2 enquiry hero — cream wash behind left copy only; Kaaba stays clear on the right */
+.individual-umrah-final-hero-photo {
+  object-position: 58% 38%;
+}
+
+.individual-umrah-final-hero-scrim {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 246, 232, 0.97) 0%,
+    rgba(255, 248, 236, 0.9) 24%,
+    rgba(255, 248, 236, 0.52) 40%,
+    rgba(255, 248, 236, 0.14) 50%,
+    transparent 58%
+  );
+}
+
+@media (min-width: 768px) {
+  .individual-umrah-final-hero-scrim {
+    background: linear-gradient(
+      108deg,
+      rgba(255, 246, 232, 0.96) 0%,
+      rgba(255, 248, 236, 0.88) 20%,
+      rgba(255, 248, 236, 0.62) 34%,
+      rgba(255, 248, 236, 0.22) 46%,
+      transparent 54%
+    );
+  }
+}
+
+@media (max-width: 767px) {
+  .individual-umrah-final-hero {
+    background: #fffdf9;
+  }
+
+  .individual-umrah-final-hero-photo {
+    object-position: 38% 42%;
+  }
+
+  .individual-umrah-final-hero-mobile-photo {
+    object-position: 76% 54%;
+  }
+
+  [dir="rtl"] .individual-umrah-final-hero-mobile-photo {
+    object-position: 24% 54%;
+  }
+
+  .individual-umrah-final-hero-mobile-wash {
+    background:
+      radial-gradient(
+        ellipse 95% 70% at 88% 28%,
+        rgba(255, 241, 224, 0.82) 0%,
+        rgba(255, 246, 232, 0.42) 42%,
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 80% 55% at 12% 0%,
+        #ffffff 0%,
+        rgba(255, 253, 249, 0.92) 48%,
+        transparent 78%
+      ),
+      linear-gradient(
+        180deg,
+        #fffdf9 0%,
+        #fff8f0 42%,
+        #fff4e6 78%,
+        #fdf5eb 100%
+      );
+  }
+
+  .individual-umrah-final-hero-mobile-fade {
+    top: -1rem;
+    height: 10rem;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      #fdf5eb 0%,
+      #fdf5eb 12%,
+      rgba(253, 245, 235, 0.94) 32%,
+      rgba(255, 248, 240, 0.72) 56%,
+      rgba(255, 250, 245, 0.28) 80%,
+      transparent 100%
+    );
+  }
+
+  .individual-umrah-final-hero-mobile-glow {
+    background: radial-gradient(
+      ellipse 85% 55% at 78% 18%,
+      rgba(255, 246, 232, 0.45) 0%,
+      rgba(255, 248, 240, 0.18) 45%,
+      transparent 72%
+    );
+  }
+
+  .individual-umrah-final-hero-scrim,
+  [dir="rtl"] .individual-umrah-final-hero-scrim {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 246, 232, 0.97) 0%,
+      rgba(255, 248, 236, 0.88) 30%,
+      rgba(255, 248, 236, 0.38) 48%,
+      rgba(255, 248, 236, 0.08) 58%,
+      transparent 68%
+    );
+  }
+
+  [dir="rtl"] .individual-umrah-final-hero-photo {
+    object-position: 62% 42%;
+  }
+}
+
+[dir="rtl"] .individual-umrah-final-hero-photo {
+  object-position: 42% 38%;
+}
+
+[dir="rtl"] .individual-umrah-final-hero-scrim {
+  background: linear-gradient(
+    260deg,
+    rgba(255, 246, 232, 0.97) 0%,
+    rgba(255, 248, 236, 0.9) 24%,
+    rgba(255, 248, 236, 0.52) 40%,
+    rgba(255, 248, 236, 0.14) 50%,
+    transparent 58%
+  );
+}
+
+@media (min-width: 768px) {
+  [dir="rtl"] .individual-umrah-final-hero-scrim {
+    background: linear-gradient(
+      252deg,
+      rgba(255, 246, 232, 0.96) 0%,
+      rgba(255, 248, 236, 0.88) 20%,
+      rgba(255, 248, 236, 0.62) 34%,
+      rgba(255, 248, 236, 0.22) 46%,
+      transparent 54%
+    );
+  }
+}
+
+/* §45 / §47 — progressive disclosure: newly revealed questions appear immediately, without clutter */
+@keyframes individual-umrah-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.individual-umrah-reveal {
+  animation: individual-umrah-reveal 0.28s ease-out;
+}
+
+@media (max-width: 767px) {
+  /* Keep mobile form calm when several conditional blocks open */
+  .individual-umrah .individual-umrah-reveal {
+    margin-top: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .individual-umrah-reveal {
+    animation: none;
+  }
+}
+
 @media (min-width: 1024px) {
   .umrah-listing-hero-photo {
-    object-position: 60% center;
+    object-position: 68% 40%;
   }
 }
 
 .newsletter-fade {
   background: linear-gradient(
     to right,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0.92) 18%,
-    rgba(255, 255, 255, 0.45) 42%,
-    transparent 72%
+    #fafbfc 0%,
+    rgba(250, 251, 252, 0.95) 12%,
+    rgba(250, 251, 252, 0.55) 38%,
+    rgba(250, 251, 252, 0.12) 68%,
+    transparent 100%
   );
 }
 
 [dir="rtl"] .newsletter-fade {
   background: linear-gradient(
     to left,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0.92) 18%,
-    rgba(255, 255, 255, 0.45) 42%,
-    transparent 72%
+    #fafbfc 0%,
+    rgba(250, 251, 252, 0.95) 12%,
+    rgba(250, 251, 252, 0.55) 38%,
+    rgba(250, 251, 252, 0.12) 68%,
+    transparent 100%
   );
 }
 
@@ -283,15 +898,15 @@ summary:focus-visible,
   margin-inline: calc(50% - 50vw);
 }
 
-/* Offer page hero — left text fade; photo visible across most of the hero */
+/* Offer page hero — softer left wash (less white) so photo stays visible */
 .offer-hero-fade {
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(255, 255, 255, 0.88) 18%,
-    rgba(255, 255, 255, 0.55) 34%,
-    rgba(255, 255, 255, 0.2) 48%,
-    rgba(255, 255, 255, 0.04) 58%,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.55) 12%,
+    rgba(255, 255, 255, 0.32) 28%,
+    rgba(255, 255, 255, 0.12) 42%,
+    rgba(255, 255, 255, 0.04) 55%,
     transparent 68%
   );
 }
@@ -299,17 +914,17 @@ summary:focus-visible,
 [dir="rtl"] .offer-hero-fade {
   background: linear-gradient(
     to left,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(255, 255, 255, 0.88) 18%,
-    rgba(255, 255, 255, 0.55) 34%,
-    rgba(255, 255, 255, 0.2) 48%,
-    rgba(255, 255, 255, 0.04) 58%,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.55) 12%,
+    rgba(255, 255, 255, 0.32) 28%,
+    rgba(255, 255, 255, 0.12) 42%,
+    rgba(255, 255, 255, 0.04) 55%,
     transparent 68%
   );
 }
 
 .offer-hero-image {
-  filter: contrast(1.06) saturate(1.1);
+  filter: contrast(1.08) saturate(1.08) brightness(0.96);
 }
 
 /* Mobile: bottom-weighted scrim so hero copy stays readable on the photo */
@@ -323,31 +938,18 @@ summary:focus-visible,
   );
 }
 
-/* Hero slider arrows — sit over the photo, clear of pricing card */
-.offer-hero-slider-prev {
-  left: 1rem;
-}
-
+/* Hero slider — next arrow only (prev removed; left copy stays clear) */
 .offer-hero-slider-next {
   right: 1rem;
 }
 
 @media (min-width: 640px) {
-  .offer-hero-slider-prev {
-    left: 1.5rem;
-  }
-
   .offer-hero-slider-next {
     right: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .offer-hero-slider-prev {
-    left: auto;
-    right: calc(min(50vw, var(--mobarak-container-max) / 2) + 7.5rem);
-  }
-
   .offer-hero-slider-next {
     right: calc((100vw - min(100vw, var(--mobarak-container-max))) / 2 + 23.5rem);
   }
@@ -356,6 +958,30 @@ summary:focus-visible,
 @media (min-width: 1280px) {
   .offer-hero-slider-next {
     right: calc((100vw - min(100vw, var(--mobarak-container-max))) / 2 + 25rem);
+  }
+}
+
+[dir="rtl"] .offer-hero-slider-next {
+  right: auto;
+  left: 1rem;
+}
+
+@media (min-width: 640px) {
+  [dir="rtl"] .offer-hero-slider-next {
+    left: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  [dir="rtl"] .offer-hero-slider-next {
+    left: calc((100vw - min(100vw, var(--mobarak-container-max))) / 2 + 23.5rem);
+    right: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  [dir="rtl"] .offer-hero-slider-next {
+    left: calc((100vw - min(100vw, var(--mobarak-container-max))) / 2 + 25rem);
   }
 }
 
@@ -494,3 +1120,45 @@ html {
   min-height: 2.75rem;
   min-width: 2.75rem;
 }
+
+body.iu-offer-print-mode aside,
+body.iu-offer-print-mode > div > div > header {
+  display: none !important;
+}
+
+body.iu-offer-print-mode main {
+  padding: 0 !important;
+  max-width: none !important;
+}
+
+/* Individual Umrah offer PDF / print */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .iu-offer-print-root,
+  .iu-offer-print-root * {
+    visibility: visible;
+  }
+
+  .iu-offer-print-root {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+  }
+
+  .iu-offer-doc {
+    box-shadow: none !important;
+  }
+
+  .admin-no-print {
+    display: none !important;
+  }
+}
+

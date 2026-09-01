@@ -13,42 +13,30 @@ import { cn } from "@/lib/utils";
 function InclusionItem({
   item,
   label,
-  compact,
 }: {
   item: TripCardInclusionItem;
   label: string;
-  compact: boolean;
 }) {
   return (
-    <li className="flex min-w-0 items-start gap-1">
-      <div
-        className={cn(
-          "relative mt-px shrink-0",
-          compact ? "h-3.5 w-3.5 md:h-4 md:w-4" : "h-4 w-4 sm:h-[1.1rem] sm:w-[1.1rem]",
-        )}
-      >
+    <li className="flex min-w-0 items-start gap-[6px]">
+      <div className="relative mt-[1px] h-[18px] w-[18px] shrink-0 md:h-[20px] md:w-[20px]">
         <Image
           src={item.icon}
           alt=""
           fill
-          className="object-contain"
-          sizes="18px"
+          className="object-contain object-top"
+          sizes="20px"
           quality={IQ.thumb}
         />
       </div>
-      <span
-        className={cn(
-          "min-w-0 font-semibold leading-[1.3] text-[#1A1A1A]",
-          compact ? "text-[10px] md:text-[10px] lg:text-[11px]" : "text-[9px] sm:text-[10px] lg:text-[11px]",
-        )}
-      >
+      <span className="min-w-0 text-[11px] font-semibold leading-[1.35] text-[#1A1A1A] md:text-[12px]">
         {label}
       </span>
     </li>
   );
 }
 
-/** Included services — two compact rows; every enabled service is shown (never merged away). */
+/** Included services — all enabled items kept; layout matches compact reference grid. */
 export function TripCardInclusions({
   trip,
   prominence = "default",
@@ -59,44 +47,24 @@ export function TripCardInclusions({
   const t = useTranslations("umrah");
   const { row1, row2 } = getTripCardInclusionRows(trip);
   const isListing = prominence === "listing";
+  const items = [...row1, ...row2];
 
-  if (row1.length === 0 && row2.length === 0) return null;
-
-  const rows = [row1, row2].filter((row) => row.length > 0);
+  if (items.length === 0) return null;
 
   return (
     <div
       className={cn(
         "border-b border-[#EEF0F3] bg-white",
-        isListing ? "px-3 py-3 md:px-4 md:py-3.5" : "px-3.5 py-3 sm:px-4 sm:py-3.5",
+        isListing
+          ? "px-4 py-3 md:px-[16px] md:py-[14px]"
+          : "ps-[22px] pe-[14px] py-[12px] sm:px-[16px]",
       )}
     >
-      <div className={cn("flex flex-col", isListing ? "gap-2 md:gap-2.5" : "gap-2.5")}>
-        {rows.map((row, rowIndex) => (
-          <ul
-            key={rowIndex}
-            className={cn(
-              "grid gap-x-2 gap-y-1.5",
-              rowIndex === 0
-                ? isListing
-                  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
-                  : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
-                : isListing
-                  ? "grid-cols-2 sm:grid-cols-4"
-                  : "grid-cols-2 lg:grid-cols-4",
-            )}
-          >
-            {row.map((item) => (
-              <InclusionItem
-                key={item.id}
-                item={item}
-                label={t(item.labelKey)}
-                compact={isListing}
-              />
-            ))}
-          </ul>
+      <ul className="grid grid-cols-2 gap-x-[10px] gap-y-[10px] sm:grid-cols-4">
+        {items.map((item) => (
+          <InclusionItem key={item.id} item={item} label={t(item.labelKey)} />
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

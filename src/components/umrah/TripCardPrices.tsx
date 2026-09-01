@@ -43,13 +43,13 @@ function PriceAmount({
     <p
       className={cn(
         "font-extrabold leading-none tracking-[-0.02em] text-[var(--mobarak-price-green)]",
-        compact ? "mt-1 text-[13px] md:mt-1.5 md:text-[15px] lg:mt-2 lg:text-[17px]" : "mt-2 text-[15px] sm:text-[17px]",
+        compact ? "mt-[6px] text-[15px] md:text-[16px]" : "mt-[8px] text-[15px] sm:text-[17px]",
       )}
     >
       <span
         className={cn(
           "font-semibold",
-          compact ? "text-[9px] md:text-[10px] lg:text-[11px]" : "text-[10px] sm:text-[11px]",
+          compact ? "text-[10px] md:text-[11px]" : "text-[10px] sm:text-[11px]",
         )}
       >
         {prefix}{" "}
@@ -81,14 +81,14 @@ function PriceBox({
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-col items-center justify-center rounded-[10px] border border-[#E5E0D6] bg-[#FBF7F0] text-center",
-        compact ? "px-1 py-2 md:px-1.5 md:py-2.5 lg:px-2 lg:py-3" : "px-1.5 py-2.5 sm:px-2 sm:py-3",
+        "flex min-w-0 flex-col items-center justify-center rounded-[10px] border border-[#E8EBEF] bg-[#F7F8FA] text-center",
+        compact ? "px-[6px] py-[10px] md:px-[8px] md:py-[12px]" : "px-[6px] py-[10px] sm:px-[8px] sm:py-[12px]",
       )}
     >
       <p
         className={cn(
-          "px-0.5 font-semibold leading-snug text-[#0A1B3D]",
-          compact ? "text-[9px] md:text-[10px] lg:text-[11px]" : "text-[9px] sm:text-[10px] lg:text-[11px]",
+          "px-[2px] font-semibold leading-snug text-[#0A1B3D]",
+          compact ? "text-[10px] md:text-[11px]" : "text-[10px] sm:text-[11px]",
         )}
       >
         {roomLabel}
@@ -104,7 +104,7 @@ function PriceBox({
       <p
         className={cn(
           "font-medium text-[#1A1A1A]",
-          compact ? "mt-0.5 text-[8px] md:mt-1 md:text-[9px] lg:text-[10px]" : "mt-1.5 text-[9px] sm:text-[10px]",
+          compact ? "mt-[4px] text-[10px]" : "mt-[6px] text-[10px] sm:text-[11px]",
         )}
       >
         {perLabel}
@@ -135,7 +135,7 @@ export function TripCardPrices({
   const isListing = prominence === "listing";
 
   const grid = (
-    <div className="grid grid-cols-3 gap-1.5 md:gap-2">
+    <div className="grid grid-cols-3 gap-[8px]">
       {PRICE_ROWS.map(({ key, roomKey }) => (
         <PriceBox
           key={key}
@@ -160,7 +160,7 @@ export function TripCardPrices({
     <div
       className={cn(
         "mt-auto border-t border-[#EEF0F3]",
-        isListing ? "px-2.5 py-2.5 md:px-4 md:py-4" : "px-3.5 py-3.5 sm:px-4 sm:py-4",
+        isListing ? "px-4 py-3 md:px-[16px] md:py-[16px]" : "ps-[22px] pe-[14px] py-[14px] sm:px-[16px]",
         className,
       )}
     >

@@ -32,9 +32,9 @@ import {
   moveGalleryItem,
   reindexGallerySortOrder,
 } from "@/lib/trip-gallery";
-import { hotels } from "@/data/mock";
-import type { TripImage } from "@/data/mock";
+import type { TripImage, Hotel } from "@/data/mock";
 import { resolveHotel } from "@/lib/hotel-catalog";
+import { useHotels } from "@/hooks/useHotels";
 import {
   getTripFlightInfo,
   type TripFlightInfo,
@@ -62,6 +62,7 @@ import { notifyTripsUpdated } from "@/hooks/useTrips";
 
 export default function AdminTripFormPage() {
   const params = useParams<{ id: string }>();
+  const { hotels } = useHotels();
   const seedTrip = useMemo(
     () => trips.find((t) => t.id === params.id || t.slug === params.id) ?? trips[0]!,
     [params.id],
@@ -355,7 +356,7 @@ export default function AdminTripFormPage() {
             city="Medina"
             hotelId={hotelStays.medinaHotelId}
             stay={hotelStays.medinaStay}
-            hotelOptions={hotels.filter((h) => h.city === "medina")}
+            hotelOptions={hotels.filter((h) => h.city === "medina" && h.active)}
             onHotelIdChange={(id) => setHotelStays((s) => ({ ...s, medinaHotelId: id }))}
             onStayChange={(stay) => {
               setHotelStays((s) => {
@@ -399,7 +400,7 @@ export default function AdminTripFormPage() {
             city="Makkah"
             hotelId={hotelStays.makkahHotelId}
             stay={hotelStays.makkahStay}
-            hotelOptions={hotels.filter((h) => h.city === "makkah")}
+            hotelOptions={hotels.filter((h) => h.city === "makkah" && h.active)}
             onHotelIdChange={(id) => setHotelStays((s) => ({ ...s, makkahHotelId: id }))}
             onStayChange={(stay) =>
               setHotelStays((s) => ({ ...s, makkahStay: normalizeTripHotelStay(stay) }))
@@ -534,7 +535,7 @@ export default function AdminTripFormPage() {
                 setGallery((prev) => [
                   ...prev,
                   {
-                    src: "/brand/offer-hero/group-photo.png",
+                    src: "/brand/offer-hero/hero-bg-3.png",
                     caption: "Unsere Reisegruppe",
                     sortOrder: prev.length,
                   },
@@ -961,7 +962,7 @@ function HotelStayEditor({
   city: string;
   hotelId: string;
   stay: TripHotelStay;
-  hotelOptions: typeof hotels;
+  hotelOptions: Hotel[];
   onHotelIdChange: (id: string) => void;
   onStayChange: (stay: TripHotelStay) => void;
   onNightsChange: (nights: number) => void;

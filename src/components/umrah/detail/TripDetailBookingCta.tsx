@@ -14,9 +14,9 @@ import { IQ } from "@/lib/images";
 import { resolveTrip } from "@/lib/trip-availability";
 import { cn } from "@/lib/utils";
 
-const CTA_IMAGE = "/brand/offer-hero/makkah.png";
+const CTA_IMAGE = "/brand/booking-cta-medina.png";
 
-/** Wide bottom CTA — Makkah/Medina visual, inquiry link for the current departure. */
+/** Wide bottom CTA — Medina visual with soft fade, inquiry link for the current departure. */
 export function TripDetailBookingCta({ trip }: { trip: UmrahTrip }) {
   const [liveTrip, setLiveTrip] = useState(trip);
 
@@ -36,48 +36,78 @@ export function TripDetailBookingCta({ trip }: { trip: UmrahTrip }) {
 
   return (
     <section id="booking" className="trip-section scroll-mt-24 pb-24 md:pb-16">
-      <div className="mobarak-card relative overflow-hidden">
-        <div className="absolute inset-y-0 start-0 hidden w-[38%] lg:block" aria-hidden>
+      <div className="relative overflow-hidden rounded-[16px] border border-[#E4EAF2] bg-white shadow-[0_4px_18px_rgba(9,36,92,0.06)]">
+        {/* Mobile: image on top with soft fade into content */}
+        <div className="relative aspect-[16/10] w-full lg:hidden" aria-hidden>
           <Image
             src={CTA_IMAGE}
             alt=""
             fill
-            className="object-cover object-center"
-            sizes="38vw"
+            className="object-cover object-[center_35%]"
+            sizes="100vw"
             quality={IQ.card}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-white/50 to-white" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,0.7) 78%, #fff 100%)",
+            }}
+          />
         </div>
 
-        <div className="relative grid gap-8 px-6 py-8 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-12 lg:py-10 lg:ps-[40%] lg:pe-10">
-          <div className="max-w-xl">
-            <h2 className="text-2xl font-bold leading-tight text-navy sm:text-[28px] lg:text-[30px]">
+        {/* Desktop: left photo with soft feather into white */}
+        <div className="pointer-events-none absolute inset-y-0 start-0 hidden w-[34%] xl:w-[36%] lg:block" aria-hidden>
+          <Image
+            src={CTA_IMAGE}
+            alt=""
+            fill
+            className="object-cover object-[center_40%]"
+            sizes="36vw"
+            quality={IQ.card}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 42%, rgba(255,255,255,0.55) 68%, rgba(255,255,255,0.92) 86%, #fff 100%)",
+            }}
+          />
+        </div>
+
+        <div className="relative grid gap-6 px-5 pb-7 pt-1 sm:gap-7 sm:px-8 sm:pb-8 sm:pt-2 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,320px)] lg:items-center lg:gap-10 lg:py-9 lg:ps-[36%] lg:pe-9 lg:pt-9 xl:ps-[38%]">
+          <div className="min-w-0 max-w-xl">
+            <h2 className="text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-[#051033] sm:text-[26px] lg:text-[28px]">
               {cta.finalTitle}
             </h2>
-            <p className="mt-3 text-[14px] leading-relaxed text-muted sm:text-[15px]">
+            <p className="mt-2.5 text-[14px] leading-relaxed text-[#3D4F5F] sm:mt-3 sm:text-[15px]">
               {cta.finalBody}
             </p>
           </div>
 
-          <div className="w-full shrink-0 lg:w-[min(100%,320px)]">
+          <div className="w-full shrink-0">
             <Link
               href={flow.inquiryPath}
               className={cn(
-                "flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-[15px] font-bold text-white shadow-sm transition sm:min-h-[56px] sm:text-base",
+                "flex min-h-[50px] w-full items-center justify-center gap-2 rounded-[12px] px-5 py-3.5 text-[14px] font-bold text-white transition sm:min-h-[52px] sm:text-[15px]",
+                "shadow-[0_8px_20px_rgba(30,90,156,0.28)] hover:brightness-[0.97]",
                 cta.mode === "waitlist"
-                  ? "bg-brand-orange-cta hover:brightness-95"
+                  ? "bg-brand-orange-cta"
                   : cta.mode === "full"
-                    ? "bg-navy hover:bg-navy/90"
-                    : "bg-brand-cta hover:bg-navy",
+                    ? "bg-navy"
+                    : "bg-[linear-gradient(180deg,#3B82F6_0%,#1E5A9C_100%)]",
               )}
             >
-              {cta.buttonLabel}
-              <DirArrow />
+              <span className="inline-flex items-center gap-1.5">
+                {cta.buttonLabel}
+                <DirArrow />
+              </span>
             </Link>
+
             <TripInquiryCtaBenefits
               trip={liveTrip}
-              className="mt-4 space-y-2"
-              itemClassName="text-[13px]"
+              className="mt-3.5 flex flex-wrap gap-x-4 gap-y-2"
+              itemClassName="text-[12px] font-medium text-[#6B7C8F]"
             />
           </div>
         </div>

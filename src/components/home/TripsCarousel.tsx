@@ -55,7 +55,7 @@ export function TripsCarousel({ trips }: { trips: UmrahTrip[] }) {
     const clamped = ((index % count) + count) % count;
     const card = el.querySelectorAll<HTMLElement>("[data-trip-card]")[clamped];
     if (!card) return;
-    el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    card.scrollIntoView({ inline: "start", block: "nearest", behavior: "smooth" });
     setActive(clamped);
   };
 
@@ -69,7 +69,7 @@ export function TripsCarousel({ trips }: { trips: UmrahTrip[] }) {
       <button
         type="button"
         onClick={() => goTo(active - 1)}
-        className="absolute start-1 top-[42%] z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-navy shadow-md transition hover:bg-surface sm:start-0 md:-start-3 lg:-start-2 xl:-start-5"
+        className="absolute start-0 top-[42%] z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-navy shadow-md transition hover:bg-surface md:-start-3 lg:-start-2 xl:-start-5"
         aria-label={tCommon("previousTrips")}
       >
         <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
@@ -77,17 +77,19 @@ export function TripsCarousel({ trips }: { trips: UmrahTrip[] }) {
       <button
         type="button"
         onClick={() => goTo(active + 1)}
-        className="absolute end-1 top-[42%] z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-navy shadow-md transition hover:bg-surface sm:end-0 md:-end-3 lg:-end-2 xl:-end-5"
+        className="absolute end-0 top-[42%] z-30 flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-navy shadow-md transition hover:bg-surface md:-end-3 lg:-end-2 xl:-end-5"
         aria-label={tCommon("nextTrips")}
       >
         <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
       </button>
 
-      <div className="-mx-4 overflow-x-clip px-0 sm:mx-0 sm:overflow-visible">
+      {/* Left stays inside Container padding so cards never flush the screen edge.
+          Only the right side bleeds so the next card can peek. */}
+      <div className="-me-5 overflow-x-clip sm:me-0 sm:overflow-visible">
         <div
           ref={scrollerRef}
           dir="ltr"
-          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-4 pt-1 pb-2 sm:gap-5 sm:px-1"
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pe-5 scroll-pe-5 pt-1 pb-2 sm:gap-5 sm:px-1 sm:pe-1 sm:scroll-pe-1"
           tabIndex={0}
           aria-live="polite"
           onKeyDown={(e) => {
@@ -107,7 +109,7 @@ export function TripsCarousel({ trips }: { trips: UmrahTrip[] }) {
               <div
                 key={trip.id}
                 data-trip-card
-                className="w-[calc(100%-1.75rem)] shrink-0 snap-start sm:w-[min(100%,360px)] lg:w-[calc((100%-2.5rem)/3)]"
+                className="w-[calc(100%-1.5rem)] shrink-0 snap-start sm:w-[min(100%,360px)] lg:w-[calc((100%-2.5rem)/3)]"
                 onTouchStart={(e) => {
                   if ((e.target as HTMLElement).closest("[data-trip-card-gallery]")) {
                     e.stopPropagation();

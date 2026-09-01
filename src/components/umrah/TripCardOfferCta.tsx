@@ -28,10 +28,10 @@ export function TripCardOfferCta({
     <Link
       href={buildTripOfferFlowHref(trip, listingFilter)}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 rounded-xl bg-brand-cta font-bold text-white shadow-[0_2px_8px_rgba(30,90,156,0.28)] transition hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cta",
+        "inline-flex items-center justify-center gap-[6px] rounded-[12px] bg-brand-cta font-bold text-white shadow-[0_2px_8px_rgba(30,90,156,0.28)] transition hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cta",
         isListing
-          ? "min-h-11 w-full px-4 py-3 text-[13px] leading-snug md:min-h-[48px] md:text-[14px]"
-          : "min-h-11 w-full gap-1.5 px-4 py-3.5 text-[14px] sm:min-h-[52px] sm:text-[15px]",
+          ? "min-h-[44px] w-full px-[16px] py-[12px] text-[13px] leading-snug md:min-h-[48px] md:text-[14px]"
+          : "min-h-[44px] w-full px-[16px] py-[14px] text-[14px] sm:min-h-[52px] sm:text-[15px]",
         fullWidth && "w-full",
       )}
     >

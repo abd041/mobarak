@@ -70,13 +70,23 @@ export function filterCountries(locale: string, query: string, limit = 8): Count
   if (trimmed.length < 1) return [];
 
   const q = normalizeCountrySearch(trimmed);
-  return getCountries(locale)
-    .filter(
-      (c) =>
-        normalizeCountrySearch(c.name).includes(q) ||
-        normalizeCountrySearch(c.code).includes(q),
-    )
-    .slice(0, limit);
+  const matches = getCountries(locale).filter(
+    (c) =>
+      normalizeCountrySearch(c.name).includes(q) ||
+      normalizeCountrySearch(c.code).includes(q),
+  );
+
+  // Prefer prefix matches so "Öst" → Österreich, "Tür" → Türkei rise to the top
+  matches.sort((a, b) => {
+    const an = normalizeCountrySearch(a.name);
+    const bn = normalizeCountrySearch(b.name);
+    const aPrefix = an.startsWith(q) || normalizeCountrySearch(a.code).startsWith(q) ? 0 : 1;
+    const bPrefix = bn.startsWith(q) || normalizeCountrySearch(b.code).startsWith(q) ? 0 : 1;
+    if (aPrefix !== bPrefix) return aPrefix - bPrefix;
+    return an.localeCompare(bn);
+  });
+
+  return matches.slice(0, limit);
 }
 
 export function findCountryByCode(locale: string, code: string): Country | undefined {

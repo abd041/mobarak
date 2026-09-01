@@ -139,7 +139,7 @@ export const INCLUSION_CATALOG: InclusionCatalogItem[] = [
   },
   {
     id: "excursionMakkah",
-    icon: "/brand/inclusion-icons/excursions.png",
+    icon: "/brand/inclusion-icons/excursion-makkah.svg",
     barLabelKey: "incBarExcursionMakkah",
     labelKey: "featExcursionMakkah",
     cardTitleKey: "featExcursionMakkah",
@@ -149,7 +149,7 @@ export const INCLUSION_CATALOG: InclusionCatalogItem[] = [
   },
   {
     id: "excursionMedina",
-    icon: "/brand/inclusion-icons/excursions.png",
+    icon: "/brand/inclusion-icons/excursion-medina.svg",
     barLabelKey: "incBarExcursionMedina",
     labelKey: "featExcursionMedina",
     cardTitleKey: "featExcursionMedina",

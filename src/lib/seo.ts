@@ -15,6 +15,15 @@ export const OG_LOCALE: Record<Locale, string> = {
   tr: "tr_TR",
 };
 
+/** BCP 47 content-language (Arabic explicitly ar for RTL pages). */
+export const CONTENT_LANGUAGE: Record<Locale, string> = {
+  de: "de-AT",
+  en: "en-GB",
+  bs: "bs-BA",
+  ar: "ar",
+  tr: "tr-TR",
+};
+
 export function localizedPath(locale: string, path = "/"): string {
   const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
   return `/${locale}${clean}`;
@@ -58,13 +67,18 @@ export function buildPageMetadata({
   indexable = true,
   type = "website",
 }: BuildMetaInput): Metadata {
+  const loc = (locale as Locale) || "de";
   const url = absoluteUrl(locale, path);
   const imageUrl = ogImage.startsWith("http") ? ogImage : `${SITE_URL}${ogImage}`;
   const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+  const ogLocale = OG_LOCALE[loc] ?? "de_AT";
+  const alternateLocale = locales
+    .filter((l) => l !== loc)
+    .map((l) => OG_LOCALE[l]);
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: fullTitle,
+    title: { absolute: fullTitle },
     description,
     alternates: {
       canonical: url,
@@ -72,7 +86,8 @@ export function buildPageMetadata({
     },
     openGraph: {
       type,
-      locale: OG_LOCALE[(locale as Locale) || "de"] ?? "de_AT",
+      locale: ogLocale,
+      alternateLocale,
       url,
       siteName: SITE_NAME,
       title: fullTitle,
@@ -95,5 +110,8 @@ export function buildPageMetadata({
     robots: indexable
       ? { index: true, follow: true }
       : { index: false, follow: false },
+    other: {
+      "content-language": CONTENT_LANGUAGE[loc] ?? locale,
+    },
   };
 }

@@ -48,12 +48,12 @@ export default async function HomePage({
       <ReviewsSection reviews={googleReviews.reviews} />
 
       <section className="overflow-visible bg-white py-10 sm:py-14 md:py-16">
-        <Container className="overflow-visible px-4 sm:px-8">
+        <Container className="overflow-visible px-5 sm:px-8">
           <div className="mb-6 text-center sm:mb-8">
-            <h2 className="text-lg font-bold tracking-[0.06em] text-navy sm:text-xl md:text-2xl">
+            <h2 className="text-[22px] font-extrabold tracking-[0.06em] text-navy sm:text-[26px] md:text-[30px]">
               {t("tripsTitle")}
             </h2>
-            <p className="mt-2 text-sm text-muted md:text-base">{t("tripsSubtitle")}</p>
+            <p className="mt-[6px] text-sm text-muted md:text-base">{t("tripsSubtitle")}</p>
           </div>
           <TripsCarousel trips={trips} />
         </Container>

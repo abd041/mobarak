@@ -30,11 +30,7 @@ export const TRIP_DETAIL_NAV: {
   { id: "gallery", labelKey: "sectionGallery" },
   { id: "flights", labelKey: "sectionFlights" },
   { id: "luggage", labelKey: "sectionLuggage" },
-  { id: "transfers", labelKey: "sectionTransfers" },
-  { id: "visa", labelKey: "sectionVisa" },
   { id: "guides", labelKey: "sectionGuides" },
-  { id: "excursions", labelKey: "sectionExcursions" },
   { id: "itinerary", labelKey: "sectionItinerary" },
-  { id: "prices", labelKey: "sectionPrices" },
   { id: "faq", labelKey: "sectionFaq" },
 ];

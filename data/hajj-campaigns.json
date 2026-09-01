@@ -1,0 +1,526 @@
+{
+  "version": 2,
+  "campaigns": [
+    {
+      "slug": "hajj-2027",
+      "year": 2027,
+      "label": "Hajj 2027",
+      "status": "active",
+      "isDefault": true,
+      "preRegEnabled": true,
+      "settings": {
+        "googleReviewsEnabled": true
+      },
+      "locales": {
+        "de": {
+          "hero": {
+            "label": "HAJJ 2027",
+            "title": "Deine Hajj-Reise.",
+            "titleLine2": "Von Anfang an begleitet.",
+            "body": "Seit über 30 Jahren begleiten wir Pilger auf ihrer wichtigsten Reise – von der Vorbereitung bis zur Betreuung während des Hajj in Saudi-Arabien.",
+            "imageSrc": "/brand/hero-bg.png",
+            "benefits": [
+              "Unterstützung bei der Registrierung",
+              "Passende Hajj-Programme",
+              "Persönliche Reiseleitung",
+              "Religiöse Begleitung",
+              "Betreuung in Saudi-Arabien",
+              "Gemeinsam als Gruppe"
+            ],
+            "cta": "Für Hajj 2027 vormerken",
+            "ctaFree": "Kostenlos & unverbindlich",
+            "ctaNoPay": "Keine Zahlung erforderlich"
+          },
+          "status": {
+            "title": "Hajj 2027 – aktueller Stand",
+            "body": "Die finalen Programme, Preise und Termine für Hajj 2027 stehen derzeit noch nicht fest. Sobald wichtige Informationen zur Registrierung, zu verfügbaren Programmen und zur Buchungsphase veröffentlicht werden, informieren wir unsere vorgemerkten Pilger.",
+            "cta": "Jetzt kostenlos vormerken",
+            "note": "Unverbindlich & kostenlos"
+          },
+          "why": {
+            "eyebrow": "WARUM MOBARAK?",
+            "title": "Hajj ist mehr als eine Reise.",
+            "subtitle": "Gerade bei einer einmaligen Reise wie dem Hajj ist persönliche Erfahrung entscheidend.",
+            "cards": [
+              {
+                "id": "why-1",
+                "icon": "experience",
+                "title": "30+ Jahre Erfahrung",
+                "body": "Seit über drei Jahrzehnten begleiten wir Pilger beim Hajj und kennen die organisatorischen und praktischen Herausforderungen dieser besonderen Reise."
+              },
+              {
+                "id": "why-2",
+                "icon": "support",
+                "title": "Persönliche Unterstützung",
+                "body": "Wir begleiten dich bereits vor der Reise und unterstützen dich bei den notwendigen Schritten der Vorbereitung."
+              },
+              {
+                "id": "why-3",
+                "icon": "religious",
+                "title": "Religiöse Begleitung",
+                "body": "Unsere erfahrenen Reiseleiter und religiösen Begleiter bereiten die Gruppe auf die Hajj-Riten vor und begleiten sie während der Reise."
+              },
+              {
+                "id": "why-4",
+                "icon": "group",
+                "title": "Gemeinsam als Gruppe",
+                "body": "Bei den entscheidenden Stationen des Hajj bewegen wir uns organisiert als Gruppe und lassen unsere Pilger nicht allein."
+              },
+              {
+                "id": "why-5",
+                "icon": "onsite",
+                "title": "Betreuung vor Ort",
+                "body": "Wir sind während des Hajj in Saudi-Arabien für dich da und unterstützen unsere Pilger in allen wichtigen Situationen."
+              },
+              {
+                "id": "why-6",
+                "icon": "languages",
+                "title": "Mehrsprachige Betreuung",
+                "body": "Deutsch · Arabisch · Bosnisch · Türkisch – je nach Gruppe."
+              }
+            ]
+          },
+          "process": {
+            "title": "Von der Vormerkung bis zur Hajj-Reise",
+            "steps": [
+              {
+                "id": "p01",
+                "num": "01",
+                "title": "Vormerkung",
+                "short": "Du meldest dein Interesse für Hajj 2027 bei uns an.",
+                "full": "Du meldest dein Interesse für Hajj 2027 bei uns an. Die Voranmeldung ist kostenlos und unverbindlich."
+              },
+              {
+                "id": "p02",
+                "num": "02",
+                "title": "Information",
+                "short": "Sobald es wichtige Neuigkeiten zu Hajj 2027 gibt, informieren wir dich rechtzeitig.",
+                "full": "Sobald es wichtige Neuigkeiten zu Hajj 2027 gibt, informieren wir dich rechtzeitig."
+              },
+              {
+                "id": "p03",
+                "num": "03",
+                "title": "Registrierung",
+                "short": "Sobald der offizielle Ablauf für Hajj 2027 feststeht, erklären wir dir die notwendigen Registrierungsschritte.",
+                "full": "Sobald der offizielle Ablauf für Hajj 2027 feststeht, erklären wir dir die notwendigen Registrierungsschritte."
+              },
+              {
+                "id": "p04",
+                "num": "04",
+                "title": "Prüfung & Dokumente",
+                "short": "Wir unterstützen dich dabei, die erforderlichen Informationen und Dokumente vorzubereiten und zu prüfen.",
+                "full": "Wir unterstützen dich dabei, die erforderlichen Informationen und Dokumente vorzubereiten und zu prüfen."
+              },
+              {
+                "id": "p05",
+                "num": "05",
+                "title": "Passendes Programm",
+                "short": "Sobald Programme verfügbar sind, helfen wir dir dabei, die passenden Möglichkeiten für dein Wohnsitzland zu verstehen.",
+                "full": "Sobald Programme verfügbar sind, helfen wir dir dabei, die passenden Möglichkeiten für dein Wohnsitzland zu verstehen."
+              },
+              {
+                "id": "p06",
+                "num": "06",
+                "title": "Unterstützung bei der Buchung",
+                "short": "Wir begleiten dich durch den Buchungsprozess und erklären dir die wichtigen nächsten Schritte.",
+                "full": "Wir begleiten dich durch den Buchungsprozess und erklären dir die wichtigen nächsten Schritte."
+              },
+              {
+                "id": "p07",
+                "num": "07",
+                "title": "Reisevorbereitung",
+                "short": "Vor der Abreise erhält unsere Gruppe organisatorische und religiöse Informationen für die bevorstehende Hajj-Reise.",
+                "full": "Vor der Abreise erhält unsere Gruppe organisatorische und religiöse Informationen für die bevorstehende Hajj-Reise."
+              },
+              {
+                "id": "p08",
+                "num": "08",
+                "title": "Abflug",
+                "short": "Unsere gemeinsame Reise beginnt. Du erhältst alle Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf.",
+                "full": "Unsere gemeinsame Reise beginnt. Du erhältst alle Informationen zu Treffpunkt, Flughafen, Gepäck und Ablauf."
+              },
+              {
+                "id": "p09",
+                "num": "09",
+                "title": "Ankunft in Saudi-Arabien",
+                "short": "Nach der Ankunft koordinieren wir Empfang, Transfers und die ersten organisatorischen Schritte.",
+                "full": "Nach der Ankunft koordinieren wir Empfang, Transfers und die ersten organisatorischen Schritte."
+              },
+              {
+                "id": "p10",
+                "num": "10",
+                "title": "Betreuung vor Ort",
+                "short": "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe persönlich in Saudi-Arabien.",
+                "full": "Während des Hajj begleiten unsere Reiseleiter und religiösen Begleiter die Gruppe persönlich in Saudi-Arabien."
+              }
+            ]
+          },
+          "journey": {
+            "eyebrow": "DEINE HAJJ-REISE MIT UNS",
+            "title": "Von der Ankunft bis zum Abschieds-Tawaf",
+            "steps": [
+              {
+                "id": "j01",
+                "num": "01",
+                "title": "Ankunft in Saudi-Arabien",
+                "modalTitle": "Willkommen in Saudi-Arabien",
+                "short": "Empfang am Flughafen und erste wichtige Informationen.",
+                "full": "Nach der Landung beginnt unsere Betreuung direkt vor Ort. Unsere Reiseleitung informiert die Gruppe über die nächsten Schritte und koordiniert den weiteren Ablauf.\n\nJe nach finalem Hajj-Programm organisieren wir gemeinsam die vorgesehenen Transfers und Treffpunkte.",
+                "checks": [
+                  "Treffpunkt der Gruppe",
+                  "Informationen zur Einreise",
+                  "Gepäckinformationen",
+                  "Ansprechpartner vor Ort",
+                  "Informationen zum Transfer",
+                  "Weiterer Tagesablauf"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j02",
+                "num": "02",
+                "title": "Transfer zum Hotel",
+                "modalTitle": "Gemeinsam zum Hotel",
+                "short": "Gemeinsamer Transfer zum vorgesehenen Hotel.",
+                "full": "Nach der Ankunft koordinieren wir den Transfer der Gruppe zum vorgesehenen Hotel. Unsere Reiseleiter informieren über Treffpunkt, Buszuordnung und den weiteren Ablauf.\n\nGerade nach einer langen Anreise ist uns wichtig, dass die Gruppe organisiert zusammenbleibt und jeder weiß, an wen er sich wenden kann.",
+                "checks": [
+                  "Bus- und Gruppeneinteilung",
+                  "Gepäckkoordination",
+                  "Begleitung durch das Team",
+                  "Informationen zur Ankunft im Hotel"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-2.png"
+              },
+              {
+                "id": "j03",
+                "num": "03",
+                "title": "Check-in Medina",
+                "modalTitle": "Check-in in Medina",
+                "short": "Ankunft in Medina und Zimmerbezug.",
+                "full": "Nach der Ankunft in Medina begleiten wir unsere Gruppe beim Hotel-Check-in und bei der Zimmervergabe.\n\nUnsere Reiseleitung informiert über Frühstückszeiten, Treffpunkte, Gebetszeiten sowie die geplanten Programmpunkte während des Aufenthalts in Medina.",
+                "checks": [
+                  "Zimmervergabe",
+                  "Hotelinformationen",
+                  "Treffpunkt der Gruppe",
+                  "Tagesprogramm",
+                  "Ansprechpartner",
+                  "Informationen zur Masjid an-Nabawi"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-2.png"
+              },
+              {
+                "id": "j04",
+                "num": "04",
+                "title": "Aufenthalt & Betreuung in Medina",
+                "modalTitle": "Deine Zeit in Medina",
+                "short": "Religiöse Programme und persönliche Begleitung.",
+                "full": "Medina ist für viele Pilger einer der emotionalsten Teile der Reise. Wir möchten ausreichend Raum für persönliche Ibadah schaffen und gleichzeitig eine strukturierte Betreuung anbieten.\n\nJe nach Programm begleiten wir unsere Gruppe bei religiösen Programmen, Ziyarat und organisatorischen Terminen.",
+                "checks": [
+                  "Masjid an-Nabawi",
+                  "Rawda – sofern entsprechend organisiert",
+                  "Ziyarat",
+                  "Religiöse Vorträge",
+                  "Persönliche Ibadah",
+                  "Treffpunkte der Gruppe"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-4.png"
+              },
+              {
+                "id": "j05",
+                "num": "05",
+                "title": "Transfer Medina → Makkah",
+                "modalTitle": "Von Medina nach Makkah",
+                "short": "Gemeinsame Weiterreise Richtung Makkah.",
+                "full": "Die Weiterreise von Medina nach Makkah ist ein wichtiger Übergang unserer Hajj-Reise.\n\nUnsere Reiseleitung informiert die Gruppe rechtzeitig über Abfahrt, Gepäck, Treffpunkt und die Vorbereitung auf den Ihram.",
+                "checks": [
+                  "Abfahrtszeit",
+                  "Treffpunkt",
+                  "Gepäck",
+                  "Bus-/Transferinformation",
+                  "Vorbereitung auf Ihram",
+                  "Informationen zum Miqat"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              },
+              {
+                "id": "j06",
+                "num": "06",
+                "title": "Miqat / Ihram",
+                "modalTitle": "Miqat und Ihram",
+                "short": "Wir bereiten uns am vorgesehenen Miqat auf den Ihram vor.",
+                "full": "Vor der Weiterreise nach Makkah erfolgt die entsprechende Vorbereitung für den Ihram. Unsere religiösen Begleiter erklären der Gruppe die notwendigen Schritte und beantworten Fragen.",
+                "checks": [
+                  "Ihram",
+                  "Niyyah",
+                  "Talbiyah",
+                  "Wichtige Regeln im Ihram",
+                  "Praktische Hinweise",
+                  "Weiterfahrt nach Makkah"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              },
+              {
+                "id": "j07",
+                "num": "07",
+                "title": "Check-in Makkah",
+                "modalTitle": "Ankunft in Makkah",
+                "short": "Ankunft in Makkah und Zimmerbezug.",
+                "full": "Nach unserer Ankunft in Makkah begleiten wir die Gruppe beim Hotel-Check-in und bei der Zimmervergabe.\n\nAnschließend erhält jeder Pilger Informationen über Treffpunkte, Gebetszeiten, das weitere Programm sowie die bevorstehenden Hajj-Tage.",
+                "checks": [
+                  "Zimmervergabe",
+                  "Hotelinformationen",
+                  "Entfernung zum Haram",
+                  "Treffpunkte",
+                  "Ansprechpartner",
+                  "Weiterer Reiseablauf"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j08",
+                "num": "08",
+                "title": "Vorbereitung auf Hajj",
+                "modalTitle": "Gemeinsam vorbereitet in die Hajj-Tage",
+                "short": "Wichtige Informationen vor Beginn der Hajj-Tage.",
+                "full": "Vor Beginn der entscheidenden Hajj-Tage bereiten unsere Reiseleiter und religiösen Begleiter die Gruppe ausführlich vor.\n\nDie Pilger erhalten sowohl religiöse als auch organisatorische Informationen, damit sie wissen, was sie in den kommenden Tagen erwartet.",
+                "checks": [
+                  "Ihram",
+                  "Ablauf der Hajj-Tage",
+                  "Mina",
+                  "Arafat",
+                  "Muzdalifah",
+                  "Jamarat",
+                  "Treffpunkte",
+                  "Was mitgenommen werden sollte"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-4.png"
+              },
+              {
+                "id": "j09",
+                "num": "09",
+                "title": "Mina",
+                "dayLabel": "8. Dhul Hijjah",
+                "modalTitle": "8. Dhul Hijjah – Mina",
+                "short": "Beginn der Hajj-Tage und Vorbereitung auf Arafat.",
+                "full": "Mit dem Aufenthalt in Mina beginnt eine der wichtigsten Phasen unserer Hajj-Reise.\n\nUnsere Gruppe bewegt sich entsprechend den offiziellen Vorgaben und dem gebuchten Hajj-Programm gemeinsam zu den vorgesehenen Bereichen.\n\nUnsere Reiseleiter informieren über Treffpunkte, Unterbringung und den Ablauf des nächsten Tages.",
+                "checks": [
+                  "Transfer nach Mina",
+                  "Gruppentreffpunkte",
+                  "Unterbringung",
+                  "Religiöse Begleitung",
+                  "Vorbereitung auf Arafat"
+                ],
+                "highlight": false,
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j10",
+                "num": "10",
+                "title": "Tag von Arafat",
+                "dayLabel": "9. Dhul Hijjah",
+                "modalTitle": "Der Tag von Arafat",
+                "short": "Der wichtigste Tag des Hajj.",
+                "full": "Der Tag von Arafat gehört zu den bedeutendsten Momenten des gesamten Hajj. An diesem besonderen Tag möchten wir unseren Pilgern ermöglichen, sich möglichst auf ihre Ibadah zu konzentrieren.\n\nUnsere Reiseleitung und religiöse Begleitung organisieren die Gruppe entsprechend den offiziellen Vorgaben und informieren über Treffpunkte und den weiteren Tagesablauf.",
+                "modalNote": "Es kann nicht zugesichert werden, dass alle Pilger zu jedem Moment physisch zusammenbleiben. Offizielle Vorgaben zu Transport und Besucherführung haben stets Vorrang.",
+                "checks": [
+                  "Gemeinsame Gruppenorganisation",
+                  "Klare Treffpunkte",
+                  "Religiöse Begleitung",
+                  "Informationen zum Tagesablauf",
+                  "Ansprechpartner",
+                  "Vorbereitung auf die Weiterreise nach Muzdalifah"
+                ],
+                "highlight": true,
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j11",
+                "num": "11",
+                "title": "Transfer Arafat → Muzdalifah",
+                "modalTitle": "Von Arafat nach Muzdalifah",
+                "short": "Gemeinsame Weiterreise nach Sonnenuntergang.",
+                "full": "Nach dem Ende des Tages von Arafat beginnt die Weiterreise nach Muzdalifah.\n\nDa die Transportabläufe während des Hajj durch offizielle Vorgaben und große Pilgerströme beeinflusst werden können, informiert unser Team die Gruppe laufend über den aktuellen Ablauf.",
+                "checks": [
+                  "Treffpunkte",
+                  "Gruppenorganisation",
+                  "Transferinformationen",
+                  "Informationen für Muzdalifah"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-2.png"
+              },
+              {
+                "id": "j12",
+                "num": "12",
+                "title": "Muzdalifah",
+                "modalTitle": "Die Nacht in Muzdalifah",
+                "short": "Übernachtung und Vorbereitung auf die kommenden Riten.",
+                "full": "In Muzdalifah verbringen die Pilger eine besondere Nacht des Hajj. Unsere religiösen Begleiter erklären die entsprechenden Riten und unsere Reiseleitung informiert über den weiteren organisatorischen Ablauf.",
+                "checks": [
+                  "Gebet",
+                  "Aufenthalt in Muzdalifah",
+                  "Vorbereitung auf Jamarat",
+                  "Gruppentreffpunkte",
+                  "Nächste Abfahrt"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              },
+              {
+                "id": "j13",
+                "num": "13",
+                "title": "Transfer nach Mina",
+                "modalTitle": "Zurück nach Mina",
+                "short": "Weiterreise am folgenden Morgen.",
+                "full": "Nach Muzdalifah führt der Weg wieder in Richtung Mina.\n\nUnser Team informiert die Gruppe über Abfahrtszeiten, Treffpunkte und den Ablauf der kommenden Riten.",
+                "checks": [
+                  "Transfer",
+                  "Treffpunkt",
+                  "Jamarat-Informationen",
+                  "Weitere Hajj-Riten"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j14",
+                "num": "14",
+                "title": "Jamarat & weitere Hajj-Riten",
+                "modalTitle": "Jamarat und weitere Hajj-Riten",
+                "short": "Steinigung und weitere wichtige Riten.",
+                "full": "Die Tage rund um Jamarat erfordern besonders gute Organisation und klare Informationen.\n\nUnsere Pilger erhalten Informationen zum vorgesehenen Zeitfenster und zur Gruppenorganisation entsprechend dem finalen Hajj-Programm.",
+                "modalNote": "Reihenfolge und Zeiten der einzelnen Riten richten sich nach dem finalen Hajj-Programm und können je nach Buchung variieren.",
+                "checks": [
+                  "Jamarat",
+                  "Hady",
+                  "Halq / Taqsir",
+                  "Tawaf al-Ifadah",
+                  "Weitere notwendige Riten"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j15",
+                "num": "15",
+                "title": "Tage von Tashreeq",
+                "dayLabel": "11.–13. Dhul Hijjah",
+                "modalTitle": "Die Tage von Tashreeq",
+                "short": "Weitere Tage in Mina und Fortsetzung der Hajj-Riten.",
+                "full": "Auch während der Tage von Tashreeq bleibt unsere Gruppe organisatorisch und religiös begleitet.\n\nUnsere Reiseleitung informiert täglich über die nächsten Programmpunkte, Treffpunkte und vorgesehenen Zeiten.",
+                "checks": [
+                  "Mina",
+                  "Jamarat",
+                  "Gruppeninformationen",
+                  "Religiöse Begleitung",
+                  "Persönliche Ansprechpartner"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              },
+              {
+                "id": "j16",
+                "num": "16",
+                "title": "Transfer nach Makkah",
+                "modalTitle": "Zurück nach Makkah",
+                "short": "Rückkehr nach Makkah.",
+                "full": "Nach den intensiven Hajj-Tagen erfolgt entsprechend dem Reiseprogramm die Rückkehr nach Makkah.\n\nWir koordinieren den Transfer und informieren über die nächsten Programmpunkte sowie den weiteren Aufenthalt.",
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j17",
+                "num": "17",
+                "title": "Abschieds-Tawaf",
+                "modalTitle": "Abschieds-Tawaf",
+                "short": "Gemeinsamer Abschieds-Tawaf vor der Rückreise.",
+                "full": "Der Abschieds-Tawaf bildet für viele Pilger den emotionalen Abschluss ihrer Zeit in Makkah.\n\nUnsere Reiseleitung informiert über den vorgesehenen Ablauf und unterstützt die Gruppe bei der Organisation entsprechend dem finalen Programm.",
+                "checks": [
+                  "Treffpunkt",
+                  "Organisation",
+                  "Religiöse Hinweise",
+                  "Vorbereitung auf die Abreise"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "j18",
+                "num": "18",
+                "title": "Transfer zum Flughafen & Rückreise",
+                "modalTitle": "Gemeinsam auf dem Weg nach Hause",
+                "short": "Heimreise mit vielen besonderen Erinnerungen.",
+                "full": "Auch am Abreisetag bleibt unsere Betreuung bestehen.\n\nWir informieren über Check-out, Treffpunkt, Gepäck und Transfer zum Flughafen und begleiten die Gruppe durch die letzten organisatorischen Schritte der Reise.",
+                "checks": [
+                  "Hotel Check-out",
+                  "Gepäck",
+                  "Flughafentransfer",
+                  "Check-in",
+                  "Ansprechpartner",
+                  "Rückflug"
+                ],
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              }
+            ]
+          },
+          "seo": {
+            "title": "Hajj 2027 mit Mobarak – persönlich begleitet von Anfang bis Ende",
+            "blocks": []
+          },
+          "experience": {
+            "stat": "30+",
+            "heading": "JAHRE ERFAHRUNG MIT HAJJ & UMRAH",
+            "body": "Tausende Pilger haben uns auf ihrer wichtigsten Reise ihr Vertrauen geschenkt.",
+            "slides": [
+              {
+                "id": "exp-1990",
+                "label": "1990er Jahre",
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "exp-2000",
+                "label": "2000er Jahre",
+                "imageSrc": "/brand/offer-hero/hero-bg-2.png"
+              },
+              {
+                "id": "exp-2010",
+                "label": "2010er Jahre",
+                "imageSrc": "/brand/offer-hero/hero-bg-kaaba.png"
+              },
+              {
+                "id": "exp-today",
+                "label": "Heute",
+                "imageSrc": "/brand/offer-hero/hero-bg-3.png"
+              }
+            ]
+          },
+          "finalCta": {
+            "title": "Der Hajj beginnt nicht erst in Makkah.",
+            "body": "Er beginnt mit der richtigen Vorbereitung. Wir begleiten dich auf diesem Weg.",
+            "imageSrc": "/brand/offer-hero/hero-bg-3.png",
+            "features": [
+              "30+ Jahre Erfahrung",
+              "Persönliche Betreuung",
+              "Religiöse Begleitung",
+              "Gemeinsam als Gruppe"
+            ],
+            "cta": "Für Hajj 2027 vormerken",
+            "ctaFree": "Kostenlos & unverbindlich"
+          },
+          "faqs": [
+            {
+              "id": "faq-1",
+              "question": "Wann stehen die finalen Hajj-2027-Termine und Preise fest?",
+              "answer": "Die finalen Programme, Preise und Termine stehen derzeit noch nicht fest. Vorgemerkte Pilger werden informiert, sobald offizielle Informationen vorliegen."
+            },
+            {
+              "id": "faq-2",
+              "question": "Ist die Voranmeldung verbindlich?",
+              "answer": "Nein. Die Voranmeldung ist kostenlos und unverbindlich. Sie verpflichtet Sie nicht zu einer Buchung."
+            },
+            {
+              "id": "faq-3",
+              "question": "Muss ich später ein Mobarak-Programm buchen?",
+              "answer": "Nein. Nach Veröffentlichung der Programme entscheiden Sie frei, ob Sie unser Programm oder ein anderes wählen."
+            }
+          ]
+        }
+      },
+      "createdAt": "2026-08-29T06:22:23.816Z",
+      "updatedAt": "2026-08-29T06:22:23.816Z"
+    }
+  ]
+}

@@ -3,18 +3,52 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
-import { TRIP_DETAIL_NAV } from "@/lib/trip-detail-sections";
+import { TRIP_DETAIL_NAV, type TripDetailSectionId } from "@/lib/trip-detail-sections";
 import { cn } from "@/lib/utils";
 
-/** Sticky horizontal jump nav — desktop only. */
+type NavItem = (typeof TRIP_DETAIL_NAV)[number];
+
+/** Only keep jump-nav tabs whose target section is actually on the page. */
+function getMountedNavItems(): NavItem[] {
+  return TRIP_DETAIL_NAV.filter(({ id }) => document.getElementById(id) != null);
+}
+
+/**
+ * Section jump nav — hidden in its static spot under the hero;
+ * appears fixed under the site header once the hero is scrolled past.
+ */
 export function TripDetailSectionNav() {
   const t = useTranslations("umrah");
-  const [active, setActive] = useState<string>(TRIP_DETAIL_NAV[0]?.id ?? "gallery");
+  const [items, setItems] = useState<NavItem[]>(TRIP_DETAIL_NAV);
+  const [active, setActive] = useState<string>(TRIP_DETAIL_NAV[0]?.id ?? "hotels");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const sections = TRIP_DETAIL_NAV.map(({ id }) => document.getElementById(id)).filter(
-      Boolean,
-    ) as HTMLElement[];
+    const syncItems = () => {
+      const next = getMountedNavItems();
+      setItems(next);
+      setActive((prev) =>
+        next.some((item) => item.id === prev) ? prev : (next[0]?.id ?? prev),
+      );
+    };
+
+    syncItems();
+    // Client sections (gallery/faq) may mount a tick later
+    const raf = requestAnimationFrame(syncItems);
+    const timer = window.setTimeout(syncItems, 100);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!items.length) return;
+
+    const sections = items
+      .map(({ id }) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
 
     if (!sections.length) return;
 
@@ -35,23 +69,51 @@ export function TripDetailSectionNav() {
 
     sections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
+  }, [items]);
+
+  useEffect(() => {
+    const hero = document.getElementById("overview");
+    if (!hero) return;
+
+    const sync = () => {
+      const headerOffset = 64; // site header (~top-16)
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      setVisible(heroBottom <= headerOffset + 8);
+    };
+
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    return () => {
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+    };
   }, []);
 
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: TripDetailSectionId) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  if (!items.length) return null;
+
   return (
     <nav
-      className="sticky top-16 z-30 hidden border-b border-line bg-white/95 shadow-card backdrop-blur-md lg:block"
+      className={cn(
+        "fixed inset-x-0 top-16 z-30 hidden border-b border-line bg-white/95 shadow-card backdrop-blur-md transition duration-200 lg:block",
+        visible
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none -translate-y-full opacity-0",
+      )}
       aria-label={t("sectionNavLabel")}
+      aria-hidden={!visible}
     >
       <Container className="no-scrollbar flex gap-1.5 overflow-x-auto py-2.5">
-        {TRIP_DETAIL_NAV.map(({ id, labelKey }) => (
+        {items.map(({ id, labelKey }) => (
           <button
             key={id}
             type="button"
             onClick={() => scrollTo(id)}
+            tabIndex={visible ? 0 : -1}
             className={cn(
               "shrink-0 rounded-full px-4 py-2 text-[13px] font-semibold transition",
               active === id

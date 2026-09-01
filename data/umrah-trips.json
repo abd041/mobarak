@@ -37,42 +37,42 @@
       ],
       "images": [
         {
-          "src": "/brand/offer-hero/kaaba.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Kaaba",
           "sortOrder": 0
         },
         {
-          "src": "/brand/offer-hero/makkah.png",
+          "src": "/brand/offer-hero/hero-bg-3.png",
           "caption": "Hotel in Makkah",
           "sortOrder": 1
         },
         {
-          "src": "/brand/offer-hero/medina.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Hotel in Medina",
           "sortOrder": 2
         },
         {
-          "src": "/brand/offer-hero/group-02.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Hotellobby",
           "sortOrder": 3
         },
         {
-          "src": "/brand/offer-hero/group-03.png",
+          "src": "/brand/offer-hero/hero-bg-3.png",
           "caption": "Hotellobby",
           "sortOrder": 4
         },
         {
-          "src": "/brand/offer-hero/ziyarat.png",
+          "src": "/brand/offer-hero/hero-bg-4.png",
           "caption": "Ausflüge",
           "sortOrder": 5
         },
         {
-          "src": "/brand/offer-hero/group-01.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Gruppenfoto",
           "sortOrder": 6
         },
         {
-          "src": "/brand/offer-hero/group-04.png",
+          "src": "/brand/offer-hero/hero-bg-4.png",
           "caption": "Gruppenfoto",
           "sortOrder": 7
         }
@@ -267,37 +267,37 @@
       ],
       "images": [
         {
-          "src": "/brand/offer-hero/medina.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Medina",
           "sortOrder": 0
         },
         {
-          "src": "/brand/offer-hero/medina.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Hotel in Medina",
           "sortOrder": 1
         },
         {
-          "src": "/brand/offer-hero/group-03.png",
+          "src": "/brand/offer-hero/hero-bg-3.png",
           "caption": "Hotellobby",
           "sortOrder": 2
         },
         {
-          "src": "/brand/offer-hero/makkah.png",
+          "src": "/brand/offer-hero/hero-bg-3.png",
           "caption": "Hotel in Makkah",
           "sortOrder": 3
         },
         {
-          "src": "/brand/offer-hero/kaaba.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Kaaba",
           "sortOrder": 4
         },
         {
-          "src": "/brand/offer-hero/ziyarat.png",
+          "src": "/brand/offer-hero/hero-bg-4.png",
           "caption": "Ausflüge",
           "sortOrder": 5
         },
         {
-          "src": "/brand/offer-hero/group-05.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Gruppenfoto",
           "sortOrder": 6
         }
@@ -454,37 +454,37 @@
       ],
       "images": [
         {
-          "src": "/brand/offer-hero/makkah.png",
+          "src": "/brand/offer-hero/hero-bg-3.png",
           "caption": "Hotel in Makkah",
           "sortOrder": 0
         },
         {
-          "src": "/brand/offer-hero/kaaba.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Kaaba",
           "sortOrder": 1
         },
         {
-          "src": "/brand/offer-hero/group-02.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Hotellobby",
           "sortOrder": 2
         },
         {
-          "src": "/brand/offer-hero/medina.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Hotel in Medina",
           "sortOrder": 3
         },
         {
-          "src": "/brand/offer-hero/ziyarat.png",
+          "src": "/brand/offer-hero/hero-bg-4.png",
           "caption": "Ausflüge",
           "sortOrder": 4
         },
         {
-          "src": "/brand/offer-hero/group-05.png",
+          "src": "/brand/offer-hero/hero-bg-kaaba.png",
           "caption": "Gruppenfoto",
           "sortOrder": 5
         },
         {
-          "src": "/brand/offer-hero/group-06.png",
+          "src": "/brand/offer-hero/hero-bg-2.png",
           "caption": "Gruppenfoto",
           "sortOrder": 6
         }

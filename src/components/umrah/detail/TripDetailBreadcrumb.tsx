@@ -20,15 +20,13 @@ export function TripDetailBreadcrumb({
   return (
     <div
       className={cn(
-        overlay
-          ? "relative z-20 border-b border-white/25 bg-white/10 backdrop-blur-[2px]"
-          : "border-b border-line bg-white",
+        overlay ? "relative z-20 bg-transparent" : "border-b border-line bg-white",
       )}
     >
       <nav
         className={cn(
-          "mx-auto flex max-w-page flex-wrap items-center gap-1 px-4 py-2.5 text-[12px] font-medium md:px-8 md:text-[13px] lg:px-10",
-          overlay ? "text-white/90" : "text-navy",
+          "mx-auto flex max-w-page flex-wrap items-center gap-1.5 px-4 pt-3 pb-5 text-[12px] font-medium md:px-8 md:text-[13px] lg:px-10 lg:pt-3 lg:pb-5",
+          overlay ? "text-[#8A97A6]" : "text-navy",
         )}
         aria-label="Breadcrumb"
       >
@@ -36,27 +34,27 @@ export function TripDetailBreadcrumb({
           href="/"
           className={cn(
             "transition",
-            overlay ? "text-white/75 hover:text-white" : "text-muted hover:text-navy",
+            overlay ? "text-[#8A97A6] hover:text-navy" : "text-muted hover:text-navy",
           )}
         >
           {tNav("home")}
         </Link>
-        <span className={overlay ? "text-white/50" : "text-muted/60"} aria-hidden>
+        <span className="text-[#C0C7D1]" aria-hidden>
           &gt;
         </span>
         <Link
           href={listingHref}
           className={cn(
             "transition",
-            overlay ? "text-white/75 hover:text-white" : "text-muted hover:text-navy",
+            overlay ? "text-[#8A97A6] hover:text-navy" : "text-muted hover:text-navy",
           )}
         >
           {tNav("umrahGroup")}
         </Link>
-        <span className={overlay ? "text-white/50" : "text-muted/60"} aria-hidden>
+        <span className="text-[#C0C7D1]" aria-hidden>
           &gt;
         </span>
-        <span className={cn("font-semibold", overlay ? "text-white" : "text-navy")}>
+        <span className={cn("font-semibold", overlay ? "text-[#5B6B7C]" : "text-navy")}>
           {dateLabel}
         </span>
       </nav>

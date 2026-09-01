@@ -1,29 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import type { GoogleReview, GoogleReviewStats } from "@/lib/google-reviews.server";
-import { GoogleG } from "@/components/brand/GoogleLogos";
+import { GoogleG, GoogleWordmark } from "@/components/brand/GoogleLogos";
 import { isRtl as isRtlLocale } from "@/i18n/routing";
 import { Container } from "@/components/ui/Container";
 import { DirArrow } from "@/components/ui/DirArrow";
 import { HajjReviewModal } from "@/components/hajj/HajjReviewModal";
+import { cn } from "@/lib/utils";
 
-const AVATAR_COLORS = ["#1F8A4C", "#1A73E8", "#00897B", "#C0392B", "#B86A10"];
-const DESKTOP_VISIBLE = 3;
+const AVATAR_COLORS = ["#8B5E3C", "#6B3A2A", "#1F8A4C", "#1A73E8", "#B86A10", "#C0392B"];
+const AVATAR_STACK_SIZE = 5;
 
 function Stars({ count = 5, size = "h-3.5 w-3.5" }: { count?: number; size?: string }) {
   const tCommon = useTranslations("common");
   return (
     <div
-      className="flex items-center gap-0.5 text-[#B86A10]"
+      className="flex items-center gap-0.5 text-[#F4B400]"
       role="img"
       aria-label={tCommon("starRating", { count })}
     >
       {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} className={`${size} fill-[#B86A10]`} aria-hidden />
+        <Star key={i} className={cn(size, "fill-[#F4B400]")} aria-hidden />
       ))}
     </div>
   );
@@ -32,29 +33,36 @@ function Stars({ count = 5, size = "h-3.5 w-3.5" }: { count?: number; size?: str
 function ReviewerAvatar({
   review,
   colorIndex,
+  size = "md",
 }: {
-  review: GoogleReview;
+  review: Pick<GoogleReview, "name" | "avatar">;
   colorIndex: number;
+  size?: "sm" | "md";
 }) {
+  const dim = size === "sm" ? "h-8 w-8 text-[12px]" : "h-10 w-10 text-[14px]";
+
   if (review.avatar) {
     return (
       <Image
         src={review.avatar}
         alt=""
-        width={32}
-        height={32}
-        className="h-8 w-8 shrink-0 rounded-full object-cover"
+        width={size === "sm" ? 32 : 40}
+        height={size === "sm" ? 32 : 40}
+        className={cn(dim, "shrink-0 rounded-full object-cover ring-2 ring-white")}
       />
     );
   }
 
   return (
     <span
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white"
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-full font-bold text-white ring-2 ring-white",
+        dim,
+      )}
       style={{ backgroundColor: AVATAR_COLORS[colorIndex % AVATAR_COLORS.length] }}
       aria-hidden
     >
-      {review.name.charAt(0)}
+      {review.name.charAt(0).toUpperCase()}
     </span>
   );
 }
@@ -71,12 +79,11 @@ function ReviewCard({
   isRtl: boolean;
 }) {
   const tCommon = useTranslations("common");
-  const tHajj = useTranslations("hajj");
 
   return (
     <article
       dir={isRtl ? "rtl" : "ltr"}
-      className="flex h-full min-h-40 flex-col rounded-xl border border-[#E9EAEE] bg-white p-4 lg:min-h-44 lg:p-5"
+      className="flex h-full min-h-[220px] flex-col rounded-[14px] border border-[#E8EAEE] bg-white p-5 shadow-[0_1px_2px_rgba(9,30,66,0.03)]"
     >
       <button
         type="button"
@@ -84,205 +91,291 @@ function ReviewCard({
         aria-label={tCommon("openReview", { name: review.name })}
         className="flex flex-1 flex-col text-start"
       >
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <ReviewerAvatar review={review} colorIndex={index} />
-          <p className="min-w-0 flex-1 truncate text-[14px] font-bold text-[#091B3B]">{review.name}</p>
+          <div className="min-w-0">
+            <p className="truncate text-[14px] font-bold leading-tight text-[#1A1A1A]">
+              {review.name}
+            </p>
+            {review.dateRelative ? (
+              <p className="mt-0.5 text-[12px] leading-tight text-[#8A94A6]">{review.dateRelative}</p>
+            ) : null}
+          </div>
         </div>
 
-        <div className="mt-2.5 flex justify-start">
-          <Stars count={review.rating} />
+        <div className="mt-3">
+          <Stars count={review.rating} size="h-3.5 w-3.5" />
         </div>
-
-        {review.dateRelative ? (
-          <p className="mt-1.5 text-[12px] text-[#5B6B7C]">{review.dateRelative}</p>
-        ) : null}
 
         <p
           dir="auto"
-          className="mt-2.5 line-clamp-4 text-[13px] leading-[1.65] text-[#3D4F5F] [unicode-bidi:plaintext]"
+          className="mt-3 line-clamp-5 flex-1 text-[13px] leading-[1.55] text-[#3D4F5F] [unicode-bidi:plaintext]"
         >
           {review.text}
         </p>
 
-        <div className="mt-3 flex items-end justify-between gap-2">
-          <span className="text-[13px] font-semibold text-brand-cta">{tHajj("readMoreReview")}</span>
-          <GoogleG className="h-4 w-4 shrink-0" />
+        <div className="mt-4 flex justify-end">
+          <GoogleG className="h-4 w-4 shrink-0 opacity-90" />
         </div>
       </button>
     </article>
   );
 }
 
-function ReviewsSlider({
-  reviews,
-  mapsUrl,
-  onOpen,
-  isRtl,
+function formatOverflowLabel(count: number, locale: string): string | null {
+  const overflow = Math.max(0, count - AVATAR_STACK_SIZE);
+  if (overflow <= 0) return null;
+  if (overflow >= 1000) {
+    const value = overflow / 1000;
+    return `+${value.toLocaleString(locale, { maximumFractionDigits: 1 })}K`;
+  }
+  return `+${overflow.toLocaleString(locale, { maximumFractionDigits: 0 })}`;
+}
+
+function AvatarStack({
+  stackReviews,
+  overflowLabel,
 }: {
-  reviews: GoogleReview[];
+  stackReviews: GoogleReview[];
+  overflowLabel: string | null;
+}) {
+  return (
+    <div className="flex items-center">
+      {stackReviews.slice(0, AVATAR_STACK_SIZE).map((review, index) => (
+        <div
+          key={review.id}
+          className={cn("relative", index > 0 && "-ms-2.5")}
+          style={{ zIndex: AVATAR_STACK_SIZE - index }}
+        >
+          <ReviewerAvatar review={review} colorIndex={index} size="sm" />
+        </div>
+      ))}
+      {overflowLabel ? (
+        <span
+          className="-ms-2.5 flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F1FB] text-[10px] font-bold text-[#1A73E8] ring-2 ring-white"
+          style={{ zIndex: 0 }}
+        >
+          {overflowLabel}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function SummaryCard({
+  ratingLabel,
+  count,
+  mapsUrl,
+  stackReviews,
+  locale,
+}: {
+  ratingLabel: string;
+  count: number;
   mapsUrl: string;
-  onOpen: (index: number) => void;
-  isRtl: boolean;
+  stackReviews: GoogleReview[];
+  locale: string;
 }) {
   const tCommon = useTranslations("common");
+  const tHome = useTranslations("home");
   const tHajj = useTranslations("hajj");
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const [perView, setPerView] = useState(1);
-
-  const ordered = isRtl ? [...reviews].reverse() : reviews;
-
-  const goPrev = () => goTo(active - 1);
-  const goNext = () => goTo(active + 1);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const update = () => setPerView(mq.matches ? DESKTOP_VISIBLE : 1);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  const syncActiveFromScroll = useCallback(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const cards = [...el.querySelectorAll<HTMLElement>("[data-review-card]")];
-    if (!cards.length) return;
-    const left = el.scrollLeft;
-    let best = 0;
-    let bestDist = Infinity;
-    cards.forEach((card, i) => {
-      const dist = Math.abs(card.offsetLeft - left);
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = i;
-      }
-    });
-    setActive(best);
-  }, []);
-
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    syncActiveFromScroll();
-    el.addEventListener("scroll", syncActiveFromScroll, { passive: true });
-    window.addEventListener("resize", syncActiveFromScroll);
-    return () => {
-      el.removeEventListener("scroll", syncActiveFromScroll);
-      window.removeEventListener("resize", syncActiveFromScroll);
-    };
-  }, [isRtl, ordered.length, syncActiveFromScroll]);
-
-  const goTo = (index: number) => {
-    const el = scrollerRef.current;
-    if (!el || ordered.length === 0) return;
-    const clamped = ((index % ordered.length) + ordered.length) % ordered.length;
-    const card = el.querySelectorAll<HTMLElement>("[data-review-card]")[clamped];
-    if (!card) return;
-    el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
-    setActive(clamped);
-  };
-
-  const showNav = ordered.length > perView;
-  const toSourceIndex = (displayIndex: number) =>
-    isRtl ? reviews.length - 1 - displayIndex : displayIndex;
+  const overflowLabel = formatOverflowLabel(count, locale);
 
   return (
-    <div className="flex min-w-0 flex-1 flex-col">
-      <div
-        className="relative min-w-0"
-        role="region"
-        aria-roledescription="carousel"
-        aria-label={tCommon("reviewsCarousel")}
-      >
-        {showNav ? (
-          <button
-            type="button"
-            onClick={goPrev}
-            className="absolute start-0 top-[42%] z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#E6E8EC] bg-white text-navy shadow-sm transition hover:bg-[#fafbfc] lg:h-10 lg:w-10"
-            aria-label={tCommon("previousReview")}
-          >
-            <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
-          </button>
-        ) : null}
+    <aside className="flex h-full min-h-[220px] flex-col rounded-[14px] border border-[#E8EAEE] bg-white p-5 shadow-[0_1px_2px_rgba(9,30,66,0.03)] lg:p-6">
+      <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#B8860B] sm:text-[11px]">
+        {tHome("reviewsTitle")}
+      </p>
 
-        {showNav ? (
-          <button
-            type="button"
-            onClick={goNext}
-            className="absolute end-0 top-[42%] z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#E6E8EC] bg-white text-navy shadow-sm transition hover:bg-[#fafbfc] lg:h-10 lg:w-10"
-            aria-label={tCommon("nextReview")}
-          >
-            <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
-          </button>
-        ) : null}
-
-        <div
-          ref={scrollerRef}
-          dir={isRtl ? "rtl" : "ltr"}
-          className={`no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth py-1 ${
-            showNav ? "px-11 lg:px-12" : "px-1"
-          }`}
-          tabIndex={0}
-          aria-live="polite"
-          onKeyDown={(e) => {
-            if (e.key === "ArrowLeft") {
-              e.preventDefault();
-              if (isRtl) goNext();
-              else goPrev();
-            } else if (e.key === "ArrowRight") {
-              e.preventDefault();
-              if (isRtl) goPrev();
-              else goNext();
-            }
-          }}
-        >
-          {ordered.map((review, index) => (
-            <div
-              key={review.id}
-              data-review-card
-              className="w-full shrink-0 snap-start lg:w-[calc((100%-2rem)/3)]"
-            >
-              <ReviewCard
-                review={review}
-                index={index}
-                isRtl={isRtl}
-                onOpen={() => onOpen(toSourceIndex(index))}
-              />
-            </div>
-          ))}
-        </div>
+      <div className="mt-3 flex items-center gap-2">
+        <GoogleWordmark className="h-[22px] w-auto" />
+        <span className="text-[18px] font-bold leading-none tracking-[-0.02em] text-[#1A1A1A]">
+          {tHajj("reviewsBrandWord")}
+        </span>
       </div>
 
-      {ordered.length > 1 ? (
-        <div className="mt-4 flex items-center justify-center gap-1" role="tablist">
-          {ordered.map((review, i) => (
-            <button
-              key={review.id}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={tCommon("goToReview", { n: i + 1 })}
-              aria-current={i === active ? "true" : undefined}
-              className="flex h-8 w-8 items-center justify-center rounded-full"
-            >
-              <span
-                className={`block rounded-full transition-all ${
-                  i === active
-                    ? "h-2.5 w-2.5 bg-brand-orange-cta"
-                    : "h-2 w-2 bg-navy/25 hover:bg-navy/45"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-      ) : null}
+      <div className="mt-4 flex items-center gap-2.5">
+        <span className="text-[36px] font-extrabold leading-none tracking-tight text-[#1A1A1A]">
+          {ratingLabel}
+        </span>
+        <Stars size="h-[18px] w-[18px]" />
+      </div>
 
-      <div className="mt-5 flex justify-center lg:mt-6">
+      <p className="mt-2 text-[13px] leading-snug text-[#6B7785]">
+        {tHajj("basedOnReviews", { count })}
+      </p>
+
+      <div className="mt-5 flex items-center">
+        <AvatarStack stackReviews={stackReviews} overflowLabel={overflowLabel} />
+      </div>
+
+      <a
+        href={mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-auto inline-flex items-center gap-1.5 pt-6 text-[14px] font-bold text-[#1A73E8] transition hover:text-[#1557B0]"
+      >
+        <span>{tCommon("allReviews")}</span>
+        <DirArrow />
+      </a>
+    </aside>
+  );
+}
+
+/** Mobile-only unified Google reviews card — matches reference exactly. */
+function MobileReviewsCard({
+  reviews,
+  stats,
+  mapsUrl,
+  ratingLabel,
+  stackReviews,
+  locale,
+  isRtl,
+  onOpen,
+}: {
+  reviews: GoogleReview[];
+  stats: GoogleReviewStats;
+  mapsUrl: string;
+  ratingLabel: string;
+  stackReviews: GoogleReview[];
+  locale: string;
+  isRtl: boolean;
+  onOpen: (index: number) => void;
+}) {
+  const tCommon = useTranslations("common");
+  const tHome = useTranslations("home");
+  const tHajj = useTranslations("hajj");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const overflowLabel = formatOverflowLabel(stats.count, locale);
+  const total = reviews.length;
+  const safeIndex = total > 0 ? activeIndex % total : 0;
+  const activeReview = reviews[safeIndex];
+
+  const go = (direction: 1 | -1) => {
+    if (total === 0) return;
+    setActiveIndex((prev) => (prev + direction + total) % total);
+  };
+
+  if (!activeReview) return null;
+
+  return (
+    <div className="mx-auto max-w-md">
+      <div className="rounded-t-[22px] rounded-b-[22px] bg-white px-5 pb-5 pt-6 shadow-[0_-12px_36px_rgba(11,44,74,0.14),0_12px_40px_rgba(9,30,66,0.1)] ring-1 ring-[#EEF0F3]">
+        <p className="text-center text-[10px] font-bold tracking-[0.14em] text-[#E07A1A] uppercase">
+          {tHome("reviewsTitle")}
+        </p>
+
+        <div className="mt-3 flex items-center justify-center gap-2">
+          <GoogleWordmark className="h-[24px] w-auto" />
+          <span className="text-[20px] font-bold leading-none tracking-[-0.02em] text-[#1A1A1A]">
+            {tHajj("reviewsBrandWord")}
+          </span>
+        </div>
+
+        <div className="mt-5 flex flex-col items-center">
+          <div className="flex items-center gap-2.5">
+            <span className="text-[40px] font-extrabold leading-none tracking-tight text-navy">
+              {ratingLabel}
+            </span>
+            <Stars size="h-5 w-5" />
+          </div>
+          <p className="mt-2 text-[13px] leading-snug text-[#3D5A80]">
+            {tHajj("basedOnReviews", {
+              count: stats.count.toLocaleString(locale),
+            })}
+          </p>
+        </div>
+
+        <div className="mt-5 flex justify-center">
+          <AvatarStack stackReviews={stackReviews} overflowLabel={overflowLabel} />
+        </div>
+
+        <article
+          dir={isRtl ? "rtl" : "ltr"}
+          className="relative mt-6 rounded-[14px] border border-[#E8EAEE] bg-white p-4"
+        >
+          <button
+            type="button"
+            onClick={() => onOpen(safeIndex)}
+            aria-label={tCommon("openReview", { name: activeReview.name })}
+            className="flex w-full flex-col text-start"
+          >
+            <div className="flex items-center gap-3">
+              <ReviewerAvatar review={activeReview} colorIndex={safeIndex} />
+              <div className="min-w-0">
+                <p className="truncate text-[14px] font-bold leading-tight text-[#1A1A1A]">
+                  {activeReview.name}
+                </p>
+                {activeReview.dateRelative ? (
+                  <p className="mt-0.5 text-[12px] leading-tight text-[#8A94A6]">
+                    {activeReview.dateRelative}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <Stars count={activeReview.rating} size="h-3.5 w-3.5" />
+            </div>
+
+            <p
+              dir="auto"
+              className="mt-3 line-clamp-5 text-[13px] leading-[1.55] text-[#3D4F5F] [unicode-bidi:plaintext]"
+            >
+              {activeReview.text}
+            </p>
+
+            <div className="mt-3 flex justify-end">
+              <GoogleG className="h-4 w-4 shrink-0 opacity-90" />
+            </div>
+          </button>
+        </article>
+
+        {total > 1 ? (
+          <div className="mt-5 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => go(isRtl ? 1 : -1)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E0E3E8] bg-white text-[#1A1A1A] transition hover:bg-[#FAFBFC]"
+              aria-label={tCommon("previousReview")}
+            >
+              <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
+            </button>
+
+            <div className="flex items-center gap-1.5" role="tablist" aria-label={tCommon("reviewsCarousel")}>
+              {reviews.map((review, index) => (
+                <button
+                  key={review.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={index === safeIndex}
+                  aria-label={`${index + 1} / ${total}`}
+                  onClick={() => setActiveIndex(index)}
+                  className={cn(
+                    "h-2 w-2 rounded-full transition",
+                    index === safeIndex ? "bg-navy" : "bg-[#D5DAE0]",
+                  )}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => go(isRtl ? -1 : 1)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E0E3E8] bg-white text-[#1A1A1A] transition hover:bg-[#FAFBFC]"
+              aria-label={tCommon("nextReview")}
+            >
+              <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      <div className="mt-5 flex justify-center">
         <a
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-[14px] font-bold text-[#091B3B] transition hover:text-brand-orange-ink"
+          className="inline-flex items-center gap-1.5 text-[15px] font-bold text-navy transition hover:text-brand-cta"
         >
           <span>{tHajj("allGoogleReviews")}</span>
           <DirArrow />
@@ -301,55 +394,148 @@ export function HajjReviewsSection({
   stats: GoogleReviewStats;
   mapsUrl: string;
 }) {
-  const t = useTranslations("home");
-  const tHajj = useTranslations("hajj");
+  const tCommon = useTranslations("common");
+  const tHome = useTranslations("home");
   const locale = useLocale();
   const isRtl = isRtlLocale(locale);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const openReview = useCallback((index: number) => setModalIndex(index), []);
   const closeModal = useCallback(() => setModalIndex(null), []);
 
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
   const ratingLabel = stats.rating.toLocaleString(locale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
 
+  const stackReviews = useMemo(() => reviews.slice(0, AVATAR_STACK_SIZE), [reviews]);
+
+  const updateNav = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    const left = Math.abs(el.scrollLeft);
+    setCanPrev(left > 4);
+    setCanNext(left < max - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    updateNav();
+    el.addEventListener("scroll", updateNav, { passive: true });
+    window.addEventListener("resize", updateNav);
+    return () => {
+      el.removeEventListener("scroll", updateNav);
+      window.removeEventListener("resize", updateNav);
+    };
+  }, [reviews.length, updateNav]);
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-review-card]");
+    const step = card ? card.offsetWidth + 16 : el.clientWidth * 0.8;
+    const delta = direction * step * (isRtl ? -1 : 1);
+    el.scrollBy({ left: delta, behavior: "smooth" });
+  };
+
   return (
-    <section className="bg-white py-8 md:py-10" aria-labelledby="hajj-reviews-heading">
+    <section
+      id="hajj-reviews"
+      className="relative z-20 bg-transparent pb-10 lg:bg-[#FAFBFC] lg:py-14"
+      aria-labelledby="hajj-reviews-heading"
+    >
+      <h2 id="hajj-reviews-heading" className="sr-only">
+        {tHome("reviewsTitle")}
+      </h2>
+
       <Container>
-        <div className="mb-6 text-center md:mb-8">
-          <h2
-            id="hajj-reviews-heading"
-            className="text-[22px] font-bold tracking-[-0.02em] text-navy md:text-[28px]"
-          >
-            {t("reviewsTitle")}
-          </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-[14px] leading-relaxed text-muted md:text-[15px]">
-            {t("reviewsSubtitle")}
-          </p>
+        {/* Mobile: pull card up so it overlaps the hero photo */}
+        <div className="relative z-20 -mt-20 px-1 sm:-mt-24 lg:hidden">
+          <MobileReviewsCard
+            reviews={reviews}
+            stats={stats}
+            mapsUrl={mapsUrl}
+            ratingLabel={ratingLabel}
+            stackReviews={stackReviews}
+            locale={locale}
+            isRtl={isRtl}
+            onOpen={openReview}
+          />
         </div>
 
-        <div className="rounded-[16px] border border-[#E9EAEE] bg-white px-4 py-5 shadow-[0_4px_18px_rgba(9,30,66,0.045)] lg:px-6 lg:py-6">
-          <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
-            <div className="flex flex-col justify-center border-[#E6E8EC] lg:w-[min(100%,220px)] lg:shrink-0 lg:border-e lg:pe-8">
-              <p className="mb-3 text-[13px] font-semibold text-[#5B6B7C]">{t("googleReviews")}</p>
-              <div className="flex items-center gap-2.5">
-                <span className="text-[32px] leading-none font-extrabold tracking-tight text-[#091B3B] md:text-[36px]">
-                  {ratingLabel}
-                </span>
-                <Stars size="h-4 w-4 md:h-[18px] md:w-[18px]" />
-              </div>
-              <p className="mt-2 text-[12px] leading-snug text-[#5B6B7C] md:text-[13px]">
-                {tHajj("basedOnReviews", { count: stats.count })}
-              </p>
-            </div>
-
-            <ReviewsSlider
-              reviews={reviews}
+        {/* Desktop: summary + sliding review cards + edge chevron */}
+        <div className="relative hidden lg:block">
+          <div className="grid grid-cols-[minmax(15.5rem,18.5rem)_minmax(0,1fr)] items-stretch gap-4 xl:grid-cols-[minmax(16.5rem,19.5rem)_minmax(0,1fr)] xl:gap-5">
+            <SummaryCard
+              ratingLabel={ratingLabel}
+              count={stats.count}
               mapsUrl={mapsUrl}
-              onOpen={openReview}
-              isRtl={isRtl}
+              stackReviews={stackReviews}
+              locale={locale}
             />
+
+            <div className="relative min-w-0">
+              <div
+                ref={scrollerRef}
+                dir={isRtl ? "rtl" : "ltr"}
+                className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pe-2"
+                role="region"
+                aria-roledescription="carousel"
+                aria-label={tCommon("reviewsCarousel")}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowLeft") {
+                    e.preventDefault();
+                    scrollByCard(isRtl ? 1 : -1);
+                  } else if (e.key === "ArrowRight") {
+                    e.preventDefault();
+                    scrollByCard(isRtl ? -1 : 1);
+                  }
+                }}
+              >
+                {reviews.map((review, index) => (
+                  <div
+                    key={review.id}
+                    data-review-card
+                    className="w-[calc((100%-2rem)/3)] min-w-[15.5rem] max-w-[19rem] shrink-0 snap-start"
+                  >
+                    <ReviewCard
+                      review={review}
+                      index={index}
+                      isRtl={isRtl}
+                      onOpen={() => openReview(index)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {canPrev ? (
+                <button
+                  type="button"
+                  onClick={() => scrollByCard(-1)}
+                  className="absolute start-0 top-1/2 z-10 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#E6E8EC] bg-white text-[#1A1A1A] shadow-[0_4px_14px_rgba(9,30,66,0.12)] transition hover:bg-[#FAFBFC] rtl:translate-x-1/2"
+                  aria-label={tCommon("previousReview")}
+                >
+                  <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
+                </button>
+              ) : null}
+
+              {canNext ? (
+                <button
+                  type="button"
+                  onClick={() => scrollByCard(1)}
+                  className="absolute end-0 top-1/2 z-10 flex h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#E6E8EC] bg-white text-[#1A1A1A] shadow-[0_4px_14px_rgba(9,30,66,0.12)] transition hover:bg-[#FAFBFC] rtl:-translate-x-1/2"
+                  aria-label={tCommon("nextReview")}
+                >
+                  <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
+                </button>
+              ) : null}
+            </div>
           </div>
         </div>
       </Container>

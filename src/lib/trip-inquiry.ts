@@ -22,7 +22,15 @@ export function formatTripDisplayDateRange(startIso: string, endIso: string, loc
   const start = new Date(`${startIso}T12:00:00`);
   const end = new Date(`${endIso}T12:00:00`);
   const loc =
-    locale === "de" ? "de-AT" : locale === "ar" ? "ar-SA" : locale === "bs" ? "bs-BA" : "en-GB";
+    locale === "de"
+      ? "de-AT"
+      : locale === "ar"
+        ? "ar-SA-u-nu-latn"
+        : locale === "tr"
+          ? "tr-TR"
+          : locale === "bs"
+            ? "bs-BA"
+            : "en-GB";
   const dayMonth = new Intl.DateTimeFormat(loc, { day: "numeric", month: "long" });
   const full = new Intl.DateTimeFormat(loc, { day: "numeric", month: "long", year: "numeric" });
   if (start.getFullYear() === end.getFullYear()) {
@@ -44,9 +52,11 @@ function inquiryLocale(locale: string): string {
     ? "de-AT"
     : locale === "ar"
       ? "ar-SA"
-      : locale === "bs"
-        ? "bs-BA"
-        : "en-GB";
+      : locale === "tr"
+        ? "tr-TR"
+        : locale === "bs"
+          ? "bs-BA"
+          : "en-GB";
 }
 
 function addDaysIso(iso: string, days: number): string {

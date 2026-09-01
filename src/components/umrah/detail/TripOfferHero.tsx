@@ -2,7 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { CalendarDays, FileText, Luggage, Plane, Users } from "lucide-react";
+import {
+  CalendarDays,
+  Check,
+  Clock3,
+  FileText,
+  Luggage,
+  Plane,
+  Users,
+  X,
+} from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import type { UmrahTrip } from "@/data/mock";
 import { cn } from "@/lib/utils";
@@ -13,11 +22,6 @@ import { TripDetailBreadcrumb } from "@/components/umrah/detail/TripDetailBreadc
 import { OFFER_HERO_SLIDES } from "@/lib/offer-hero-slides";
 
 export const OFFER_HERO_IMAGE = OFFER_HERO_SLIDES[0]!.src;
-
-const NAVY = "#09245C";
-const BLUE = "#174DE8";
-const GREEN = "#178B2D";
-const ORANGE = "#F5A000";
 
 function formatFullDateRange(startIso: string, endIso: string, locale: string) {
   const start = new Date(`${startIso}T12:00:00`);
@@ -33,47 +37,61 @@ function formatFullDateRange(startIso: string, endIso: string, locale: string) {
 }
 
 const HERO_INCLUSIONS = [
-  { key: "visa", Icon: FileText, labelKey: "featVisa" },
-  { key: "flight", Icon: Plane, labelKey: "featFlight" },
-  { key: "baggage", Icon: Luggage, labelKey: "featBaggageShort" },
-  { key: "guide", Icon: Users, labelKey: "featGuide" },
+  { key: "visa", Icon: FileText, line1: "featVisaL1", line2: "featVisaL2" },
+  { key: "flight", Icon: Plane, line1: "featFlightL1", line2: "featFlightL2" },
+  { key: "baggage", Icon: Luggage, line1: "featBaggageL1", line2: "featBaggageL2" },
+  { key: "guide", Icon: Users, line1: "featGuideL1", line2: "featGuideL2" },
 ] as const;
 
-const HERO_TONE_COLOR = {
-  green: GREEN,
-  red: "#C0392B",
-  orange: ORANGE,
+const PILL_STYLE = {
+  green: {
+    color: "#178B2D",
+    bg: "#E8F6EC",
+    border: "rgba(23, 139, 45, 0.28)",
+    Icon: Check,
+  },
+  orange: {
+    color: "#C47A00",
+    bg: "#FFF4E5",
+    border: "rgba(196, 122, 0, 0.3)",
+    Icon: Clock3,
+  },
+  red: {
+    color: "#C0392B",
+    bg: "#FDECEA",
+    border: "rgba(192, 57, 43, 0.28)",
+    Icon: X,
+  },
 } as const;
 
-function HeroAvailabilityPills({ trip }: { trip: UmrahTrip }) {
-  const t = useTranslations("umrah");
-  const lines = getAvailabilityBadgeLines(trip);
+function AvailabilityPill({
+  tone,
+  label,
+}: {
+  tone: keyof typeof PILL_STYLE;
+  label: string;
+}) {
+  const style = PILL_STYLE[tone];
+  const Icon = style.Icon;
 
   return (
-    <div id="availability" className="flex flex-wrap items-center gap-2 scroll-mt-28">
-      {lines.map((line) => {
-        const color = HERO_TONE_COLOR[line.tone];
-        const label =
-          line.labelKey === "available"
-            ? t("available", { count: line.count ?? 0 })
-            : t(line.labelKey);
-
-        return (
-          <span
-            key={`${line.tone}-${line.labelKey}`}
-            className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border bg-white/95 px-3 py-1.5 text-[12px] font-semibold leading-none shadow-sm backdrop-blur-sm"
-            style={{ borderColor: color, color }}
-          >
-            <span
-              className="h-2 w-2 shrink-0 rounded-full"
-              style={{ backgroundColor: color }}
-              aria-hidden
-            />
-            {label}
-          </span>
-        );
-      })}
-    </div>
+    <span
+      className="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[12px] font-semibold leading-none sm:text-[13px]"
+      style={{
+        backgroundColor: style.bg,
+        borderColor: style.border,
+        color: style.color,
+      }}
+    >
+      <span
+        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white"
+        style={{ backgroundColor: style.color }}
+        aria-hidden
+      >
+        <Icon className="h-2.5 w-2.5" strokeWidth={3} />
+      </span>
+      {label}
+    </span>
   );
 }
 
@@ -83,10 +101,6 @@ export function TripOfferHero({ trip }: { trip: UmrahTrip }) {
   const tCommon = useTranslations("common");
   const locale = useLocale();
   const [live, setLive] = useState(trip);
-
-  const titleParts = live.title.trim().split(/\s+/);
-  const titleFirst = titleParts[0] ?? live.title;
-  const titleRest = titleParts.slice(1).join(" ");
 
   useEffect(() => {
     const sync = () => setLive(resolveTrip(trip));
@@ -102,51 +116,95 @@ export function TripOfferHero({ trip }: { trip: UmrahTrip }) {
   const dateFull = formatFullDateRange(live.startDate, live.endDate, locale);
   const nightsLabel = tCommon("nights", { count: live.nights }).toUpperCase();
   const [slide, setSlide] = useState(0);
+  const availabilityLines = getAvailabilityBadgeLines(live);
+  const greenAvailability = availabilityLines.find((line) => line.tone === "green");
+  const otherAvailability = availabilityLines.filter((line) => line.tone !== "green");
+
+  const titleParts = live.title.trim().split(/\s+/);
+  const titleFirst = titleParts[0] ?? live.title;
+  const titleRest = titleParts.slice(1).join(" ");
+
+  const renderAvailabilityPill = (line: (typeof availabilityLines)[number]) => {
+    const label =
+      line.labelKey === "available"
+        ? t("available", { count: line.count ?? 0 })
+        : t(line.labelKey);
+    return (
+      <AvailabilityPill
+        key={`${line.tone}-${line.labelKey}`}
+        tone={line.tone}
+        label={label}
+      />
+    );
+  };
 
   return (
     <>
       <section
         id="overview"
-        className="full-viewport-bleed relative scroll-mt-24 overflow-hidden min-h-[32rem] sm:min-h-[34rem] lg:h-[500px] lg:min-h-[500px]"
+        className="offer-hero-bg full-viewport-bleed relative z-10 scroll-mt-24 overflow-hidden lg:overflow-hidden"
         aria-label={live.title}
       >
-        <TripOfferHeroSlider active={slide} onChange={setSlide} />
+        <div className="absolute inset-0 overflow-hidden">
+          <TripOfferHeroSlider active={slide} onChange={setSlide} />
+        </div>
 
-        <div className="relative z-10 flex min-h-[inherit] flex-col pointer-events-none">
+        <div className="relative z-10 flex h-full flex-col pointer-events-none">
           <div className="pointer-events-auto hidden lg:block">
             <TripDetailBreadcrumb dateLabel={live.dateLabel} overlay />
           </div>
 
-          <Container className="flex flex-1 flex-col justify-end pointer-events-none pb-16 lg:h-[500px] lg:min-h-[500px] lg:justify-center lg:pb-0">
-            <div className="pointer-events-auto grid items-end gap-8 py-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center lg:gap-8 lg:py-6">
-              <div className="flex max-w-[580px] flex-col gap-4 sm:gap-5 lg:justify-center lg:gap-4">
-                <HeroAvailabilityPills trip={live} />
+          <Container className="flex min-h-0 flex-1 flex-col pointer-events-none pb-8 lg:justify-start lg:pb-5 lg:pt-0">
+            {/* Mobile: green availability sits high on the photo */}
+            {greenAvailability ? (
+              <div
+                id="availability"
+                className="pointer-events-auto pt-5 sm:pt-6 lg:hidden"
+              >
+                {renderAvailabilityPill(greenAvailability)}
+              </div>
+            ) : null}
 
-                <span
-                  className="inline-flex w-fit rounded-full px-3 py-1 text-[11px] font-bold tracking-widest uppercase lg:bg-[#E8F1FF]"
-                  style={{ backgroundColor: "rgba(232, 241, 255, 0.95)", color: BLUE }}
+            {/* Mobile: rest lower; desktop: full stack near top */}
+            <div
+              className={cn(
+                "pointer-events-auto mt-auto max-w-[580px] pt-10 pb-2 sm:pt-12 lg:mt-0 lg:max-w-[580px] lg:py-0 lg:pt-0",
+              )}
+            >
+              <div className="flex flex-col items-start gap-5 scroll-mt-28 lg:scroll-mt-28">
+                {/* Desktop keeps all pills together */}
+                <div
+                  id={greenAvailability ? undefined : "availability"}
+                  className="hidden flex-col items-start gap-5 lg:flex"
                 >
+                  {availabilityLines.map(renderAvailabilityPill)}
+                </div>
+
+                {/* Mobile: waitlist / other pills stay with title block */}
+                {otherAvailability.length > 0 ? (
+                  <div className="flex flex-col items-start gap-5 lg:hidden">
+                    {otherAvailability.map(renderAvailabilityPill)}
+                  </div>
+                ) : null}
+
+                <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-[#E8F1FF] px-3 py-1.5 text-[11px] font-bold tracking-[0.08em] text-[#09245C] uppercase sm:text-[12px]">
                   {nightsLabel}
                 </span>
 
-                <h1 className="text-[36px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white sm:text-[42px] lg:text-[56px] lg:leading-[0.96] xl:text-[60px]">
+                <h1 className="m-0 text-[36px] leading-[0.98] font-extrabold tracking-[-0.035em] text-white sm:text-[42px] lg:text-[52px] lg:leading-[0.94] xl:text-[56px]">
                   {titleRest ? (
                     <>
                       <span className="lg:hidden">{live.title}</span>
-                      <span className="hidden lg:inline" style={{ color: NAVY }}>
-                        {titleFirst}
-                      </span>
+                      <span className="hidden lg:inline text-[#051033]">{titleFirst}</span>
                       <br className="hidden lg:block" />
-                      <span className="hidden lg:inline" style={{ color: BLUE }}>
-                        {titleRest}
-                      </span>
+                      <span className="hidden lg:inline text-[#174DE8]">{titleRest}</span>
                     </>
                   ) : (
-                    <span className="lg:text-[color:var(--navy)]">{live.title}</span>
+                    <span className="lg:text-[#051033]">{live.title}</span>
                   )}
                 </h1>
 
-                <p className="flex items-center gap-2.5 text-[15px] font-bold text-white sm:text-[17px] lg:text-[color:var(--navy)]">
+                <p className="m-0 flex items-center gap-2.5 text-[15px] font-bold text-white sm:text-[17px] lg:text-[color:var(--navy)]">
                   <CalendarDays
                     className="h-[18px] w-[18px] shrink-0 text-white lg:text-[color:var(--navy)]"
                     strokeWidth={2}
@@ -155,39 +213,66 @@ export function TripOfferHero({ trip }: { trip: UmrahTrip }) {
                   <span>{dateFull}</span>
                 </p>
 
-                <ul
-                  className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-4 sm:gap-y-0"
-                  aria-label={t("inclusions")}
-                >
-                  {HERO_INCLUSIONS.map(({ key, Icon, labelKey }, i) => (
-                    <li
-                      key={key}
-                      className={cn(
-                        "flex flex-col items-center gap-2 px-1 text-center sm:px-2",
-                        i > 0 && "sm:border-s sm:border-white/25 lg:sm:border-[#D5DCE4]/80",
-                      )}
-                    >
-                      <Icon
-                        className="h-6 w-6 text-white sm:h-7 sm:w-7 lg:text-[color:var(--navy)]"
-                        strokeWidth={1.5}
-                        aria-hidden
-                      />
-                      <span className="text-[11px] leading-snug font-semibold text-white sm:text-[12px] lg:text-[color:var(--navy)]">
-                        {t(labelKey)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div className="flex w-full flex-col items-start gap-3">
+                  <ul
+                    className="m-0 flex w-full max-w-full list-none flex-nowrap items-start justify-between gap-0 p-0 sm:w-fit sm:justify-start"
+                    aria-label={t("inclusions")}
+                  >
+                    {HERO_INCLUSIONS.map(({ key, Icon, line1, line2 }, i) => (
+                      <li
+                        key={key}
+                        className={cn(
+                          "relative flex min-w-0 flex-1 flex-col items-center gap-1.5 px-1.5 text-center sm:flex-none sm:gap-2 sm:px-3.5",
+                          i > 0 &&
+                            "border-s border-white/35 sm:border-s-[1.5px] sm:border-[#C5A35A]/90 lg:border-[#B08D3A]",
+                        )}
+                      >
+                        <Icon
+                          className="h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7 lg:text-[#051033]"
+                          strokeWidth={1.5}
+                          aria-hidden
+                        />
+                        <span className="flex flex-col items-center text-[9px] leading-[1.2] font-semibold text-white sm:whitespace-nowrap sm:text-[12px] sm:leading-[1.25] lg:text-[#051033]">
+                          <span>{t(line1)}</span>
+                          <span>{t(line2)}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
 
-              {/* Desktop pricing card — inline with hero */}
-              <aside
-                id="prices"
-                className="relative hidden w-full scroll-mt-24 lg:block lg:max-w-[360px] lg:justify-self-end"
-              >
-                <TripPricingCard trip={live} />
-              </aside>
+                  {/* Mobile slide dots — under inclusions (desktop keeps arrow only) */}
+                  <div
+                    className="flex w-full items-center justify-center gap-2 sm:w-fit sm:self-center lg:hidden"
+                    role="tablist"
+                    aria-label={t("heroSliderLabel")}
+                  >
+                    {OFFER_HERO_SLIDES.map((item, index) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={index === slide}
+                        aria-label={`${index + 1} / ${OFFER_HERO_SLIDES.length}`}
+                        onClick={() => setSlide(index)}
+                        className={cn(
+                          "h-2 w-2 rounded-full transition",
+                          index === slide ? "bg-white" : "bg-white/40",
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
+          </Container>
+        </div>
+
+        {/* Desktop card: centered in full 500px hero — equal top & bottom gap */}
+        <div className="pointer-events-none absolute inset-0 z-20 hidden lg:flex lg:items-center">
+          <Container className="flex w-full justify-end">
+            <aside id="prices" className="pointer-events-auto w-full max-w-[360px] scroll-mt-24">
+              <TripPricingCard trip={live} />
+            </aside>
           </Container>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import type { TripInclusionId } from "@/lib/trip-inclusions";
 import { DEFAULT_TRIP_INCLUSIONS } from "@/lib/trip-inclusions";
 import type { HotelAmenityId } from "@/lib/hotel-amenities";
+import type { HotelMealPlanId } from "@/lib/hotel-meal-plans";
 import type { TripPeriodFilterTag } from "@/lib/listing-period-filters";
 import { buildTripCardGallery } from "@/lib/trip-card-images";
 import type { TripPriceDisplayMode } from "@/lib/trip-price-display";
@@ -21,7 +22,7 @@ export type TripImage = {
   sortOrder: number;
 };
 
-/** Shared hotel catalog — name, image, and stars; stay dates live on the trip. */
+/** Shared hotel catalog — created once; used by Umrah trips & Individual Umrah offers. */
 export type Hotel = {
   id: string;
   name: string;
@@ -32,10 +33,16 @@ export type Hotel = {
   /** Target mosque for the walking-distance line */
   mosque: "nabawi" | "haram";
   breakfast: boolean;
+  /** Meal plans this hotel can offer */
+  mealPlans: HotelMealPlanId[];
   /** Additional features shown below the gallery — order preserved */
   amenities: HotelAmenityId[];
-  /** Optional long-form copy for the hotel details modal */
+  /** Optional long-form copy for the hotel details modal / admin */
   description?: string;
+  /** Internal notes for the team (not shown on public cards by default) */
+  notes?: string;
+  /** Inactive hotels stay in Admin but are hidden from new selections */
+  active: boolean;
   images: TripImage[];
 };
 
@@ -201,29 +208,19 @@ function buildHotelGallery(city: "medina" | "makkah", total: number): TripImage[
 export const hotels: Hotel[] = [
   {
     id: "maden",
-    name: "Maden Hotel",
+    name: "Le Méridien Medina",
     city: "medina",
     stars: 5,
     walkingMinutes: 3,
     mosque: "nabawi",
     breakfast: true,
+    mealPlans: ["breakfast", "half_board"],
     description:
-      "Das Maden Hotel liegt nur wenige Gehminuten von der Al-Masjid an-Nabawi entfernt und bietet komfortable Zimmer mit Frühstück für Ihren Medina-Aufenthalt.",
+      "Le Méridien Medina liegt nur wenige Gehminuten von der Al-Masjid an-Nabawi entfernt und bietet komfortable Zimmer mit Frühstück für Ihren Medina-Aufenthalt.",
+    notes: "",
+    active: true,
     amenities: ["wifi", "reception", "ac", "restaurant", "stars"],
     images: buildHotelGallery("medina", 16),
-  },
-  {
-    id: "anjum",
-    name: "Anjum Hotel Makkah",
-    city: "makkah",
-    stars: 5,
-    walkingMinutes: 5,
-    mosque: "haram",
-    breakfast: true,
-    description:
-      "Das Anjum Hotel Makkah befindet sich in unmittelbarer Nähe zur Al-Masjid al-Haram und verbindet erstklassigen Komfort mit kurzen Wegen zu den heiligen Stätten.",
-    amenities: ["wifi", "reception", "ac"],
-    images: buildHotelGallery("makkah", 19),
   },
   {
     id: "anwar",
@@ -233,8 +230,98 @@ export const hotels: Hotel[] = [
     walkingMinutes: 4,
     mosque: "nabawi",
     breakfast: true,
+    mealPlans: ["breakfast"],
+    description:
+      "Anwar Al Madinah Mövenpick bietet modernen Komfort und eine ruhige Lage nahe der Prophetenmoschee.",
+    notes: "",
+    active: true,
     amenities: ["wifi", "ac", "restaurant"],
     images: buildHotelGallery("medina", 15),
+  },
+  {
+    id: "season-star",
+    name: "Season Star Hotel Madinah",
+    city: "medina",
+    stars: 4,
+    walkingMinutes: 8,
+    mosque: "nabawi",
+    breakfast: true,
+    mealPlans: ["breakfast", "half_board"],
+    description:
+      "Season Star Hotel Madinah ist eine solide Wahl mit gutem Preis-Leistungs-Verhältnis und kurzen Wegen zur Prophetenmoschee.",
+    notes: "",
+    active: true,
+    amenities: ["wifi", "reception", "ac"],
+    images: buildHotelGallery("medina", 12),
+  },
+  {
+    id: "swissotel",
+    name: "Swissôtel Al Maqam Makkah",
+    city: "makkah",
+    stars: 5,
+    walkingMinutes: 2,
+    mosque: "haram",
+    breakfast: true,
+    mealPlans: ["breakfast", "half_board", "full_board"],
+    description:
+      "Swissôtel Al Maqam Makkah liegt unmittelbar am Haram und bietet erstklassigen Komfort für Ihren Aufenthalt in Makkah.",
+    notes: "",
+    active: true,
+    amenities: ["wifi", "reception", "ac", "restaurant", "stars"],
+    images: buildHotelGallery("makkah", 18),
+  },
+  {
+    id: "clock-tower",
+    name: "Makkah Clock Royal Tower",
+    city: "makkah",
+    stars: 5,
+    walkingMinutes: 1,
+    mosque: "haram",
+    breakfast: true,
+    mealPlans: ["breakfast", "half_board"],
+    description:
+      "Makkah Clock Royal Tower (Fairmont) — ikonische Lage direkt am Haram mit Panoramablick.",
+    notes: "",
+    active: true,
+    amenities: ["wifi", "reception", "ac", "restaurant", "stars"],
+    images: buildHotelGallery("makkah", 20),
+  },
+  {
+    id: "elaf-kinda",
+    name: "Elaf Kinda Hotel",
+    city: "makkah",
+    stars: 4,
+    walkingMinutes: 6,
+    mosque: "haram",
+    breakfast: true,
+    mealPlans: ["breakfast"],
+    description:
+      "Elaf Kinda Hotel bietet komfortable Zimmer und eine praktische Lage für Ihren Makkah-Aufenthalt.",
+    notes: "",
+    active: true,
+    amenities: ["wifi", "reception", "ac"],
+    images: buildHotelGallery("makkah", 14),
+  },
+  /**
+   * Legacy seed hotel kept for existing Umrah group trips (`medinaHotelId` / `makkahHotelId`).
+   * Hidden from Individual Umrah offer picker via `active: false` is not used — trips still need it.
+   * Prefer Swissôtel for new Makkah offers; Anjum remains available in Admin hotels.
+   */
+  {
+    id: "anjum",
+    name: "Anjum Hotel Makkah",
+    city: "makkah",
+    stars: 5,
+    walkingMinutes: 5,
+    mosque: "haram",
+    breakfast: true,
+    mealPlans: ["breakfast", "half_board", "full_board"],
+    description:
+      "Das Anjum Hotel Makkah befindet sich in unmittelbarer Nähe zur Al-Masjid al-Haram und verbindet erstklassigen Komfort mit kurzen Wegen zu den heiligen Stätten.",
+    notes: "",
+    active: true,
+    amenities: ["wifi", "reception", "ac"],
+    images: buildHotelGallery("makkah", 19),
   },
 ];
 

@@ -1,6 +1,6 @@
 import { DEFAULT_PARTNERS, type Partner } from "@/data/partners";
 
-const STORAGE_KEY = "mobarak.partners";
+const STORAGE_KEY = "mobarak.partners.v7";
 export const PARTNERS_EVENT = "mobarak-partners";
 
 function sortPartners(list: Partner[]): Partner[] {

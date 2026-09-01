@@ -12,6 +12,15 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Public Hajj campaign URLs: /de/hajj-2027 → internal /de/hajj/campaign/hajj-2027
+  const hajjRewrite = pathname.match(/^\/(de|ar|bs|en|tr)\/(hajj-\d{4})(\/.*)?$/);
+  if (hajjRewrite) {
+    const [, locale, slug, rest = ""] = hajjRewrite;
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}/hajj/campaign/${slug}${rest}`;
+    return NextResponse.rewrite(url);
+  }
+
   return intlMiddleware(request);
 }
 

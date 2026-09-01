@@ -11,56 +11,55 @@ export type Partner = {
 };
 
 /**
- * Default catalog — all hidden until Mobarak confirms permission to display.
- * Do not invent accreditations; enable in admin only when authorised.
+ * Homepage trust strip — logo1–6 retina (4×) sharpened exports.
  */
 export const DEFAULT_PARTNERS: Partner[] = [
   {
     id: "iata",
     title: "IATA",
-    logoSrc: "/brand/partners/iata.png",
+    logoSrc: "/brand/partners/iata-hd.png",
     link: "",
     sortOrder: 10,
-    visible: false,
+    visible: true,
   },
   {
     id: "saudia",
     title: "Saudia",
-    logoSrc: "/brand/partners/saudia.png",
+    logoSrc: "/brand/partners/saudia-hd.png",
     link: "",
     sortOrder: 20,
-    visible: false,
+    visible: true,
   },
   {
-    id: "certified",
-    title: "Certified",
-    logoSrc: "/brand/partners/check.png",
+    id: "tuv",
+    title: "TÜV",
+    logoSrc: "/brand/partners/tuv-hd.png",
     link: "",
     sortOrder: 30,
-    visible: false,
+    visible: true,
   },
   {
-    id: "halal",
-    title: "Halal",
-    logoSrc: "/brand/partners/halal.png",
+    id: "ministry-hajj",
+    title: "Ministry of Hajj and Umrah",
+    logoSrc: "/brand/partners/ministry-hajj-hd.png",
     link: "",
     sortOrder: 40,
-    visible: false,
+    visible: true,
   },
   {
-    id: "xerotours",
-    title: "Xerotours",
-    logoSrc: "/brand/partners/xerotours.png",
+    id: "iso-9001",
+    title: "ISO 9001:2015",
+    logoSrc: "/brand/partners/iso-9001-hd.png",
     link: "",
     sortOrder: 50,
-    visible: false,
+    visible: true,
   },
   {
-    id: "obsv",
-    title: "ÖBSV",
-    logoSrc: "/brand/partners/obsv.png",
+    id: "ogsv",
+    title: "ÖGSV",
+    logoSrc: "/brand/partners/ogsv-hd.png",
     link: "",
     sortOrder: 60,
-    visible: false,
+    visible: true,
   },
 ];

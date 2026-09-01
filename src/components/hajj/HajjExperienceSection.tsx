@@ -67,7 +67,7 @@ function ExperienceCarousel({ slides }: { slides: HajjPageContent["experience"][
 
   return (
     <div
-      className="relative min-w-0"
+      className="relative w-full min-w-0"
       role="region"
       aria-roledescription="carousel"
       aria-label={tCommon("experienceCarousel")}
@@ -77,7 +77,7 @@ function ExperienceCarousel({ slides }: { slides: HajjPageContent["experience"][
           <button
             type="button"
             onClick={goPrev}
-            className="absolute start-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-navy-deep/80 text-white shadow-lg backdrop-blur-sm transition hover:bg-navy-deep lg:h-10 lg:w-10"
+            className="absolute start-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-navy-deep/75 text-white shadow-lg backdrop-blur-sm transition hover:bg-navy-deep"
             aria-label={tCommon("previous")}
           >
             <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
@@ -85,7 +85,7 @@ function ExperienceCarousel({ slides }: { slides: HajjPageContent["experience"][
           <button
             type="button"
             onClick={goNext}
-            className="absolute end-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-navy-deep/80 text-white shadow-lg backdrop-blur-sm transition hover:bg-navy-deep lg:h-10 lg:w-10"
+            className="absolute end-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-navy-deep/75 text-white shadow-lg backdrop-blur-sm transition hover:bg-navy-deep"
             aria-label={tCommon("next")}
           >
             <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
@@ -96,7 +96,7 @@ function ExperienceCarousel({ slides }: { slides: HajjPageContent["experience"][
       <div
         ref={scrollerRef}
         dir={isRtl ? "rtl" : "ltr"}
-        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth px-1 py-1"
+        className="no-scrollbar flex w-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth rounded-2xl"
         tabIndex={0}
         aria-live="polite"
         onKeyDown={(e) => {
@@ -115,18 +115,19 @@ function ExperienceCarousel({ slides }: { slides: HajjPageContent["experience"][
           <figure
             key={slide.id}
             data-exp-slide
-            className="w-[min(100%,340px)] shrink-0 snap-center sm:w-[min(85%,380px)] lg:w-full"
+            className="w-full min-w-full shrink-0 snap-center"
           >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-navy-deep shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+            <div className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl border border-white/15 bg-[#0B1A33] shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:aspect-[4/3]">
               <Image
                 src={slide.imageSrc}
                 alt={slide.label}
                 fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 85vw, 480px"
+                className="object-cover object-center"
+                sizes="(max-width: 1024px) 100vw, 560px"
                 quality={IQ.content}
+                priority={slide.id === ordered[0]?.id}
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/55 to-transparent px-4 pb-4 pt-12">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/50 to-transparent px-5 pb-5 pt-14">
                 <figcaption className="text-[14px] font-bold tracking-[0.06em] text-white uppercase sm:text-[15px]">
                   {slide.label}
                 </figcaption>
@@ -160,17 +161,24 @@ export function HajjExperienceSection({ content }: { content: HajjPageContent["e
   return (
     <section id="erfahrung" className="bg-navy py-14 text-white md:py-16 lg:py-20">
       <Container>
+        {content.title ? (
+          <h2 className="mx-auto mb-10 max-w-4xl text-center text-[24px] font-bold leading-snug tracking-[-0.02em] text-white md:mb-12 md:text-[30px] lg:text-[34px]">
+            {content.title}
+          </h2>
+        ) : null}
+
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-14">
           <div className="text-center lg:text-start">
+            <div className="mx-auto mb-5 h-0.5 w-16 rounded-full bg-[#C43B3B] lg:mx-0" aria-hidden />
             <p
               className="text-[72px] font-bold leading-[0.9] tracking-[-0.03em] text-brand-gold sm:text-[88px] lg:text-[104px]"
               aria-hidden
             >
               {content.stat}
             </p>
-            <h2 className="mt-4 text-[16px] font-bold tracking-[0.14em] text-white sm:text-[18px] lg:mt-5 lg:text-[20px]">
+            <h3 className="mt-4 text-[16px] font-bold tracking-[0.14em] text-white uppercase sm:text-[18px] lg:mt-5 lg:text-[20px]">
               {content.heading}
-            </h2>
+            </h3>
             <p className="mx-auto mt-4 max-w-md text-[15px] leading-[1.7] text-white/82 sm:text-[16px] lg:mx-0 lg:max-w-none">
               {content.body}
             </p>
