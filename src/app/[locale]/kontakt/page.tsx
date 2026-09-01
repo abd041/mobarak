@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { ComingSoon } from "@/components/ui/ComingSoon";
+import { ContactPageContent } from "@/components/contact/ContactPageContent";
 import { pageMetadata } from "@/lib/page-metadata";
 
 export async function generateMetadata({
@@ -19,5 +19,5 @@ export default async function ContactPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ComingSoon />;
+  return <ContactPageContent locale={locale} />;
 }
