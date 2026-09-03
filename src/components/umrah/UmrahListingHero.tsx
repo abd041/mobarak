@@ -19,13 +19,13 @@ function ListingHeroBenefitItemMobile({
 }) {
   return (
     <li className="flex min-w-0 flex-col items-center gap-1 text-center">
-      <div className="relative h-6 w-6 shrink-0">
+      <div className="relative h-5 w-5 shrink-0">
         <Image
           src={benefit.icon}
           alt=""
           fill
           className="umrah-listing-benefit-icon object-contain"
-          sizes="24px"
+          sizes="20px"
           quality={IQ.thumb}
         />
       </div>
@@ -36,7 +36,7 @@ function ListingHeroBenefitItemMobile({
   );
 }
 
-/** Desktop: icon left + text right, single row. */
+/** Desktop: icon above + two-line label — matches reference density. */
 function ListingHeroBenefitItemDesktop({
   benefit,
   label,
@@ -45,7 +45,7 @@ function ListingHeroBenefitItemDesktop({
   label: string;
 }) {
   return (
-    <li className="flex shrink-0 items-center gap-1.5 lg:gap-2">
+    <li className="flex w-[5.75rem] shrink-0 flex-col items-center gap-1.5 text-center lg:w-[6.25rem] xl:w-[6.5rem]">
       <div className="relative h-6 w-6 shrink-0 lg:h-7 lg:w-7">
         <Image
           src={benefit.icon}
@@ -56,7 +56,7 @@ function ListingHeroBenefitItemDesktop({
           quality={IQ.thumb}
         />
       </div>
-      <span className="max-w-[4.75rem] text-[10px] font-semibold leading-[1.2] text-[#051033] lg:max-w-[5.25rem] lg:text-[11px] xl:max-w-[5.5rem] xl:text-[11px]">
+      <span className="w-full text-[10px] font-semibold leading-[1.2] text-[#051033] lg:text-[11px]">
         {label}
       </span>
     </li>
@@ -64,9 +64,9 @@ function ListingHeroBenefitItemDesktop({
 }
 
 /**
- * Listing hero
- * - Mobile (locked): full-bleed Kaaba, title, 4+5 icons
- * - Desktop: title + subtitle + 9 icons in one row (icon left, text right) + Kaaba right fade
+ * Listing hero (Umrah Gruppenreisen only)
+ * - Mobile: full-bleed Makkah plate, title, 4+4 icons
+ * - Desktop: title + subtitle + 8 icons + soft-faded photo on the right
  */
 export async function UmrahListingHero() {
   const t = await getTranslations("umrah");
@@ -86,7 +86,7 @@ export async function UmrahListingHero() {
 
       {/* Mobile: full-bleed. Desktop: photo on the right. */}
       <div
-        className="pointer-events-none absolute inset-0 md:inset-y-0 md:end-0 md:start-auto md:w-[50%]"
+        className="pointer-events-none absolute inset-0 md:inset-y-0 md:end-0 md:start-auto md:w-[55%]"
         aria-hidden
       >
         <Image
@@ -95,16 +95,16 @@ export async function UmrahListingHero() {
           fill
           priority
           quality={IQ.hero}
-          sizes="(max-width: 767px) 100vw, 50vw"
-          className="umrah-listing-hero-photo object-cover object-[78%_36%] md:object-[70%_40%]"
+          sizes="(max-width: 767px) 100vw, 55vw"
+          className="umrah-listing-hero-photo object-cover object-[72%_42%] md:object-[76%_40%]"
         />
       </div>
 
       <div className="umrah-listing-hero-scrim pointer-events-none absolute inset-0" aria-hidden />
 
-      {/* ——— Mobile (do not change) ——— */}
-      <Container className="relative flex h-full min-h-[inherit] items-end pb-5 pt-6 md:hidden">
-        <div className="flex w-full flex-col justify-end gap-4">
+      {/* ——— Mobile ——— */}
+      <Container className="relative flex h-full min-h-[inherit] items-end pb-4 pt-5 md:hidden">
+        <div className="flex w-full flex-col justify-end gap-3">
           <div>
             <p
               className="min-w-0 font-black leading-[0.98] tracking-[-0.03em] text-[#051033] uppercase"
@@ -112,16 +112,16 @@ export async function UmrahListingHero() {
             >
               {titleRest ? (
                 <>
-                  <span className="block text-[34px] font-black tracking-[-0.04em]">
+                  <span className="block text-[32px] font-black tracking-[-0.04em]">
                     {titleFirst}
                   </span>
-                  <span className="block text-[22px] font-extrabold">{titleRest}</span>
+                  <span className="block text-[20px] font-extrabold">{titleRest}</span>
                 </>
               ) : (
-                <span className="block text-[28px]">{listingTitle}</span>
+                <span className="block text-[26px]">{listingTitle}</span>
               )}
             </p>
-            <p className="mt-1.5 max-w-[34rem] text-[13px] font-medium leading-snug text-[#5B6B7C]">
+            <p className="mt-1 max-w-[34rem] text-[13px] font-medium leading-snug text-[#5B6B7C]">
               {t("listingSubtitle")}
             </p>
           </div>
@@ -131,10 +131,8 @@ export async function UmrahListingHero() {
               <ul
                 key={rowIndex}
                 className={cn(
-                  "ms-0 me-0 mb-0 list-none gap-x-1.5 gap-y-2 p-0",
-                  rowIndex === 0
-                    ? "mt-0 flex w-[78%] max-w-[17.5rem] justify-between"
-                    : "mt-3 grid w-full max-w-[22.5rem] grid-cols-5",
+                  "ms-0 me-0 mb-0 grid w-full max-w-[22rem] list-none grid-cols-4 gap-x-2 gap-y-1.5 p-0",
+                  rowIndex === 0 ? "mt-0" : "mt-2.5",
                 )}
               >
                 {row.map((benefit) => (
@@ -151,20 +149,20 @@ export async function UmrahListingHero() {
       </Container>
 
       {/* ——— Desktop ——— */}
-      <Container className="relative hidden py-7 md:block lg:py-8">
-        <div>
+      <Container className="relative hidden py-5 md:block lg:py-6">
+        <div className="relative z-10 max-w-[min(100%,36rem)] lg:max-w-[min(100%,38rem)]">
           <p
-            className="min-w-0 max-w-[min(100%,44rem)] text-[36px] font-black uppercase leading-[1.05] tracking-[-0.03em] text-[#051033] lg:max-w-[min(100%,48rem)] lg:text-[42px]"
+            className="min-w-0 text-[30px] font-black uppercase leading-[1.05] tracking-[-0.03em] text-[#051033] lg:text-[34px] xl:text-[36px]"
             aria-hidden="true"
           >
             {listingTitle}
           </p>
-          <p className="mt-2 max-w-[34rem] text-[15px] font-medium leading-snug text-[#5B6B7C] lg:text-[16px]">
+          <p className="mt-1.5 max-w-[32rem] text-[14px] font-medium leading-snug text-[#5B6B7C] lg:text-[15px]">
             {t("listingSubtitle")}
           </p>
 
           <ul
-            className="mt-5 flex w-fit max-w-full list-none flex-nowrap items-center justify-start gap-x-2.5 p-0 lg:mt-6 lg:gap-x-3 xl:gap-x-3.5"
+            className="mt-4 flex w-fit max-w-full list-none flex-nowrap items-start justify-start gap-x-1 p-0 lg:mt-5 lg:gap-x-1.5 xl:gap-x-2"
             aria-label={t("inclusions")}
           >
             {LISTING_HERO_BENEFITS.map((benefit) => (

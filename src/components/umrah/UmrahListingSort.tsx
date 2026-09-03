@@ -29,14 +29,14 @@ export function UmrahListingSort({
     <div className={cn("flex min-w-0 shrink-0 items-center justify-end gap-1.5 sm:gap-2", className)}>
       <label
         htmlFor="umrah-listing-sort"
-        className="hidden shrink-0 text-[13px] font-medium text-navy sm:inline sm:text-[14px]"
+        className="hidden shrink-0 text-[12px] font-medium text-navy sm:inline sm:text-[13px]"
       >
         {t("sortBy")}
       </label>
       <select
         id="umrah-listing-sort"
         aria-label={t("sortBy")}
-        className="min-h-10 max-w-[10.5rem] min-w-0 rounded-lg border border-line bg-white px-2 py-1.5 text-[12px] font-semibold text-navy sm:min-h-11 sm:max-w-[12.5rem] sm:px-3 sm:py-2 sm:text-[14px]"
+        className="min-h-8 max-w-[10.5rem] min-w-0 rounded-md border border-line bg-white px-2 py-1 text-[12px] font-semibold text-navy sm:min-h-9 sm:max-w-[12rem] sm:px-2.5 sm:py-1.5 sm:text-[13px]"
         value={sort}
         onChange={(e) => onSortChange(e.target.value as TripListingSortKey)}
       >

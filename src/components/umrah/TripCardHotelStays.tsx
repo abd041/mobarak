@@ -1,25 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Star } from "lucide-react";
-import { Link } from "@/i18n/navigation";
-import { DirArrow } from "@/components/ui/DirArrow";
+import { Footprints, Star } from "lucide-react";
 import type { Hotel, UmrahTrip } from "@/data/mock";
 import { getTripHotelStayDateLabels } from "@/lib/trip-inquiry";
 import type { PeriodFilterKey } from "@/lib/listing-period-filters";
-import { buildTripOfferFlowHref } from "@/lib/trip-flow";
+import { IQ } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
-function HotelStars({ count, compact = false }: { count: number; compact?: boolean }) {
+function HotelStars({ count }: { count: number }) {
   return (
-    <span className="inline-flex shrink-0 items-center gap-px" aria-label={`${count} stars`}>
+    <span className="mt-0.5 inline-flex shrink-0 items-center gap-px" aria-label={`${count} stars`}>
       {Array.from({ length: count }).map((_, i) => (
         <Star
           key={i}
-          className={cn(
-            "fill-brand-gold text-brand-orange-cta",
-            compact ? "h-[11px] w-[11px] md:h-[12px] md:w-[12px]" : "h-[12px] w-[12px]",
-          )}
+          className="h-2.5 w-2.5 fill-[#FFB800] text-[#FFB800] md:h-3 md:w-3"
           aria-hidden
         />
       ))}
@@ -31,68 +27,73 @@ function StayColumn({
   cityLabel,
   nightsLabel,
   dateLabel,
-  hotelName,
-  stars,
-  detailsHref,
-  detailsLabel,
+  hotel,
   prominence = "default",
 }: {
   cityLabel: string;
   nightsLabel: string;
   dateLabel: string;
-  hotelName: string;
-  stars: number;
-  detailsHref: string;
-  detailsLabel: string;
+  hotel: Hotel;
   prominence?: "listing" | "default";
 }) {
   const t = useTranslations("umrah");
   const isListing = prominence === "listing";
+  const thumb =
+    hotel.images[0]?.src ||
+    (hotel.city === "medina" ? "/brand/offer-hero/hero-bg-2.png" : "/brand/offer-hero/hero-bg-3.png");
+  const walkingLabel =
+    hotel.mosque === "nabawi"
+      ? t("cardWalkingNabawi", { minutes: hotel.walkingMinutes })
+      : t("cardWalkingHaram", { minutes: hotel.walkingMinutes });
 
   return (
-    <div
-      className={cn(
-        "min-w-0",
-        isListing
-          ? "px-3.5 py-3 md:px-[14px] md:py-[14px]"
-          : "ps-[22px] pe-[12px] py-[14px] sm:px-[16px] sm:py-[16px]",
-      )}
-    >
+    <div className={cn("min-w-0 bg-white px-2.5 py-2.5", isListing && "md:px-3 md:py-2.5")}>
       <p
         className={cn(
-          "break-words font-extrabold leading-tight text-[#0A1B3D]",
-          isListing ? "text-[13px] md:text-[14px]" : "text-[14px] sm:text-[15px]",
+          "leading-tight text-[#0A1B3D]",
+          isListing ? "text-[12px] md:text-[13px]" : "text-[13px]",
         )}
       >
-        {t("cardCityStay", { city: cityLabel, nights: nightsLabel })}
+        <span className="font-extrabold">{cityLabel}</span>
+        <span className="font-semibold"> ({nightsLabel})</span>
       </p>
       <p
         className={cn(
-          "mt-[4px] break-words font-medium leading-snug text-[#0A1B3D]",
-          isListing ? "text-[11px] md:text-[12px]" : "text-[12px] sm:text-[13px]",
+          "mt-0.5 font-normal leading-snug text-[#0A1B3D]",
+          isListing ? "text-[10px] md:text-[11px]" : "text-[11px]",
         )}
       >
         {dateLabel}
       </p>
-      <div className="mt-[6px] flex min-w-0 flex-wrap items-center gap-x-[6px] gap-y-[2px]">
-        <span
-          className={cn(
-            "min-w-0 break-words font-semibold leading-tight text-[#0A1B3D]",
-            isListing ? "text-[12px] md:text-[13px]" : "text-[13px] sm:text-[14px]",
-          )}
-        >
-          {hotelName}
-        </span>
-        <HotelStars count={stars} compact={isListing} />
+
+      <div className="mt-1.5 flex items-start gap-1.5 md:gap-2">
+        <div className="relative h-[56px] w-[44px] shrink-0 overflow-hidden rounded-lg bg-[#EEF0F3] md:h-[60px] md:w-[48px]">
+          <Image
+            src={thumb}
+            alt=""
+            fill
+            className="object-cover object-center"
+            sizes="48px"
+            quality={IQ.thumb}
+          />
+        </div>
+
+        <div className="min-w-0 flex-1 pt-0">
+          <p
+            className={cn(
+              "break-words font-bold leading-tight text-[#0A1B3D]",
+              isListing ? "text-[11px] md:text-[12px]" : "text-[12px]",
+            )}
+          >
+            {hotel.name}
+          </p>
+          <HotelStars count={hotel.stars} />
+          <span className="mt-1 inline-flex max-w-full items-start gap-0.5 rounded-md border border-[#F0E4D4]/70 bg-[#FFF5E6] px-1.5 py-0.5 text-[8px] font-semibold leading-[1.3] text-[#6B4E16] md:text-[9px]">
+            <Footprints className="mt-px h-2.5 w-2.5 shrink-0 text-[#6B4E16]" strokeWidth={2.5} aria-hidden />
+            <span className="min-w-0">{walkingLabel}</span>
+          </span>
+        </div>
       </div>
-      {!isListing ? (
-        <Link
-          href={detailsHref}
-          className="mt-[6px] inline-block text-[11px] font-semibold text-[#1E5A9C] hover:underline"
-        >
-          {detailsLabel} <DirArrow />
-        </Link>
-      ) : null}
     </div>
   );
 }
@@ -101,7 +102,7 @@ export function TripCardHotelStays({
   trip,
   medina,
   makkah,
-  listingFilter = "all",
+  listingFilter: _listingFilter = "all",
   prominence = "default",
 }: {
   trip: UmrahTrip;
@@ -114,31 +115,24 @@ export function TripCardHotelStays({
   const t = useTranslations("umrah");
   const tCommon = useTranslations("common");
   const stayDates = getTripHotelStayDateLabels(trip, locale);
-  const detailsHref = buildTripOfferFlowHref(trip, listingFilter);
 
   const medinaDateLabel = stayDates.medina || trip.medinaStay.dateLabel || "—";
   const makkahDateLabel = stayDates.makkah || trip.makkahStay.dateLabel || "—";
 
   return (
-    <div className="grid min-w-0 grid-cols-2 divide-x divide-[#EEF0F3] border-b border-[#EEF0F3]">
+    <div className="grid min-w-0 grid-cols-2 divide-x divide-[#EEEEEE] border-b border-[#EEEEEE] bg-white">
       <StayColumn
         cityLabel={t("medina")}
         nightsLabel={tCommon("nights", { count: trip.medinaStay.nights })}
         dateLabel={medinaDateLabel}
-        hotelName={medina.name}
-        stars={medina.stars}
-        detailsHref={detailsHref}
-        detailsLabel={t("hotelDetailsShort")}
+        hotel={medina}
         prominence={prominence}
       />
       <StayColumn
         cityLabel={t("makkah")}
         nightsLabel={tCommon("nights", { count: trip.makkahStay.nights })}
         dateLabel={makkahDateLabel}
-        hotelName={makkah.name}
-        stars={makkah.stars}
-        detailsHref={detailsHref}
-        detailsLabel={t("hotelDetailsShort")}
+        hotel={makkah}
         prominence={prominence}
       />
     </div>

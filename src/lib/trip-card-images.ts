@@ -17,10 +17,12 @@ export const TRIP_CARD_PHOTOS = {
   makkahHotel: {
     src: "/brand/offer-hero/hero-bg-3.png",
     caption: "Hotel in Makkah",
+    captionSubtitle: "Ein Ort, der Herzen verändert.",
   },
   medinaHotel: {
     src: "/brand/offer-hero/hero-bg-2.png",
     caption: "Hotel in Medina",
+    captionSubtitle: "Nahe der Prophetenmoschee.",
   },
   lobbyMakkah: {
     src: "/brand/offer-hero/hero-bg-4.png",

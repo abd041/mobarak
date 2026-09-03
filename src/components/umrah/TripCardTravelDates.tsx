@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Moon } from "lucide-react";
 import type { UmrahTrip } from "@/data/mock";
 import { getTripCardDateLabel } from "@/lib/trip-inquiry";
 import { getTripNightCount } from "@/lib/trip-nights";
@@ -24,22 +24,20 @@ export function TripCardTravelDates({
   return (
     <div
       className={cn(
-        "flex items-center justify-between gap-[10px] border-b border-[#EEF0F3] bg-white",
-        isListing
-          ? "px-4 py-3 md:px-[16px] md:py-[14px]"
-          : "ps-[22px] pe-[14px] py-[12px] sm:px-[16px]",
+        "flex items-center justify-between gap-2 border-b border-[#E8EBEF] bg-[#F4F7FA] px-3 py-2",
+        isListing && "md:px-3.5 md:py-2",
       )}
     >
       <p
         className={cn(
-          "flex min-w-0 items-center gap-[8px] leading-tight text-[#0A1B3D]",
+          "flex min-w-0 items-center gap-1.5 leading-tight text-[#0A1B3D]",
           isListing
-            ? "text-[15px] font-extrabold tracking-[-0.02em] md:text-[16px]"
-            : "text-[15px] font-bold tracking-[-0.01em] sm:text-[16px]",
+            ? "text-[12px] font-extrabold tracking-[-0.02em] md:text-[13px]"
+            : "text-[13px] font-bold sm:text-[14px]",
         )}
       >
         <CalendarDays
-          className="h-[18px] w-[18px] shrink-0 text-[#0A1B3D] md:h-[20px] md:w-[20px]"
+          className="h-3.5 w-3.5 shrink-0 text-[#0A1B3D] md:h-4 md:w-4"
           strokeWidth={2.25}
           aria-hidden
         />
@@ -48,12 +46,13 @@ export function TripCardTravelDates({
       {nights > 0 ? (
         <span
           className={cn(
-            "shrink-0 whitespace-nowrap text-[#0A1B3D]",
+            "flex shrink-0 items-center gap-1 whitespace-nowrap text-[#0A1B3D]",
             isListing
-              ? "text-[14px] font-extrabold tracking-[-0.01em] md:text-[16px]"
-              : "text-[14px] font-bold sm:text-[15px]",
+              ? "text-[12px] font-extrabold tracking-[-0.01em] md:text-[13px]"
+              : "text-[12px] font-bold sm:text-[13px]",
           )}
         >
+          <Moon className="h-3 w-3 shrink-0 md:h-3.5 md:w-3.5" strokeWidth={2.25} aria-hidden />
           {tCommon("nights", { count: nights })}
         </span>
       ) : null}

@@ -88,7 +88,7 @@ export function TripOfferHeroSlider({
         <button
           type="button"
           onClick={goNext}
-          className="offer-hero-slider-next pointer-events-auto absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-navy shadow-card transition hover:bg-white sm:h-12 sm:w-12"
+          className="offer-hero-slider-next pointer-events-auto absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-[#111111] shadow-card transition hover:bg-white sm:h-12 sm:w-12"
           aria-label={tCommon("nextImage")}
         >
           <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />

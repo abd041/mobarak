@@ -18,6 +18,8 @@ export type TripImage = {
   src: string;
   /** Optional caption shown under / over the image */
   caption?: string;
+  /** Secondary line under the gallery caption overlay title */
+  captionSubtitle?: string;
   /** Display order in the gallery (ascending) */
   sortOrder: number;
 };
@@ -80,6 +82,9 @@ export type TripDetailNotes = {
   excursions?: string;
 };
 
+/** Marketing pills on offer-card image (stacked under availability). */
+export type TripOfferBadgeId = "popular" | "direct_flight" | "early_bird";
+
 export type UmrahTrip = {
   /** Stable trip / departure ID — unique per group departure. */
   id: string;
@@ -101,6 +106,11 @@ export type UmrahTrip = {
   /** true = waitlist full; false = waitlist still available. */
   waitlistFull: boolean;
   status: AvailabilityStatus;
+  /**
+   * Optional marketing badges over the gallery (Beliebt, Direktflug, Frühbucher).
+   * Availability pills stay separate via AvailabilityBadge.
+   */
+  offerBadges?: TripOfferBadgeId[];
   groupSize: number;
   departureAirport: string;
   airline: string;
@@ -164,7 +174,7 @@ export const IMG = {
   room:
     "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=75",
   roomDouble:
-    "https://images.unsplash.com/photo-1611892440504-42a784e83da7?auto=format&fit=crop&w=900&q=75",
+    "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=75",
   restaurant:
     "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=75",
   bathroom:
@@ -180,15 +190,19 @@ export const IMG = {
 /** Representative hotel gallery — exterior, lobby, rooms, restaurant, etc. */
 function buildHotelGallery(city: "medina" | "makkah", total: number): TripImage[] {
   const cityLabel = city === "medina" ? "Medina" : "Makkah";
+  const hero =
+    city === "medina"
+      ? { src: IMG.medina, caption: `Al-Masjid an-Nabawi – ${cityLabel}`, sortOrder: 0 }
+      : { src: IMG.roomDouble, caption: `Zimmer mit Haram-Blick – ${cityLabel}`, sortOrder: 0 };
   const pool: TripImage[] = [
-    { src: IMG.hotel, caption: `Außenansicht – ${cityLabel}`, sortOrder: 0 },
-    { src: IMG.lobby, caption: "Lobby", sortOrder: 1 },
-    { src: IMG.roomDouble, caption: "Doppelzimmer", sortOrder: 2 },
-    { src: IMG.room, caption: "Dreibett- / Vierbettzimmer", sortOrder: 3 },
-    { src: IMG.restaurant, caption: "Restaurant", sortOrder: 4 },
-    { src: IMG.bathroom, caption: "Badezimmer", sortOrder: 5 },
-    { src: IMG.breakfast, caption: "Frühstück", sortOrder: 6 },
-    { src: IMG.medina, caption: `Aussicht – ${cityLabel}`, sortOrder: 7 },
+    hero,
+    { src: IMG.hotel, caption: `Außenansicht – ${cityLabel}`, sortOrder: 1 },
+    { src: IMG.lobby, caption: "Lobby", sortOrder: 2 },
+    { src: city === "makkah" ? IMG.kaaba : IMG.medina, caption: `Aussicht – ${cityLabel}`, sortOrder: 3 },
+    { src: IMG.room, caption: "Dreibett- / Vierbettzimmer", sortOrder: 4 },
+    { src: IMG.restaurant, caption: "Restaurant", sortOrder: 5 },
+    { src: IMG.bathroom, caption: "Badezimmer", sortOrder: 6 },
+    { src: IMG.breakfast, caption: "Frühstück", sortOrder: 7 },
     { src: IMG.group, caption: "Aufenthaltsbereich", sortOrder: 8 },
     { src: IMG.kaaba, caption: "Umgebung", sortOrder: 9 },
     { src: IMG.lobby, caption: "Empfang", sortOrder: 10 },
@@ -211,7 +225,7 @@ export const hotels: Hotel[] = [
     name: "Le Méridien Medina",
     city: "medina",
     stars: 5,
-    walkingMinutes: 3,
+    walkingMinutes: 8,
     mosque: "nabawi",
     breakfast: true,
     mealPlans: ["breakfast", "half_board"],
@@ -357,23 +371,24 @@ const baseDetailNotes: TripDetailNotes = {
   excursions: "Geführte Ausflüge zu den wichtigsten Orten in Makkah und Medina inklusive.",
 };
 
-export const trips: UmrahTrip[] = [
+const seedTripsBase: UmrahTrip[] = [
   {
     id: "trip-23-okt-2026",
     displayOrder: 10,
     slug: "23-oktober-2026",
-    title: "Umrah Gruppenreise",
+    title: "Umrah Herbstferien",
     startDate: "2026-10-23",
     endDate: "2026-10-31",
     dateLabel: "23.–31. Oktober 2026",
-    nights: 9,
+    nights: 8,
     totalCapacity: 45,
     availableSeats: 5,
     waitlistEnabled: true,
     waitlistCapacity: 20,
     waitlistFull: false,
     status: "available",
-    groupSize: 45,
+    offerBadges: ["popular", "early_bird"],
+    groupSize: 40,
     departureAirport: "Wien",
     airline: "Egypt Air",
     airlineLogo: "/brand/meta-icons/egyptair-logo-wide.png",
@@ -399,13 +414,13 @@ export const trips: UmrahTrip[] = [
       nights: 3,
       checkIn: "2026-10-23",
       checkOut: "2026-10-26",
-      dateLabel: "23. Okt. – 26. Okt. 2026",
+      dateLabel: "23. – 26. Oktober 2026",
     },
     makkahStay: {
-      nights: 6,
+      nights: 5,
       checkIn: "2026-10-26",
       checkOut: "2026-10-31",
-      dateLabel: "26. Okt. – 31. Okt. 2026",
+      dateLabel: "26. – 31. Oktober 2026",
     },
     outbound: {
       dateLabel: "Do, 23. Oktober 2026",
@@ -463,6 +478,7 @@ export const trips: UmrahTrip[] = [
     waitlistCapacity: 15,
     waitlistFull: false,
     status: "available",
+    offerBadges: ["early_bird"],
     groupSize: 45,
     departureAirport: "Wien",
     airline: "Egypt Air",
@@ -546,6 +562,7 @@ export const trips: UmrahTrip[] = [
     waitlistCapacity: 10,
     waitlistFull: true,
     status: "waitlist_full",
+    offerBadges: ["popular"],
     groupSize: 45,
     departureAirport: "Wien",
     airline: "Egypt Air",
@@ -611,6 +628,301 @@ export const trips: UmrahTrip[] = [
     detailNotes: baseDetailNotes,
     seoIndexable: true,
   },
+];
+
+function cloneListingTrip(
+  base: UmrahTrip,
+  patch: {
+    id: string;
+    slug: string;
+    displayOrder: number;
+    startDate: string;
+    endDate: string;
+    dateLabel: string;
+    nights?: number;
+    availableSeats?: number;
+    waitlistFull?: boolean;
+    status?: AvailabilityStatus;
+    offerBadges?: TripOfferBadgeId[];
+    prices?: UmrahTrip["prices"];
+    filterTags: TripPeriodFilterTag[];
+    medinaStay: TripHotelStay;
+    makkahStay: TripHotelStay;
+    outboundDateLabel: string;
+    inboundDateLabel: string;
+  },
+): UmrahTrip {
+  return {
+    ...base,
+    id: patch.id,
+    slug: patch.slug,
+    displayOrder: patch.displayOrder,
+    startDate: patch.startDate,
+    endDate: patch.endDate,
+    dateLabel: patch.dateLabel,
+    nights: patch.nights ?? base.nights,
+    availableSeats: patch.availableSeats ?? base.availableSeats,
+    waitlistFull: patch.waitlistFull ?? base.waitlistFull,
+    status: patch.status ?? base.status,
+    offerBadges: patch.offerBadges ?? base.offerBadges,
+    prices: patch.prices ?? base.prices,
+    filterTags: patch.filterTags,
+    medinaStay: patch.medinaStay,
+    makkahStay: patch.makkahStay,
+    outbound: { ...base.outbound, dateLabel: patch.outboundDateLabel },
+    inbound: { ...base.inbound, dateLabel: patch.inboundDateLabel },
+  };
+}
+
+const [seedOkt, seedNov, seedDez] = seedTripsBase;
+
+/** Listing seed — 12 departures so “Weitere Termine anzeigen” can be demo’d (9 + expand). */
+export const trips: UmrahTrip[] = [
+  ...seedTripsBase,
+  cloneListingTrip(seedOkt!, {
+    id: "trip-05-okt-2026",
+    slug: "05-oktober-2026",
+    displayOrder: 5,
+    startDate: "2026-10-05",
+    endDate: "2026-10-13",
+    dateLabel: "05.–13. Oktober 2026",
+    availableSeats: 12,
+    offerBadges: ["direct_flight"],
+    prices: { quad: 1190, triple: 1290, double: 1390 },
+    filterTags: ["oktober"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-10-05",
+      checkOut: "2026-10-08",
+      dateLabel: "05. Okt. – 08. Okt. 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-10-08",
+      checkOut: "2026-10-13",
+      dateLabel: "08. Okt. – 13. Okt. 2026",
+    },
+    outboundDateLabel: "Mo, 05. Oktober 2026",
+    inboundDateLabel: "Di, 13. Oktober 2026",
+  }),
+  cloneListingTrip(seedOkt!, {
+    id: "trip-15-okt-2026",
+    slug: "15-oktober-2026",
+    displayOrder: 8,
+    startDate: "2026-10-15",
+    endDate: "2026-10-23",
+    dateLabel: "15.–23. Oktober 2026",
+    availableSeats: 8,
+    offerBadges: ["popular", "early_bird"],
+    prices: { quad: 1220, triple: 1320, double: 1420 },
+    filterTags: ["oktober", "herbstferien"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-10-15",
+      checkOut: "2026-10-18",
+      dateLabel: "15. Okt. – 18. Okt. 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-10-18",
+      checkOut: "2026-10-23",
+      dateLabel: "18. Okt. – 23. Okt. 2026",
+    },
+    outboundDateLabel: "Do, 15. Oktober 2026",
+    inboundDateLabel: "Fr, 23. Oktober 2026",
+  }),
+  cloneListingTrip(seedNov!, {
+    id: "trip-08-nov-2026",
+    slug: "08-november-2026",
+    displayOrder: 15,
+    startDate: "2026-11-08",
+    endDate: "2026-11-16",
+    dateLabel: "08.–16. November 2026",
+    availableSeats: 18,
+    offerBadges: ["early_bird"],
+    prices: { quad: 1260, triple: 1360, double: 1460 },
+    filterTags: ["november"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-11-08",
+      checkOut: "2026-11-11",
+      dateLabel: "08. Nov – 11. Nov 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-11-11",
+      checkOut: "2026-11-16",
+      dateLabel: "11. Nov – 16. Nov 2026",
+    },
+    outboundDateLabel: "So, 08. November 2026",
+    inboundDateLabel: "Mo, 16. November 2026",
+  }),
+  cloneListingTrip(seedNov!, {
+    id: "trip-18-nov-2026",
+    slug: "18-november-2026",
+    displayOrder: 18,
+    startDate: "2026-11-18",
+    endDate: "2026-11-26",
+    dateLabel: "18.–26. November 2026",
+    availableSeats: 6,
+    offerBadges: ["popular"],
+    prices: { quad: 1275, triple: 1375, double: 1475 },
+    filterTags: ["november"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-11-18",
+      checkOut: "2026-11-21",
+      dateLabel: "18. Nov – 21. Nov 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-11-21",
+      checkOut: "2026-11-26",
+      dateLabel: "21. Nov – 26. Nov 2026",
+    },
+    outboundDateLabel: "Mi, 18. November 2026",
+    inboundDateLabel: "Do, 26. November 2026",
+  }),
+  cloneListingTrip(seedDez!, {
+    id: "trip-10-dez-2026",
+    slug: "10-dezember-2026",
+    displayOrder: 25,
+    startDate: "2026-12-10",
+    endDate: "2026-12-18",
+    dateLabel: "10.–18. Dezember 2026",
+    availableSeats: 14,
+    status: "available",
+    waitlistFull: false,
+    offerBadges: ["direct_flight", "early_bird"],
+    prices: { quad: 1340, triple: 1440, double: 1540 },
+    filterTags: ["dezember"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-12-10",
+      checkOut: "2026-12-13",
+      dateLabel: "10. Dez – 13. Dez 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-12-13",
+      checkOut: "2026-12-18",
+      dateLabel: "13. Dez – 18. Dez 2026",
+    },
+    outboundDateLabel: "Do, 10. Dezember 2026",
+    inboundDateLabel: "Fr, 18. Dezember 2026",
+  }),
+  cloneListingTrip(seedDez!, {
+    id: "trip-20-dez-2026",
+    slug: "20-dezember-2026",
+    displayOrder: 28,
+    startDate: "2026-12-20",
+    endDate: "2026-12-28",
+    dateLabel: "20.–28. Dezember 2026",
+    availableSeats: 2,
+    status: "available",
+    waitlistFull: false,
+    offerBadges: ["popular"],
+    prices: { quad: 1360, triple: 1460, double: 1560 },
+    filterTags: ["dezember", "weihnachtsferien"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2026-12-20",
+      checkOut: "2026-12-23",
+      dateLabel: "20. Dez – 23. Dez 2026",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2026-12-23",
+      checkOut: "2026-12-28",
+      dateLabel: "23. Dez – 28. Dez 2026",
+    },
+    outboundDateLabel: "So, 20. Dezember 2026",
+    inboundDateLabel: "Mo, 28. Dezember 2026",
+  }),
+  cloneListingTrip(seedNov!, {
+    id: "trip-15-jan-2027",
+    slug: "15-jaenner-2027",
+    displayOrder: 40,
+    startDate: "2027-01-15",
+    endDate: "2027-01-23",
+    dateLabel: "15.–23. Jänner 2027",
+    availableSeats: 20,
+    status: "available",
+    waitlistFull: false,
+    offerBadges: ["early_bird"],
+    prices: { quad: 1310, triple: 1410, double: 1510 },
+    filterTags: ["jaenner", "semesterferien"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2027-01-15",
+      checkOut: "2027-01-18",
+      dateLabel: "15. Jän – 18. Jän 2027",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2027-01-18",
+      checkOut: "2027-01-23",
+      dateLabel: "18. Jän – 23. Jän 2027",
+    },
+    outboundDateLabel: "Fr, 15. Jänner 2027",
+    inboundDateLabel: "Sa, 23. Jänner 2027",
+  }),
+  cloneListingTrip(seedOkt!, {
+    id: "trip-05-feb-2027",
+    slug: "05-februar-2027",
+    displayOrder: 50,
+    startDate: "2027-02-05",
+    endDate: "2027-02-13",
+    dateLabel: "05.–13. Februar 2027",
+    availableSeats: 22,
+    status: "available",
+    waitlistFull: false,
+    offerBadges: ["direct_flight"],
+    prices: { quad: 1280, triple: 1380, double: 1480 },
+    filterTags: ["februar", "semesterferien"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2027-02-05",
+      checkOut: "2027-02-08",
+      dateLabel: "05. Feb – 08. Feb 2027",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2027-02-08",
+      checkOut: "2027-02-13",
+      dateLabel: "08. Feb – 13. Feb 2027",
+    },
+    outboundDateLabel: "Fr, 05. Februar 2027",
+    inboundDateLabel: "Sa, 13. Februar 2027",
+  }),
+  cloneListingTrip(seedDez!, {
+    id: "trip-20-mar-2027",
+    slug: "20-maerz-2027",
+    displayOrder: 60,
+    startDate: "2027-03-20",
+    endDate: "2027-03-28",
+    dateLabel: "20.–28. März 2027",
+    availableSeats: 9,
+    status: "available",
+    waitlistFull: false,
+    offerBadges: ["popular", "early_bird"],
+    prices: { quad: 1330, triple: 1430, double: 1530 },
+    filterTags: ["maerz", "osterferien", "ramadan"],
+    medinaStay: {
+      nights: 3,
+      checkIn: "2027-03-20",
+      checkOut: "2027-03-23",
+      dateLabel: "20. Mär – 23. Mär 2027",
+    },
+    makkahStay: {
+      nights: 5,
+      checkIn: "2027-03-23",
+      checkOut: "2027-03-28",
+      dateLabel: "23. Mär – 28. Mär 2027",
+    },
+    outboundDateLabel: "Sa, 20. März 2027",
+    inboundDateLabel: "So, 28. März 2027",
+  }),
 ];
 
 export const reviews: Review[] = [

@@ -1,13 +1,15 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { UmrahTrip } from "@/data/mock";
+import { getLocalizedTripFaqs } from "@/lib/trip-localized-copy";
 import { cn } from "@/lib/utils";
 
 export function TripDetailFaq({ trip }: { trip: UmrahTrip }) {
   const t = useTranslations("umrah");
-  const faqs = trip.faqs ?? [];
+  const locale = useLocale();
+  const faqs = getLocalizedTripFaqs(trip, locale, t);
 
   if (!faqs.length) return null;
 
@@ -15,7 +17,7 @@ export function TripDetailFaq({ trip }: { trip: UmrahTrip }) {
     <section id="faq" className="trip-section scroll-mt-24">
       <div className="mb-5 flex items-center gap-4 sm:mb-6">
         <span className="hidden h-px flex-1 bg-[#E4EAF2] sm:block" aria-hidden />
-        <h2 className="shrink-0 text-[18px] font-bold tracking-[-0.01em] text-[#051033] sm:text-[22px]">
+        <h2 className="shrink-0 text-[18px] font-bold tracking-[-0.01em] text-[#111111] sm:text-[22px]">
           {t("sectionFaq")}
         </h2>
         <span className="hidden h-px flex-1 bg-[#E4EAF2] sm:block" aria-hidden />
@@ -45,7 +47,7 @@ export function TripDetailFaq({ trip }: { trip: UmrahTrip }) {
                 "[&::-webkit-details-marker]:hidden",
               )}
             >
-              <span className="text-[14px] font-bold leading-snug tracking-[-0.01em] text-[#051033] sm:text-[15px]">
+              <span className="text-[14px] font-bold leading-snug tracking-[-0.01em] text-[#111111] sm:text-[15px]">
                 {faq.question}
               </span>
 
@@ -59,7 +61,7 @@ export function TripDetailFaq({ trip }: { trip: UmrahTrip }) {
                 )}
               >
                 <ChevronDown
-                  className="h-4 w-4 text-[#09245C] transition-transform duration-200 group-open:rotate-180"
+                  className="h-4 w-4 text-[#1A1A1A] transition-transform duration-200 group-open:rotate-180"
                   strokeWidth={2}
                   aria-hidden
                 />

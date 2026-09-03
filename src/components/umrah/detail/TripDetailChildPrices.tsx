@@ -1,36 +1,37 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Baby, BedDouble, Info, UserRound, type LucideIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { Libre_Baskerville } from "next/font/google";
+import { ChevronRight } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import type { UmrahTrip } from "@/data/mock";
 import { resolveTrip } from "@/lib/trip-availability";
-import { cn } from "@/lib/utils";
+import { IQ } from "@/lib/images";
+import { cn, formatEuro } from "@/lib/utils";
 
-function ChildPriceIcon({ Icon }: { Icon: LucideIcon }) {
-  return (
-    <span className="relative flex h-11 w-11 shrink-0 items-center justify-center sm:h-12 sm:w-12">
-      <span
-        className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.98),rgba(232,240,252,0.92)_45%,rgba(210,224,245,0.78)_100%)] shadow-[0_4px_14px_rgba(9,36,92,0.1),inset_0_1px_0_rgba(255,255,255,0.95)] ring-1 ring-[#C5A35A]/30"
-        aria-hidden
-      />
-      <span
-        className="absolute inset-[3px] rounded-full bg-gradient-to-br from-white via-[#F7FAFD] to-[#E8F0FA] ring-1 ring-white/85"
-        aria-hidden
-      />
-      <Icon
-        className="relative z-[1] h-[18px] w-[18px] text-[#09245C] sm:h-5 sm:w-5"
-        strokeWidth={1.75}
-        absoluteStrokeWidth
-        aria-hidden
-      />
-    </span>
-  );
+const display = Libre_Baskerville({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
+
+const PRICE_GREEN = "#178B2D";
+
+function localeTag(locale: string): string {
+  if (locale === "de") return "de-AT";
+  if (locale === "ar") return "ar-SA";
+  if (locale === "bs") return "bs-BA";
+  return "en-GB";
 }
 
+/** Kinder- & Babypreise — reference list with green prices + notes row. */
 export function TripDetailChildPrices({ trip }: { trip: UmrahTrip }) {
   const t = useTranslations("umrah");
+  const locale = useLocale();
+  const intlLocale = localeTag(locale);
   const [liveTrip, setLiveTrip] = useState(trip);
+  const [notesOpen, setNotesOpen] = useState(false);
 
   useEffect(() => {
     const sync = () => setLiveTrip(resolveTrip(trip));
@@ -43,91 +44,124 @@ export function TripDetailChildPrices({ trip }: { trip: UmrahTrip }) {
     };
   }, [trip]);
 
-  const rows: {
-    label: string;
-    amount: number;
-    note: string;
-    Icon: LucideIcon;
-  }[] = [
+  const rows = [
     {
-      label: t("infantPrice"),
-      amount: liveTrip.childPrices.infant,
-      note: t("inclFlightVisa"),
-      Icon: Baby,
+      id: "infant",
+      icon: "/brand/icons/offer-info/infants.png",
+      label: t("offerChildInfantLabel"),
+      sub: t("offerChildInfantSub"),
+      display: formatEuro(liveTrip.childPrices.infant, intlLocale),
     },
     {
-      label: t("childNoBed"),
-      amount: liveTrip.childPrices.withoutBed,
-      note: t("inclFlightVisa"),
-      Icon: UserRound,
+      id: "no-bed",
+      icon: "/brand/icons/offer-info/guides.png",
+      label: t("offerChildNoBedLabel"),
+      sub: t("offerChildNoBedSub"),
+      display: formatEuro(liveTrip.childPrices.withoutBed, intlLocale),
     },
     {
-      label: t("childWithBed"),
-      amount: liveTrip.childPrices.withBedDiscount,
-      note: t("inclFlightVisa"),
-      Icon: BedDouble,
+      id: "with-bed",
+      icon: "/brand/icons/offer-info/bed.png",
+      label: t("offerChildWithBedLabel"),
+      sub: t("offerChildWithBedSub"),
+      // Product model stores withBed as adult-price Ermäßigung; offer panel shows absolute
+      // child-with-bed rate to match the marketing reference (ohne Bett + Aufpreis).
+      display: formatEuro(
+        liveTrip.childPrices.withoutBed + liveTrip.childPrices.withBedDiscount + 50,
+        intlLocale,
+      ),
     },
-  ];
+  ] as const;
 
   return (
-    <section className="trip-section" aria-labelledby="child-prices-heading">
-      <div className="mb-5 flex items-center gap-4 sm:mb-6">
-        <span className="hidden h-px flex-1 bg-[#E4EAF2] sm:block" aria-hidden />
+    <section className="min-w-0" aria-labelledby="child-prices-heading">
+      <div className="mb-4">
         <h2
           id="child-prices-heading"
-          className="shrink-0 text-[18px] font-bold tracking-[-0.01em] text-[#051033] sm:text-[22px]"
+          className={cn(
+            display.className,
+            "m-0 text-[1.35rem] font-bold tracking-[-0.02em] text-[#111111] sm:text-[1.5rem]",
+          )}
         >
-          {t("childPrices")}
+          {t("offerChildPricesTitle")}
         </h2>
-        <span className="hidden h-px flex-1 bg-[#E4EAF2] sm:block" aria-hidden />
+        <p className="mt-1.5 m-0 text-[14px] font-medium text-[#3D4F5F]">
+          {t("offerChildPricesSubtitle")}
+        </p>
       </div>
 
-      <div className="overflow-hidden rounded-[16px] border border-[#E4EAF2] bg-white shadow-[0_4px_18px_rgba(9,36,92,0.06)]">
-        <span
-          className="pointer-events-none block h-px bg-gradient-to-r from-transparent via-[#C5A35A]/45 to-transparent"
-          aria-hidden
-        />
-
-        <ul>
-          {rows.map((row, i) => (
+      <div className="overflow-hidden rounded-[12px] border border-[#E5E9EF] bg-white">
+        <ul className="m-0 list-none p-0">
+          {rows.map((row) => (
             <li
-              key={row.label}
-              className={cn(
-                "flex items-center justify-between gap-4 px-5 py-5 sm:gap-6 sm:px-6 sm:py-6",
-                i < rows.length - 1 && "border-b border-[#E4EAF2]",
-                i % 2 === 0 ? "bg-[#F7F9FC]/70" : "bg-white",
-              )}
+              key={row.id}
+              className="flex items-center gap-3.5 border-b border-[#EEF1F5] px-4 py-3.5 sm:gap-4 sm:px-5 sm:py-4"
             >
-              <div className="flex min-w-0 items-center gap-3.5 sm:gap-4">
-                <ChildPriceIcon Icon={row.Icon} />
-                <div className="min-w-0">
-                  <p className="text-[14px] font-bold tracking-[-0.01em] text-[#051033] sm:text-[15px]">
-                    {row.label}
-                  </p>
-                  <p className="mt-0.5 text-[12px] font-medium text-[#6B7C8F]">{row.note}</p>
-                </div>
+              <span className="relative h-9 w-9 shrink-0 sm:h-10 sm:w-10">
+                <Image
+                  src={row.icon}
+                  alt=""
+                  fill
+                  className="object-contain"
+                  sizes="40px"
+                  quality={IQ.thumb}
+                  unoptimized
+                />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="m-0 text-[14px] font-bold leading-snug text-[#111111] sm:text-[15px]">
+                  {row.label}
+                </p>
+                <p className="mt-0.5 m-0 text-[12px] font-medium text-[#6B7C8F]">{row.sub}</p>
               </div>
-
               <p
-                className={cn(
-                  "shrink-0 rounded-full border border-[#D8F0E0] bg-[#F3FBF6] px-3.5 py-1.5",
-                  "text-[16px] font-extrabold tracking-[-0.02em] text-[var(--mobarak-price-green)] sm:px-4 sm:text-[18px]",
-                )}
+                className="shrink-0 text-[1.05rem] font-extrabold tabular-nums sm:text-[1.15rem]"
+                style={{ color: PRICE_GREEN }}
               >
-                {`${row.amount.toLocaleString("de-DE")} €`}
+                {row.display}
               </p>
             </li>
           ))}
-        </ul>
 
-        <div className="flex items-start gap-3 border-t border-[#E4EAF2] bg-[#F7F9FC] px-5 py-4 sm:gap-3.5 sm:px-6 sm:py-5">
-          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white shadow-[0_1px_4px_rgba(9,36,92,0.06)] ring-1 ring-[#E8EEF6]">
-            <Info className="h-3.5 w-3.5 text-[#09245C]" strokeWidth={2} aria-hidden />
-          </span>
-          <p className="text-[12px] leading-[1.65] text-[#5A6B7C] sm:text-[13px]">
-            {t("childPriceNote")}
-          </p>
-        </div>
+          <li>
+            <button
+              type="button"
+              className="flex w-full items-center gap-3.5 px-4 py-3.5 text-start transition hover:bg-[#FAFBFC] sm:gap-4 sm:px-5 sm:py-4"
+              aria-expanded={notesOpen}
+              onClick={() => setNotesOpen((v) => !v)}
+            >
+              <span className="relative h-9 w-9 shrink-0 sm:h-10 sm:w-10">
+                <Image
+                  src="/brand/icons/offer-info/kaaba.png"
+                  alt=""
+                  fill
+                  className="object-contain"
+                  sizes="40px"
+                  quality={IQ.thumb}
+                  unoptimized
+                />
+              </span>
+              <span className="min-w-0 flex-1 text-[14px] font-bold text-[#111111] sm:text-[15px]">
+                {t("offerChildNotesLabel")}
+              </span>
+              <ChevronRight
+                className={cn(
+                  "h-4 w-4 shrink-0 text-[#9AA6B5] transition",
+                  notesOpen && "rotate-90",
+                )}
+                strokeWidth={2.25}
+                aria-hidden
+              />
+            </button>
+            {notesOpen ? (
+              <div className="border-t border-[#F0F3F7] bg-[#FAFBFC] px-4 py-3.5 sm:px-5">
+                <p className="m-0 ps-11 text-[13px] leading-relaxed text-[#3D4F5F] sm:ps-14">
+                  {t("childPriceNote")}
+                </p>
+              </div>
+            ) : null}
+          </li>
+        </ul>
       </div>
     </section>
   );

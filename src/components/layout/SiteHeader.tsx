@@ -51,9 +51,9 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#eceef1] bg-white">
-      {/* §4 Mobile: logo left; phone · language · hamburger right */}
-      <div className="relative mx-auto flex h-[4.5rem] max-w-page items-center gap-2 px-3 sm:h-20 sm:px-5 md:px-8 min-[1180px]:h-24 lg:px-9.25">
+    <header className="sticky top-0 z-50 border-b border-[#E8EAEE] bg-white">
+      {/* Compact header — match listing reference height */}
+      <div className="relative mx-auto flex h-16 max-w-page items-center gap-2 px-3 sm:h-[4.25rem] sm:px-5 md:px-8 min-[1180px]:h-[4.5rem] lg:px-9.25">
         <Link
           href="/"
           className="flex shrink-0 items-center rounded-sm"
@@ -63,13 +63,13 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           <BrandLogo
             height={112}
             priority
-            className="!h-14 !max-h-14 w-auto sm:!h-16 sm:!max-h-16 min-[1180px]:!h-[5.25rem] min-[1180px]:!max-h-[5.25rem]"
+            className="!h-11 !max-h-11 w-auto sm:!h-12 sm:!max-h-12 min-[1180px]:!h-14 min-[1180px]:!max-h-14"
           />
         </Link>
 
         {/* Desktop nav only — never on mobile (§4) */}
         <nav
-          className="absolute left-1/2 hidden min-w-0 -translate-x-1/2 items-center justify-center gap-6 min-[1180px]:flex xl:gap-8"
+          className="absolute left-1/2 hidden min-w-0 -translate-x-1/2 items-center justify-center gap-5 min-[1180px]:flex xl:gap-6"
           aria-label={tCommon("menu")}
         >
           {NAV.map((item) => {
@@ -80,16 +80,16 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative shrink-0 whitespace-nowrap rounded-sm pb-1 text-[13px] font-medium transition xl:text-[14px]",
+                  "relative shrink-0 whitespace-nowrap rounded-sm pb-1 text-[13px] font-medium transition xl:text-[13.5px]",
                   active
-                    ? "font-semibold text-brand-orange-ink"
+                    ? "font-semibold text-navy"
                     : "text-[#3d4f5f] hover:text-navy",
                 )}
               >
                 {t(item.key)}
                 {active && (
                   <span
-                    className="absolute -bottom-0.5 left-1/2 h-0.5 w-7 -translate-x-1/2 rounded-full bg-brand-orange"
+                    className="absolute -bottom-0.5 left-1/2 h-[3px] w-[2.25rem] -translate-x-1/2 rounded-full bg-brand-orange"
                     aria-hidden
                   />
                 )}
@@ -107,9 +107,9 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           {/* Desktop: phone number chip + language */}
           <a
             href={`tel:${tMeta("phone").replace(/\s/g, "")}`}
-            className="dir-ltr-keep hidden items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-semibold whitespace-nowrap text-navy transition hover:border-[#d5d9df] hover:bg-white hover:shadow-card min-[1180px]:inline-flex xl:text-[14px]"
+            className="dir-ltr-keep hidden items-center gap-2 rounded-full bg-[#0A1B3D] px-3.5 py-1.5 text-[12.5px] font-semibold whitespace-nowrap text-white transition hover:bg-[#152848] min-[1180px]:inline-flex xl:text-[13px]"
           >
-            <Phone className="h-4 w-4 shrink-0 text-navy" strokeWidth={2} />
+            <Phone className="h-3.5 w-3.5 shrink-0 text-white" strokeWidth={2} />
             {tMeta("phone")}
           </a>
 
@@ -119,7 +119,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             className="hidden min-[1180px]:block"
           />
 
-          {/* Mobile: phone · language · hamburger (compact) */}
+          {/* Mobile: phone · hamburger (language lives in the drawer) */}
           <a
             href={`tel:${tMeta("phone").replace(/\s/g, "")}`}
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#E6E8EC] text-[#0A1B3D] transition hover:bg-[#F7F8FA] min-[1180px]:hidden sm:h-10 sm:w-10"
@@ -127,13 +127,6 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           >
             <Phone className="h-[18px] w-[18px] sm:h-5 sm:w-5" strokeWidth={2} />
           </a>
-
-          <LanguageSwitcher
-            current={current as Locale}
-            label={tLang("label")}
-            className="min-[1180px]:hidden"
-            compact
-          />
 
           <button
             type="button"
@@ -176,6 +169,15 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                 </Link>
               );
             })}
+
+            <div className="mt-3 border-t border-line pt-3">
+              <LanguageSwitcher
+                current={current as Locale}
+                label={tLang("label")}
+                className="w-full"
+                variant="menu"
+              />
+            </div>
 
             <div className="mt-3 border-t border-line pt-3">
               <a

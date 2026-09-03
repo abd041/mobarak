@@ -2,7 +2,7 @@
 
 import { useId } from "react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { CalendarDays, Star, X } from "lucide-react";
 import type { Hotel } from "@/data/mock";
 import {
@@ -41,6 +41,7 @@ export function HotelDetailsModal({
 }) {
   const t = useTranslations("umrah");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
   const titleId = useId();
   const descId = useId();
   const dialogRef = useDialogA11y(open, onClose);
@@ -48,6 +49,8 @@ export function HotelDetailsModal({
   const images = hotel.images.length
     ? hotel.images
     : [{ src: "/brand/hero-bg.png", caption: hotel.name }];
+  const description =
+    locale === "de" && hotel.description?.trim() ? hotel.description : null;
 
   if (!open) return null;
 
@@ -63,7 +66,7 @@ export function HotelDetailsModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        aria-describedby={hotel.description ? descId : undefined}
+        aria-describedby={description ? descId : undefined}
         tabIndex={-1}
       >
         <button
@@ -81,7 +84,7 @@ export function HotelDetailsModal({
             {cityLabel} – {nightsLabel}
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <h2 id={titleId} className="text-2xl font-bold text-navy">
+            <h2 id={titleId} className="text-2xl font-bold text-[#111111]">
               {hotel.name}
             </h2>
             <div className="flex items-center gap-0.5 text-brand-gold" aria-hidden>
@@ -90,20 +93,20 @@ export function HotelDetailsModal({
               ))}
             </div>
           </div>
-          <p className="mt-2 flex items-center gap-2 text-sm font-medium text-navy">
-            <CalendarDays className="h-4 w-4 shrink-0 text-brand-cta" strokeWidth={1.75} aria-hidden />
+          <p className="mt-2 flex items-center gap-2 text-sm font-medium text-[#111111]">
+            <CalendarDays className="h-4 w-4 shrink-0 text-[#1A1A1A]" strokeWidth={1.75} aria-hidden />
             {stay.dateLabel}
           </p>
-          {hotel.description && (
+          {description && (
             <p id={descId} className="mt-4 text-sm leading-relaxed text-muted">
-              {hotel.description}
+              {description}
             </p>
           )}
         </div>
 
         <div className="space-y-6 px-5 py-6 sm:px-6">
           <div>
-            <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-navy">
+            <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-[#111111]">
               {t("hotelDetailsGallery")}
             </h3>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -130,7 +133,7 @@ export function HotelDetailsModal({
           </div>
 
           <div>
-            <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-navy">
+            <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-[#111111]">
               {t("hotelDetailsFeatures")}
             </h3>
             <ul className="space-y-2.5">
@@ -139,7 +142,7 @@ export function HotelDetailsModal({
                   <item.Icon
                     className={cn(
                       "mt-0.5 h-4 w-4 shrink-0",
-                      item.primary ? "text-brand-cta" : "text-brand-cta/80",
+                      item.primary ? "text-[#1A1A1A]" : "text-[#1A1A1A]/80",
                     )}
                     strokeWidth={1.75}
                     aria-hidden
@@ -147,7 +150,7 @@ export function HotelDetailsModal({
                   <span
                     className={cn(
                       "text-sm leading-snug",
-                      item.primary ? "font-semibold text-navy" : "font-medium text-muted",
+                      item.primary ? "font-semibold text-[#111111]" : "font-medium text-muted",
                     )}
                   >
                     {formatHotelInfoLabel(t, item)}
@@ -159,11 +162,11 @@ export function HotelDetailsModal({
 
           <dl className="grid gap-3 rounded-xl border border-line bg-surface p-4 text-sm sm:grid-cols-2">
             <div>
-              <dt className="font-semibold text-navy">{t("hotelCheckIn")}</dt>
+              <dt className="font-semibold text-[#111111]">{t("hotelCheckIn")}</dt>
               <dd className="mt-0.5 text-muted">{checkInLabel || stay.dateLabel}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-navy">{t("hotelCheckOut")}</dt>
+              <dt className="font-semibold text-[#111111]">{t("hotelCheckOut")}</dt>
               <dd className="mt-0.5 text-muted">{checkOutLabel || stay.dateLabel}</dd>
             </div>
           </dl>

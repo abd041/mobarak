@@ -14,6 +14,7 @@ import {
 import { getTripFlightInfo, type TripFlightInfo } from "@/lib/trip-flights";
 import { formatHotelInfoLabel, getHotelInfoItems } from "@/lib/hotel-amenities";
 import { IQ } from "@/lib/images";
+import { getLocalizedTripTitle } from "@/lib/trip-localized-copy";
 
 const INQUIRY_SUMMARY_ITEMS = ["visaIncl", "flightIncl", "featBaggageShort", "featGuide"] as const;
 
@@ -238,7 +239,8 @@ export function InquiryTripSummary({
 
   const dateFull = formatTripDisplayDateRange(trip.startDate, trip.endDate, locale);
   const hotelStayDates = getTripHotelStayDateLabels(trip, locale);
-  const heroImage = trip.images[0] ?? { src: "/brand/hero-bg.png", caption: trip.title };
+  const displayTitle = getLocalizedTripTitle(trip, locale, t);
+  const heroImage = trip.images[0] ?? { src: "/brand/hero-bg.png", caption: displayTitle };
 
   return (
     <aside className="h-fit lg:sticky lg:top-24">
@@ -252,7 +254,7 @@ export function InquiryTripSummary({
           </span>
 
           <p className="mt-3 text-[22px] font-bold leading-tight tracking-[-0.01em] text-navy">
-            {trip.title}
+            {displayTitle}
           </p>
 
           <p className="mt-2 text-[13px] font-semibold text-navy">
@@ -263,7 +265,7 @@ export function InquiryTripSummary({
           <div className="relative mt-4 aspect-[16/10] overflow-hidden rounded-[10px] bg-surface">
             <Image
               src={heroImage.src}
-              alt={heroImage.caption || trip.title}
+              alt={heroImage.caption || displayTitle}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 400px"

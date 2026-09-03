@@ -3,28 +3,43 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
 import type { TripImage } from "@/data/mock";
 import { useTouchAxisScroll } from "@/hooks/useTouchAxisScroll";
 import { cn } from "@/lib/utils";
 import { IQ, getTripCardGallerySizes, shouldLoadGallerySlide } from "@/lib/images";
 
+const WISHLIST_KEY = "mobarak.tripWishlist";
+
+function readWishlist(): Set<string> {
+  if (typeof window === "undefined") return new Set();
+  try {
+    const raw = window.localStorage.getItem(WISHLIST_KEY);
+    if (!raw) return new Set();
+    return new Set(JSON.parse(raw) as string[]);
+  } catch {
+    return new Set();
+  }
+}
+
+function writeWishlist(ids: Set<string>) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(WISHLIST_KEY, JSON.stringify([...ids]));
+}
+
 export function TripCardGallery({
   images,
   badges,
-  nightsBadge,
+  tripId,
   prominence = "default",
   layout = "default",
-  /** Card is near the viewport — defer all gallery bytes until true. */
   galleryInView = true,
-  /** Preload the first slide with high priority (first listing card only). */
   preloadLead = false,
 }: {
   images: TripImage[];
   badges?: React.ReactNode;
-  nightsBadge?: React.ReactNode;
+  tripId?: string;
   prominence?: "listing" | "default";
-  /** Listing mobile: image column stretches to match content + CTA height. */
   layout?: "default" | "listing-split";
   galleryInView?: boolean;
   preloadLead?: boolean;
@@ -33,6 +48,7 @@ export function TripCardGallery({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [loaded, setLoaded] = useState(() => new Set<number>());
+  const [wishlisted, setWishlisted] = useState(false);
   const slides = images.length > 0 ? images : [{ src: "", caption: undefined, sortOrder: 0 }];
   const last = Math.max(0, slides.length - 1);
   const isListingSplit = layout === "listing-split";
@@ -42,6 +58,11 @@ export function TripCardGallery({
   );
 
   useTouchAxisScroll(scrollerRef);
+
+  useEffect(() => {
+    if (!tripId) return;
+    setWishlisted(readWishlist().has(tripId));
+  }, [tripId]);
 
   useEffect(() => {
     if (!galleryInView) return;
@@ -98,29 +119,26 @@ export function TripCardGallery({
     setActive(clamped);
   };
 
-  const onControlClick = (e: React.MouseEvent, indexOrDir: number, isDir?: boolean) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isDir) goTo(active + indexOrDir);
-    else goTo(indexOrDir);
-  };
-
   const onGalleryClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const caption = slides[Math.min(active, slides.length - 1)]?.caption?.trim() ?? "";
-  const canGoPrev = active > 0;
-  const canGoNext = active < last;
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!tripId) return;
+    const next = readWishlist();
+    if (next.has(tripId)) next.delete(tripId);
+    else next.add(tripId);
+    writeWishlist(next);
+    setWishlisted(next.has(tripId));
+  };
 
-  const navButtonClass = cn(
-    "absolute top-1/2 z-30 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-black/20 text-white backdrop-blur-[1px] transition hover:bg-black/35 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-    isListingSplit
-      ? "touch-target h-11 w-11 opacity-90 md:h-8 md:w-8 md:min-h-0 md:min-w-0 md:opacity-0 md:group-hover/gallery:opacity-100 md:group-focus-within/gallery:opacity-100"
-      : "touch-target h-11 w-11 max-sm:opacity-90 sm:h-8 sm:w-8 sm:min-h-0 sm:min-w-0 sm:opacity-0 sm:group-hover/gallery:opacity-100 sm:group-focus-within/gallery:opacity-100",
-  );
-  const showCaption = Boolean(caption);
+  const currentSlide = slides[Math.min(active, slides.length - 1)];
+  const captionTitle = currentSlide?.caption?.trim() ?? "";
+  const captionSubtitle = currentSlide?.captionSubtitle?.trim() ?? "";
+  const showCaption = Boolean(captionTitle);
 
   return (
     <div
@@ -128,10 +146,10 @@ export function TripCardGallery({
       className={cn(
         "group/gallery relative shrink-0 overflow-hidden bg-[#e8ebef]",
         isListingSplit
-          ? "w-[35%] max-w-[8.75rem] shrink-0 self-stretch min-h-0 md:w-full md:max-w-none md:self-auto md:aspect-[4/3] lg:aspect-[3/2]"
+          ? "w-[35%] max-w-[8.75rem] shrink-0 self-stretch min-h-0 md:w-full md:max-w-none md:self-auto md:aspect-[16/10]"
           : prominence === "listing"
-            ? "aspect-[4/3] md:aspect-[4/3] lg:aspect-[3/2]"
-            : "aspect-[5/4] sm:aspect-[4/3]",
+            ? "aspect-[16/10]"
+            : "aspect-[3/2]",
       )}
       onClick={onGalleryClick}
       role="region"
@@ -144,164 +162,111 @@ export function TripCardGallery({
           !isListingSplit && "h-full",
         )}
       >
-      <div
-        ref={scrollerRef}
-        dir="ltr"
-        data-scroll-region="gallery"
-        className="axis-horizontal-scroll no-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto [-webkit-overflow-scrolling:touch]"
-        tabIndex={0}
-        onClick={onGalleryClick}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowLeft") {
-            e.preventDefault();
-            e.stopPropagation();
-            goTo(active - 1);
-          } else if (e.key === "ArrowRight") {
-            e.preventDefault();
-            e.stopPropagation();
-            goTo(active + 1);
-          }
-        }}
-      >
-        {slides.map((img, i) => {
-          const show = galleryInView && shouldLoadGallerySlide(i, loaded);
-          const isLeadSlide = preloadLead && galleryInView && i === 0;
-          return (
-            <div
-              key={`${img.src}-${i}`}
-              className="relative h-full min-w-full shrink-0 snap-center snap-always bg-surface"
-            >
-              {show && img.src ? (
-                <Image
-                  src={img.src}
-                  alt={img.caption || ""}
-                  fill
-                  className="trip-card-photo pointer-events-none object-cover object-center select-none"
-                  sizes={imageSizes}
-                  quality={IQ.card}
-                  priority={isLeadSlide}
-                  loading={isLeadSlide ? "eager" : "lazy"}
-                  fetchPriority={isLeadSlide ? "high" : "auto"}
-                  draggable={false}
-                />
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
+        <div
+          ref={scrollerRef}
+          dir="ltr"
+          data-scroll-region="gallery"
+          className="axis-horizontal-scroll no-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto [-webkit-overflow-scrolling:touch]"
+          tabIndex={0}
+          onClick={onGalleryClick}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              e.stopPropagation();
+              goTo(active - 1);
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              e.stopPropagation();
+              goTo(active + 1);
+            }
+          }}
+        >
+          {slides.map((img, i) => {
+            const show = galleryInView && shouldLoadGallerySlide(i, loaded);
+            const isLeadSlide = preloadLead && galleryInView && i === 0;
+            return (
+              <div
+                key={`${img.src}-${i}`}
+                className="relative h-full min-w-full shrink-0 snap-center snap-always bg-surface"
+              >
+                {show && img.src ? (
+                  <Image
+                    src={img.src}
+                    alt={img.caption || ""}
+                    fill
+                    className="trip-card-photo pointer-events-none object-cover object-center select-none"
+                    sizes={imageSizes}
+                    quality={IQ.card}
+                    priority={isLeadSlide}
+                    loading={isLeadSlide ? "eager" : "lazy"}
+                    fetchPriority={isLeadSlide ? "high" : "auto"}
+                    draggable={false}
+                  />
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {badges}
 
-      {nightsBadge ? (
-        <div
+      {tripId ? (
+        <button
+          type="button"
+          onClick={toggleWishlist}
           className={cn(
-            "pointer-events-none absolute z-10",
-            isListingSplit ? "end-1 top-1 md:end-3 md:top-3" : "end-3 top-3",
+            "absolute end-2 top-2 z-20 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-[2px] transition hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:end-2.5 md:top-2.5 md:h-8 md:w-8",
+            isListingSplit && "end-1.5 top-1.5 md:end-2.5 md:top-2.5",
           )}
+          aria-label={wishlisted ? tCommon("removeFromWishlist") : tCommon("addToWishlist")}
+          aria-pressed={wishlisted}
         >
-          {nightsBadge}
-        </div>
-      ) : null}
-
-      {slides.length > 1 ? (
-        <>
-          <button
-            type="button"
-            onClick={(e) => onControlClick(e, -1, true)}
-            disabled={!canGoPrev}
-            className={cn(
-              navButtonClass,
-              isListingSplit ? "start-0.5 md:start-2" : "start-2",
-              !canGoPrev && "invisible pointer-events-none",
-            )}
-            aria-label={tCommon("previousImage")}
-          >
-            <ChevronLeft
-              className={cn(isListingSplit ? "h-3.5 w-3.5 md:h-4 md:w-4" : "h-4 w-4")}
-              strokeWidth={2.25}
-              aria-hidden
-            />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => onControlClick(e, 1, true)}
-            disabled={!canGoNext}
-            className={cn(
-              navButtonClass,
-              isListingSplit ? "end-0.5 md:end-2" : "end-2",
-              !canGoNext && "invisible pointer-events-none",
-            )}
-            aria-label={tCommon("nextImage")}
-          >
-            <ChevronRight
-              className={cn(isListingSplit ? "h-3.5 w-3.5 md:h-4 md:w-4" : "h-4 w-4")}
-              strokeWidth={2.25}
-              aria-hidden
-            />
-          </button>
-        </>
+          <Heart
+            className={cn("h-3.5 w-3.5 md:h-4 md:w-4", wishlisted && "fill-white")}
+            strokeWidth={2}
+            aria-hidden
+          />
+        </button>
       ) : null}
 
       <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/50 via-black/10 to-transparent",
-          isListingSplit ? "px-1.5 pt-5 pb-1.5 md:px-3 md:pt-8 md:pb-2.5" : "px-3 pt-8 pb-2.5",
+          "pointer-events-none absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/55 via-black/15 to-transparent",
+          isListingSplit ? "px-1.5 pt-8 pb-1.5 md:px-2.5 md:pb-2" : "px-2.5 pt-10 pb-2",
         )}
       >
-        <div
-          className={cn(
-            "flex items-end gap-2",
-            isListingSplit ? "justify-center md:justify-between" : "justify-between",
-          )}
-        >
-          {showCaption && caption ? (
-            <span
+        <div className="flex items-end justify-between gap-2">
+          {showCaption ? (
+            <div
               className={cn(
-                "max-w-[70%] truncate rounded-md bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white",
-                isListingSplit && "hidden md:inline-block",
+                "min-w-0 max-w-[72%] rounded-md bg-black/55 px-2 py-1 backdrop-blur-[2px]",
+                isListingSplit && "hidden md:block",
               )}
             >
-              {caption}
-            </span>
+              <p className="flex items-center gap-1 truncate text-[10px] font-bold leading-tight text-white sm:text-[11px]">
+                <MapPin className="h-2.5 w-2.5 shrink-0" strokeWidth={2.25} aria-hidden />
+                <span className="truncate">{captionTitle}</span>
+              </p>
+              {captionSubtitle ? (
+                <p className="mt-0.5 truncate ps-3.5 text-[9px] leading-snug text-white/90 sm:text-[10px]">
+                  {captionSubtitle}
+                </p>
+              ) : null}
+            </div>
           ) : (
             <span aria-hidden className={cn(isListingSplit && "hidden md:inline")} />
           )}
           {slides.length > 1 ? (
-            <div
+            <span
               className={cn(
-                "pointer-events-auto relative z-30 flex items-center gap-0.5",
+                "shrink-0 rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-bold tabular-nums text-[#0A1B3D] shadow-sm",
                 isListingSplit && "md:ms-auto",
               )}
-              dir="ltr"
+              aria-live="polite"
             >
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={(e) => onControlClick(e, i)}
-                  aria-label={tCommon("goToImage", { n: i + 1 })}
-                  aria-current={i === active ? "true" : undefined}
-                  className={cn(
-                    "touch-target flex cursor-pointer items-center justify-center rounded-full",
-                    isListingSplit ? "h-11 w-11 md:h-7 md:w-7 md:min-h-0 md:min-w-0" : "h-11 w-11 sm:h-7 sm:w-7 sm:min-h-0 sm:min-w-0",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "block rounded-full transition-all",
-                      isListingSplit
-                        ? i === active
-                          ? "h-1 w-2.5 bg-white md:h-1.5 md:w-3.5"
-                          : "h-1 w-1 bg-white/75 md:h-1.5 md:w-1.5"
-                        : i === active
-                          ? "h-1.5 w-3.5 bg-white"
-                          : "h-1.5 w-1.5 bg-white/75",
-                    )}
-                  />
-                </button>
-              ))}
-            </div>
+              {active + 1}/{slides.length}
+            </span>
           ) : null}
         </div>
       </div>

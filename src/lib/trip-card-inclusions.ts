@@ -4,77 +4,53 @@ import { getTripInclusions, type TripInclusionId } from "@/lib/trip-inclusions";
 export type TripCardInclusionItem = {
   id: string;
   icon: string;
-  labelKey: string;
-  /** Row item is shown when any matching inclusion is enabled on the departure. */
+  linesKey: string;
   matchIds: TripInclusionId[];
 };
 
-/** Row 1 — Visum … Religiöse Begleitung (never merge or drop when enabled). */
+/** Design row 1 — Visum, Flug, Transfer (baggage removed per listing reference). */
 export const TRIP_CARD_INCLUSION_ROW_1: TripCardInclusionItem[] = [
   {
     id: "visa",
     icon: "/brand/inclusion-icons/visa.png",
-    labelKey: "listingBenefitVisa",
+    linesKey: "cardInclVisaLines",
     matchIds: ["visa"],
   },
   {
     id: "flight",
     icon: "/brand/inclusion-icons/flight.png",
-    labelKey: "listingBenefitFlight",
+    linesKey: "cardInclFlightLines",
     matchIds: ["flight"],
   },
   {
-    id: "baggage",
-    icon: "/brand/inclusion-icons/baggage.png",
-    labelKey: "listingBenefitBaggage",
-    matchIds: ["baggage"],
+    id: "transfer",
+    icon: "/brand/inclusion-icons/transfer.png",
+    linesKey: "cardInclTransferLines",
+    matchIds: ["transfer"],
+  },
+];
+
+/** Design row 2 — Ausflüge, Hotels inkl. Frühstück, Reiseführer. */
+export const TRIP_CARD_INCLUSION_ROW_2: TripCardInclusionItem[] = [
+  {
+    id: "excursions",
+    icon: "/brand/inclusion-icons/excursions.png",
+    linesKey: "cardInclExcursionsLines",
+    matchIds: ["excursionMakkah", "excursionMedina"],
+  },
+  {
+    id: "hotelsBreakfast",
+    icon: "/brand/inclusion-icons/hotel.png",
+    linesKey: "cardInclHotelsBreakfastLines",
+    matchIds: ["hotels", "breakfast"],
   },
   {
     id: "guide",
     icon: "/brand/inclusion-icons/guide.png",
-    labelKey: "listingBenefitGuide",
+    linesKey: "cardInclGuideLines",
     matchIds: ["guide"],
   },
-  {
-    id: "religious",
-    icon: "/brand/inclusion-icons/religious.png",
-    labelKey: "listingBenefitReligious",
-    matchIds: ["religious"],
-  },
 ];
-
-/** Row 2 — Transfers … Ausflüge (fixed order per listing spec). */
-export const TRIP_CARD_INCLUSION_ROW_2: TripCardInclusionItem[] = [
-  {
-    id: "transfer",
-    icon: "/brand/inclusion-icons/transfer.png",
-    labelKey: "listingBenefitTransfer",
-    matchIds: ["transfer"],
-  },
-  {
-    id: "hotels",
-    icon: "/brand/inclusion-icons/hotel.png",
-    labelKey: "listingBenefitHotels",
-    matchIds: ["hotels"],
-  },
-  {
-    id: "breakfast",
-    icon: "/brand/inclusion-icons/breakfast.png",
-    labelKey: "listingBenefitBreakfast",
-    matchIds: ["breakfast"],
-  },
-  {
-    id: "excursions",
-    icon: "/brand/inclusion-icons/excursions.png",
-    labelKey: "listingBenefitExcursions",
-    matchIds: ["excursionMakkah", "excursionMedina"],
-  },
-];
-
-export const TRIP_CARD_INCLUSION_ROWS = [
-  TRIP_CARD_INCLUSION_ROW_1,
-  TRIP_CARD_INCLUSION_ROW_2,
-] as const;
 
 function filterActiveSlots(
   slots: readonly TripCardInclusionItem[],
@@ -83,7 +59,7 @@ function filterActiveSlots(
   return slots.filter((slot) => slot.matchIds.some((id) => active.has(id)));
 }
 
-/** Two fixed rows of compact inclusion chips for offer cards. */
+/** Two fixed rows (3 + 3) matching the offer-card listing reference. */
 export function getTripCardInclusionRows(trip: UmrahTrip): {
   row1: TripCardInclusionItem[];
   row2: TripCardInclusionItem[];

@@ -37,9 +37,9 @@ function CardSlot({
 
 /**
  * Responsive offer layout — chronological by default (Nächster Termin):
- * - Mobile: one card per row, stacked vertically (Trip 1 → Trip 2 → Trip 3 …)
- * - Tablet (md): 2 cards per row, same DOM order left-to-right then next row
- * - Desktop (lg): 3 cards per row
+ * - Mobile: one card per row, stacked vertically
+ * - Tablet (md): 2 cards per row
+ * - Desktop (lg+): 3 cards per row (listing reference)
  */
 export function UmrahListingGrid({
   trips,
@@ -54,7 +54,7 @@ export function UmrahListingGrid({
 }) {
   return (
     <ul
-      className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3"
+      className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-4"
       data-scroll-region="offers"
       aria-label="Umrah Angebote"
     >

@@ -26,7 +26,7 @@ export function TripDetailBreadcrumb({
       <nav
         className={cn(
           "mx-auto flex max-w-page flex-wrap items-center gap-1.5 px-4 pt-3 pb-5 text-[12px] font-medium md:px-8 md:text-[13px] lg:px-10 lg:pt-3 lg:pb-5",
-          overlay ? "text-[#8A97A6]" : "text-navy",
+          overlay ? "text-[#8A97A6]" : "text-[#111111]",
         )}
         aria-label="Breadcrumb"
       >
@@ -34,7 +34,7 @@ export function TripDetailBreadcrumb({
           href="/"
           className={cn(
             "transition",
-            overlay ? "text-[#8A97A6] hover:text-navy" : "text-muted hover:text-navy",
+            overlay ? "text-[#8A97A6] hover:text-[#111111]" : "text-muted hover:text-[#111111]",
           )}
         >
           {tNav("home")}
@@ -46,7 +46,7 @@ export function TripDetailBreadcrumb({
           href={listingHref}
           className={cn(
             "transition",
-            overlay ? "text-[#8A97A6] hover:text-navy" : "text-muted hover:text-navy",
+            overlay ? "text-[#8A97A6] hover:text-[#111111]" : "text-muted hover:text-[#111111]",
           )}
         >
           {tNav("umrahGroup")}
@@ -54,7 +54,7 @@ export function TripDetailBreadcrumb({
         <span className="text-[#C0C7D1]" aria-hidden>
           &gt;
         </span>
-        <span className={cn("font-semibold", overlay ? "text-[#5B6B7C]" : "text-navy")}>
+        <span className={cn("font-semibold", overlay ? "text-[#5B6B7C]" : "text-[#111111]")}>
           {dateLabel}
         </span>
       </nav>

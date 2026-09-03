@@ -64,7 +64,7 @@ export function ItineraryMobileList({ trip, t }: { trip: UmrahTrip; t: TFn }) {
 
                   <div className="min-w-0 flex-1 pt-0.5">
                     {item.time && (
-                      <p className="text-[12px] font-bold leading-snug text-brand-cta sm:text-[13px]">
+                      <p className="text-[12px] font-bold leading-snug text-[#1A1A1A] sm:text-[13px]">
                         {item.time}
                       </p>
                     )}
@@ -72,7 +72,7 @@ export function ItineraryMobileList({ trip, t }: { trip: UmrahTrip; t: TFn }) {
                     {titleLines.map((line, i) => (
                       <p
                         key={i}
-                        className={`text-[13px] leading-snug font-semibold text-navy sm:text-[14px] ${
+                        className={`text-[13px] leading-snug font-semibold text-[#111111] sm:text-[14px] ${
                           i > 0 ? "mt-0.5" : item.time ? "mt-0.5" : ""
                         }`}
                         style={{ color: NAVY }}

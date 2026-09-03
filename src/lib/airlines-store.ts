@@ -9,7 +9,7 @@ export type CatalogAirline = {
   id: string;
   /** Display name, e.g. "Turkish Airlines". */
   name: string;
-  /** Logo path or URL, e.g. "/brand/airlines/turkish.svg". */
+  /** Logo path or URL, e.g. "/brand/airlines/turkish.png". */
   logo: string;
   active: boolean;
   sortOrder: number;

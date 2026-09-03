@@ -53,11 +53,15 @@ export function TripInquiryCtaBenefits({
   trip,
   className,
   itemClassName,
+  showThird = false,
 }: {
   trip: UmrahTrip;
   className?: string;
   itemClassName?: string;
+  /** Pricing-card reference: three trust lines */
+  showThird?: boolean;
 }) {
+  const t = useTranslations("umrah");
   const copy = useTripInquiryCtaCopy(trip);
   const iconTone =
     copy.mode === "full"
@@ -66,16 +70,18 @@ export function TripInquiryCtaBenefits({
         ? "text-brand-orange-cta"
         : "text-brand-green";
 
+  const lines = showThird
+    ? [t("pricingTrustFree"), t("pricingTrustAdvice"), t("pricingTrustNoObligation")]
+    : [copy.primaryBenefit, copy.secondaryBenefit];
+
   return (
     <ul className={className}>
-      <li className={cn("flex items-center gap-2 font-medium text-navy", itemClassName)}>
-        <Check className={cn("h-3.5 w-3.5 shrink-0", iconTone)} strokeWidth={2.75} aria-hidden />
-        {copy.primaryBenefit}
-      </li>
-      <li className={cn("flex items-center gap-2 font-medium text-navy", itemClassName)}>
-        <Check className={cn("h-3.5 w-3.5 shrink-0", iconTone)} strokeWidth={2.75} aria-hidden />
-        {copy.secondaryBenefit}
-      </li>
+      {lines.map((line) => (
+        <li key={line} className={cn("flex items-center gap-2 font-medium text-[#111111]", itemClassName)}>
+          <Check className={cn("h-3.5 w-3.5 shrink-0", iconTone)} strokeWidth={2.75} aria-hidden />
+          {line}
+        </li>
+      ))}
     </ul>
   );
 }

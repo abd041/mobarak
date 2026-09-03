@@ -16,7 +16,7 @@ export function UmrahListingResultCount({
   return (
     <p
       className={cn(
-        "mt-0 text-[14px] font-semibold text-navy sm:text-[16px]",
+        "mt-0 text-[13px] font-semibold text-navy sm:text-[14px]",
         className,
       )}
       role="status"

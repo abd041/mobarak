@@ -71,18 +71,18 @@ export function SiteFooter() {
   const activeSocial = SOCIAL_ICONS.filter(({ key }) => settings.social[key]?.trim());
 
   return (
-    <footer className="mt-auto border-t border-[#E9EAEE] bg-white text-[#0A1B3D]">
+    <footer className="mt-auto border-t border-[#E9EAEE] bg-[#FAFBFC] text-[#0A1B3D]">
       <Container className="lg:px-9">
-        <div className="grid grid-cols-2 gap-x-5 gap-y-10 py-12 lg:grid-cols-4 lg:gap-8 lg:py-14">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-8 py-8 lg:grid-cols-4 lg:gap-8 lg:py-10">
           {/* Brand */}
           <div className="col-span-2 max-w-xs lg:col-span-1">
-            <div className="mb-4">
+            <div className="mb-3">
               {settings.logoSrc.startsWith("data:") ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={settings.logoSrc}
                   alt={BRAND_LOGO.alt}
-                  className="h-[72px] w-auto object-contain sm:h-20"
+                  className="h-14 w-auto object-contain sm:h-16"
                 />
               ) : (
                 <Image
@@ -91,15 +91,15 @@ export function SiteFooter() {
                   width={BRAND_LOGO.width}
                   height={BRAND_LOGO.height}
                   quality={80}
-                  className="h-[72px] w-auto object-contain sm:h-20"
+                  className="h-14 w-auto object-contain sm:h-16"
                 />
               )}
             </div>
-            <p className="mb-5 text-[13px] leading-[1.55] text-[#5B6B7C]">
+            <p className="mb-4 text-[12px] leading-[1.5] text-[#5B6B7C] sm:text-[13px]">
               {settings.tagline || t("tagline")}
             </p>
             {activeSocial.length > 0 && (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3.5">
                 {activeSocial.map(({ key, label, Icon }) => (
                   <a
                     key={key}
@@ -109,7 +109,7 @@ export function SiteFooter() {
                     aria-label={label}
                     className="text-[#0A1B3D] transition hover:text-[#E8913A]"
                   >
-                    <Icon className="h-[18px] w-[18px]" />
+                    <Icon className="h-[16px] w-[16px]" />
                   </a>
                 ))}
               </div>
@@ -118,8 +118,8 @@ export function SiteFooter() {
 
           {/* Services */}
           <div className="min-w-0">
-            <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">{t("services")}</h3>
-            <ul className="space-y-2.5 text-[13px] text-[#5B6B7C] sm:text-[14px]">
+            <h3 className="mb-3 text-[14px] font-bold text-[#0A1B3D]">{t("services")}</h3>
+            <ul className="space-y-2 text-[12px] text-[#5B6B7C] sm:text-[13px]">
               {services.map((s) => (
                 <li key={s.id}>
                   <FooterAnchor href={s.href}>{s.label}</FooterAnchor>
@@ -130,10 +130,10 @@ export function SiteFooter() {
 
           {/* Important links */}
           <div className="min-w-0">
-            <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">
+            <h3 className="mb-3 text-[14px] font-bold text-[#0A1B3D]">
               {t("importantLinks")}
             </h3>
-            <ul className="space-y-2.5 text-[13px] text-[#5B6B7C] sm:text-[14px]">
+            <ul className="space-y-2 text-[12px] text-[#5B6B7C] sm:text-[13px]">
               {links.map((s) => (
                 <li key={s.id}>
                   <FooterAnchor href={s.href}>{s.label}</FooterAnchor>
@@ -144,11 +144,11 @@ export function SiteFooter() {
 
           {/* Contact */}
           <div className="col-span-2 min-w-0 lg:col-span-1">
-            <h3 className="mb-4 text-[15px] font-bold text-[#0A1B3D]">{t("contact")}</h3>
-            <ul className="space-y-3 text-[14px] text-[#5B6B7C]">
+            <h3 className="mb-3 text-[14px] font-bold text-[#0A1B3D]">{t("contact")}</h3>
+            <ul className="space-y-2.5 text-[13px] text-[#5B6B7C]">
               {settings.phone && (
-                <li className="flex items-start gap-2.5">
-                  <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
+                <li className="flex items-start gap-2">
+                  <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
                   <a
                     href={`tel:${settings.phone.replace(/\s/g, "")}`}
                     className="dir-ltr-keep transition hover:text-[#0A1B3D]"
@@ -158,8 +158,8 @@ export function SiteFooter() {
                 </li>
               )}
               {settings.email && (
-                <li className="flex items-start gap-2.5">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
+                <li className="flex items-start gap-2">
+                  <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
                   <a
                     href={`mailto:${settings.email}`}
                     className="dir-ltr-keep transition hover:text-[#0A1B3D]"
@@ -169,8 +169,8 @@ export function SiteFooter() {
                 </li>
               )}
               {settings.address && (
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
+                <li className="flex items-start gap-2">
+                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0A1B3D]" strokeWidth={2} />
                   <span className="leading-[1.45]">{settings.address}</span>
                 </li>
               )}
@@ -179,7 +179,7 @@ export function SiteFooter() {
         </div>
       </Container>
 
-      <div className="border-t border-[#E9EAEE] py-4 text-center text-[12px] text-muted">
+      <div className="border-t border-[#E9EAEE] py-3 text-center text-[11px] text-muted sm:text-[12px]">
         {t("copyright", { year })}
       </div>
     </footer>

@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 
 /**
- * Why / Promise — two HTML cards only; clean roza.png mosque background (no baked UI).
+ * Why / Promise — two HTML cards only; mosque background (no baked UI).
  * Mobile: why + mosque + promise linked as one unit (no gaps).
  */
 export async function HomeWhyPromise() {

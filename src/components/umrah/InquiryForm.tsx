@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Check, ChevronDown, Info, Phone, ShieldCheck } from "lucide-react";
+import { Check, ChevronDown, Info, Megaphone, Phone, ShieldCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { type Locale } from "@/i18n/routing";
 import type { Hotel, UmrahTrip } from "@/data/mock";
@@ -27,7 +27,6 @@ import { resolveTrip } from "@/lib/trip-availability";
 import { getSiteSettings, SITE_SETTINGS_EVENT } from "@/lib/site-settings-store";
 import { cn } from "@/lib/utils";
 import { DirArrow, DirBackArrow } from "@/components/ui/DirArrow";
-import { NationalityCombobox } from "@/components/ui/NationalityCombobox";
 import {
   TripInquiryFormNotice,
   useTripInquiryCtaCopy,
@@ -53,19 +52,6 @@ const DIAL_OPTIONS = [
   { code: "EG", flag: "🇪🇬", dial: "+20" },
 ];
 
-const SOURCE_LEFT: { value: (typeof SOURCE_OPTION_VALUES)[number]; labelKey: string }[] = [
-  { value: "instagram", labelKey: "sourceInstagram" },
-  { value: "facebook", labelKey: "sourceFacebook" },
-  { value: "google", labelKey: "sourceGoogle" },
-  { value: "chatgpt", labelKey: "sourceChatgpt" },
-];
-
-const SOURCE_RIGHT: { value: (typeof SOURCE_OPTION_VALUES)[number]; labelKey: string }[] = [
-  { value: "friend", labelKey: "sourceFriend" },
-  { value: "know", labelKey: "sourceKnow" },
-  { value: "other", labelKey: "sourceOther" },
-];
-
 const SOURCE_OPTION_VALUES = [
   "instagram",
   "facebook",
@@ -76,11 +62,79 @@ const SOURCE_OPTION_VALUES = [
   "other",
 ] as const;
 
-const PREFERRED_LANGUAGE_OPTIONS: { value: Locale; flag: string }[] = [
-  { value: "de", flag: "🇩🇪" },
-  { value: "ar", flag: "🇸🇦" },
-  { value: "bs", flag: "🇧🇦" },
-  { value: "en", flag: "🇬🇧" },
+type SourceOptionValue = (typeof SOURCE_OPTION_VALUES)[number];
+
+type SourceLabelKey =
+  | "sourceInstagram"
+  | "sourceFacebook"
+  | "sourceGoogle"
+  | "sourceChatgpt"
+  | "sourceFriend"
+  | "sourceKnow"
+  | "sourceOther";
+
+type SourceHintKey =
+  | "sourceInstagramHint"
+  | "sourceFacebookHint"
+  | "sourceGoogleHint"
+  | "sourceChatgptHint"
+  | "sourceFriendHint"
+  | "sourceKnowHint"
+  | "sourceOtherHint";
+
+const SOURCE_ICON_SRC: Record<SourceOptionValue, string> = {
+  instagram: "/brand/icons/inquiry-source/instagram.png?v=3",
+  facebook: "/brand/icons/inquiry-source/facebook.png?v=3",
+  google: "/brand/icons/inquiry-source/google.png?v=3",
+  chatgpt: "/brand/icons/inquiry-source/chatgpt.png?v=3",
+  friend: "/brand/icons/inquiry-source/friend.png?v=3",
+  know: "/brand/icons/inquiry-source/know.png?v=3",
+  other: "/brand/icons/inquiry-source/other.png?v=3",
+};
+
+function SourceOptionIcon({ value }: { value: SourceOptionValue }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={SOURCE_ICON_SRC[value]}
+      alt=""
+      width={52}
+      height={52}
+      draggable={false}
+      className="pointer-events-none h-[52px] w-[52px] shrink-0 rounded-full object-cover shadow-[0_2px_8px_rgba(15,23,42,0.16)]"
+    />
+  );
+}
+
+const SOURCE_OPTIONS: {
+  value: SourceOptionValue;
+  labelKey: SourceLabelKey;
+  hintKey: SourceHintKey;
+}[] = [
+  { value: "instagram", labelKey: "sourceInstagram", hintKey: "sourceInstagramHint" },
+  { value: "facebook", labelKey: "sourceFacebook", hintKey: "sourceFacebookHint" },
+  { value: "google", labelKey: "sourceGoogle", hintKey: "sourceGoogleHint" },
+  { value: "chatgpt", labelKey: "sourceChatgpt", hintKey: "sourceChatgptHint" },
+  { value: "friend", labelKey: "sourceFriend", hintKey: "sourceFriendHint" },
+  { value: "know", labelKey: "sourceKnow", hintKey: "sourceKnowHint" },
+  { value: "other", labelKey: "sourceOther", hintKey: "sourceOtherHint" },
+];
+
+const PREFERRED_LANGUAGE_OPTIONS: {
+  value: Locale;
+  flag: string;
+  labelKey:
+    | "preferredLanguageDe"
+    | "preferredLanguageAr"
+    | "preferredLanguageBs"
+    | "preferredLanguageTr"
+    | "preferredLanguageEn";
+}[] = [
+  { value: "de", flag: "🇩🇪", labelKey: "preferredLanguageDe" },
+  { value: "ar", flag: "🇸🇦", labelKey: "preferredLanguageAr" },
+  { value: "bs", flag: "🇧🇦", labelKey: "preferredLanguageBs" },
+  { value: "tr", flag: "🇹🇷", labelKey: "preferredLanguageTr" },
+  { value: "en", flag: "🇬🇧", labelKey: "preferredLanguageEn" },
 ];
 
 type Pax = PaxFormData;
@@ -108,7 +162,6 @@ export function InquiryForm({
   const t = useTranslations("umrah");
   const tCommon = useTranslations("common");
   const tMeta = useTranslations("meta");
-  const tLang = useTranslations("language");
   const locale = useLocale();
   const [liveTrip, setLiveTrip] = useState(trip);
 
@@ -162,9 +215,6 @@ export function InquiryForm({
     }),
     [t],
   );
-
-  const preferredLanguageFlag =
-    PREFERRED_LANGUAGE_OPTIONS.find((o) => o.value === preferredLanguage)?.flag ?? "🌐";
 
   useEffect(() => {
     setPreferredLanguage(locale);
@@ -322,7 +372,7 @@ export function InquiryForm({
           id="inquiry-form"
           onSubmit={onSubmit}
           noValidate
-          className="min-w-0 w-full self-start overflow-hidden rounded-[16px] border border-line bg-white shadow-[var(--shadow-card)] pb-[calc(7.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0"
+          className="min-w-0 w-full self-start overflow-hidden rounded-[16px] border border-line bg-white shadow-[var(--shadow-card)]"
         >
           <input type="hidden" name="trip_id" value={flow.tripId} />
           <input type="hidden" name="trip_slug" value={liveTrip.slug} />
@@ -422,25 +472,16 @@ export function InquiryForm({
                         onBlur={() => markPaxTouched(i, "lastName")}
                         error={showPaxError(i, "lastName")}
                       />
-                      <NationalityCombobox
+                      <Field
                         label={t("nationality")}
                         placeholder={t("nationalityPlaceholder")}
-                        locale={locale}
-                        fieldId={`pax-${i}`}
-                        value={
-                          p.nationalityCode && p.nationality
-                            ? { code: p.nationalityCode, name: p.nationality }
-                            : null
-                        }
-                        onChange={(next) =>
-                          updatePax(i, {
-                            nationality: next?.name ?? "",
-                            nationalityCode: next?.code ?? "",
-                          })
+                        value={p.nationality}
+                        onChange={(v) =>
+                          updatePax(i, { nationality: v, nationalityCode: "" })
                         }
                         onBlur={() => markPaxTouched(i, "nationality")}
-                        error={errors.pax[i]?.nationality}
-                        showError={Boolean(showPaxError(i, "nationality"))}
+                        error={showPaxError(i, "nationality")}
+                        autoComplete="off"
                       />
                       <PassportTypeSelect
                         label={t("passportType")}
@@ -509,65 +550,83 @@ export function InquiryForm({
             </div>
           </section>
 
-          {/* Referral source */}
+          {/* Referral source — optional cards */}
           <section className="border-t border-line p-5 sm:p-6">
-            <h3 className="text-[16px] font-bold text-navy">{t("sourceTitle")}</h3>
-            <div
-              className="mt-4 grid gap-x-8 sm:grid-cols-2"
-              onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                  setTouched((prev) => ({ ...prev, source: true }));
-                }
-              }}
-            >
-              <div className="space-y-2.5">
-                {SOURCE_LEFT.map(({ value, labelKey }) => (
-                  <SourceRadio
-                    key={value}
-                    value={value}
-                    label={t(labelKey)}
-                    checked={source === value}
-                    onChange={() => {
-                      setSource(value);
-                      setTouched((prev) => ({ ...prev, source: true }));
-                      setSourceOtherDetail("");
-                    }}
-                  />
-                ))}
+            <div className="rounded-[16px] border border-line bg-white p-5 shadow-[0_1px_8px_rgba(11,44,74,0.04)] sm:p-6">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EEF4FF] px-2.5 py-1 text-[11px] font-semibold text-[#1264F5]">
+                <Megaphone className="h-3.5 w-3.5" strokeWidth={2.25} aria-hidden />
+                {t("sourceBadge")}
+              </span>
+              <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <h3 className="text-[18px] font-bold text-[#111111] sm:text-[20px]">{t("sourceTitle")}</h3>
+                <span className="text-[12px] font-medium text-muted">{t("sourceOptional")}</span>
               </div>
-              <div className="space-y-2.5">
-                {SOURCE_RIGHT.map(({ value, labelKey }) => (
-                  <SourceRadio
-                    key={value}
-                    value={value}
-                    label={t(labelKey)}
-                    checked={source === value}
-                    onChange={() => {
-                      setSource(value);
-                      setTouched((prev) => ({ ...prev, source: true }));
-                      if (value !== "other") setSourceOtherDetail("");
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-            {showFieldError("source") && (
-              <p className="mt-3 text-[12px] text-red-600" role="alert" data-invalid="true">
-                {showFieldError("source")}
+              <p className="mt-1.5 max-w-2xl text-[13px] leading-relaxed text-[#6B7C8F]">
+                {t("sourceIntro")}
               </p>
-            )}
-            {source === "other" && (
-              <div className="mt-4">
+              <input type="hidden" name="source" value={source} readOnly />
+              <div
+                className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+                role="radiogroup"
+                aria-label={t("sourceTitle")}
+              >
+                {SOURCE_OPTIONS.map(({ value, labelKey, hintKey }) => {
+                  const selected = source === value;
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      onClick={() => {
+                        const next = selected ? "" : value;
+                        setSource(next);
+                        setTouched((prev) => ({ ...prev, source: true }));
+                        if (next !== "other") setSourceOtherDetail("");
+                      }}
+                      className={cn(
+                        "relative flex min-h-[92px] items-center gap-[14px] rounded-[14px] border bg-white px-4 py-[18px] pe-12 text-start transition",
+                        selected
+                          ? "border-[#1264F5] bg-[#F5F9FF] shadow-[0_1px_6px_rgba(18,100,245,0.12)]"
+                          : "border-[#E6E9EE] shadow-[0_1px_3px_rgba(15,23,42,0.04)] hover:border-[#C5CEDA]",
+                      )}
+                    >
+                      <SourceOptionIcon value={value} />
+                      <span className="min-w-0 flex-1 pr-1">
+                        <span className="block text-[14px] font-bold leading-[1.25] text-[#111111]">
+                          {t(labelKey)}
+                        </span>
+                        <span className="mt-1 block text-[12px] font-normal leading-[1.35] text-[#6B7C8F]">
+                          {t(hintKey)}
+                        </span>
+                      </span>
+                      <span
+                        className={cn(
+                          "absolute end-3.5 top-3.5 flex h-[18px] w-[18px] items-center justify-center rounded-full border-[1.5px]",
+                          selected ? "border-[#1264F5]" : "border-[#C9D2DC]",
+                        )}
+                        aria-hidden
+                      >
+                        {selected ? (
+                          <span className="h-2 w-2 rounded-full bg-[#1264F5]" />
+                        ) : null}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              {source === "other" && (
                 <input
                   type="text"
                   name="source_other_detail"
                   value={sourceOtherDetail}
                   onChange={(e) => setSourceOtherDetail(e.target.value)}
                   placeholder={t("sourceOtherPlaceholder")}
-                  className={inputClass}
+                  className={cn(inputClass, "mt-3")}
+                  autoComplete="off"
                 />
-              </div>
-            )}
+              )}
+            </div>
           </section>
 
           {/* Contact */}
@@ -626,7 +685,7 @@ export function InquiryForm({
                       onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
                       data-invalid={showFieldError("phone") ? "true" : undefined}
                       aria-invalid={showFieldError("phone") ? true : undefined}
-                      className="min-w-0 flex-1 border-0 bg-white px-2 py-2.5 text-[14px] text-navy placeholder:text-muted outline-none sm:px-3"
+                      className="min-w-0 flex-1 border-0 bg-white px-2 py-2.5 text-[16px] text-navy placeholder:text-muted outline-none sm:px-3"
                       placeholder={t("phonePlaceholder")}
                       inputMode="tel"
                       autoComplete="tel-national"
@@ -679,21 +738,21 @@ export function InquiryForm({
                     {t("preferredLanguage")}
                   </span>
                   <div className="relative">
-                    <span
-                      className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[16px] leading-none"
-                      aria-hidden
-                    >
-                      {preferredLanguageFlag}
-                    </span>
                     <select
                       name="preferred_language"
-                      className={cn(selectClass, "ps-10", preferredLanguage && "text-navy")}
+                      aria-label={t("preferredLanguage")}
+                      className={cn(selectClass, "dir-ltr-keep text-navy")}
                       value={preferredLanguage}
-                      onChange={(e) => setPreferredLanguage(e.target.value)}
+                      onChange={(e) => {
+                        const next = e.target.value as Locale;
+                        if (PREFERRED_LANGUAGE_OPTIONS.some((o) => o.value === next)) {
+                          setPreferredLanguage(next);
+                        }
+                      }}
                     >
-                      {PREFERRED_LANGUAGE_OPTIONS.map(({ value, flag }) => (
+                      {PREFERRED_LANGUAGE_OPTIONS.map(({ value, flag, labelKey }) => (
                         <option key={value} value={value}>
-                          {flag} {tLang(value)}
+                          {flag} {t(labelKey)}
                         </option>
                       ))}
                     </select>
@@ -740,13 +799,20 @@ export function InquiryForm({
             <button
               type="submit"
               disabled={loading}
-              className="mt-5 hidden min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-brand-cta px-6 text-[15px] font-bold text-white shadow-sm transition hover:bg-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cta disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-[56px] lg:flex"
+              className={cn(
+                "mt-5 flex min-h-[50px] w-full items-center justify-center gap-2 rounded-[12px] px-6 py-3.5 text-[14px] font-bold text-white transition hover:brightness-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:min-h-[52px] sm:text-[15px]",
+                inquiryCta.mode === "waitlist"
+                  ? "bg-brand-orange-cta focus-visible:outline-brand-orange-cta"
+                  : inquiryCta.mode === "full"
+                    ? "bg-navy focus-visible:outline-navy"
+                    : "bg-[#1264F5] shadow-[0_8px_20px_rgba(18,100,245,0.28)] focus-visible:outline-[#1264F5]",
+              )}
             >
               {loading ? tCommon("loading") : inquiryCta.buttonLabel}
               {!loading && <DirArrow />}
             </button>
 
-            <p className="mt-4 hidden items-center justify-center gap-2 text-[13px] font-medium text-navy lg:flex">
+            <p className="mt-4 flex items-center justify-center gap-2 text-[13px] font-medium text-navy">
               <span
                 className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-green"
                 aria-hidden
@@ -757,37 +823,13 @@ export function InquiryForm({
             </p>
           </section>
         </form>
-
-        {/* Mobile sticky submit — matches inquiry mock */}
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:hidden">
-          <div className="pointer-events-auto border-t border-line bg-white/98 px-4 pt-3 shadow-[0_-8px_24px_rgba(9,36,92,0.1)] safe-bottom">
-            <button
-              type="submit"
-              form="inquiry-form"
-              disabled={loading}
-              className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-brand-cta px-6 text-[15px] font-bold text-white shadow-sm transition hover:bg-navy disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? tCommon("loading") : inquiryCta.buttonLabel}
-              {!loading && <DirArrow />}
-            </button>
-            <p className="mt-3 flex items-center justify-center gap-2 pb-1 text-[12px] font-medium text-navy">
-              <span
-                className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-green"
-                aria-hidden
-              >
-                <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
-              </span>
-              {tCommon("freeInquiry")}
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
 const inputClass =
-  "w-full rounded-lg border border-line bg-white px-3 py-2.5 text-[14px] text-navy placeholder:text-muted outline-none transition focus:border-brand-cta focus:ring-2 focus:ring-brand-cta/15";
+  "w-full rounded-lg border border-line bg-white px-3 py-2.5 text-[16px] text-navy placeholder:text-muted outline-none transition focus:border-brand-cta focus:ring-2 focus:ring-brand-cta/15";
 const selectClass = cn(
   inputClass,
   "appearance-none pe-9",
@@ -914,6 +956,7 @@ function Field({
   onBlur,
   error,
   type = "text",
+  autoComplete,
 }: {
   label: string;
   placeholder?: string;
@@ -922,6 +965,7 @@ function Field({
   onBlur?: () => void;
   error?: string;
   type?: string;
+  autoComplete?: string;
 }) {
   const errorId = useId();
   const keepLtr = type === "email" || type === "tel";
@@ -936,6 +980,7 @@ function Field({
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
+        autoComplete={autoComplete}
         aria-invalid={hasError || undefined}
         aria-describedby={hasError ? errorId : undefined}
         data-invalid={hasError ? "true" : undefined}
@@ -979,32 +1024,6 @@ function PrivacyPolicyLink({
   );
 }
 
-function SourceRadio({
-  value,
-  label,
-  checked,
-  onChange,
-}: {
-  value: string;
-  label: string;
-  checked: boolean;
-  onChange: () => void;
-}) {
-  return (
-    <label className="flex cursor-pointer items-center gap-2.5 text-[13px] text-navy">
-      <input
-        type="radio"
-        name="source"
-        value={value}
-        className="h-4 w-4 accent-brand-cta"
-        checked={checked}
-        onChange={onChange}
-      />
-      {label}
-    </label>
-  );
-}
-
 function PhoneInlineSelect({
   value,
   onChange,
@@ -1024,7 +1043,7 @@ function PhoneInlineSelect({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label={ariaLabel}
-        className="w-full appearance-none border-0 bg-transparent py-2.5 ps-2 pe-6 text-[14px] text-navy outline-none"
+        className="w-full appearance-none border-0 bg-transparent py-2.5 ps-2 pe-6 text-[16px] text-navy outline-none"
       >
         {children}
       </select>

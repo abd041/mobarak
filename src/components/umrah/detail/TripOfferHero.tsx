@@ -1,104 +1,68 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { Caveat, Libre_Baskerville } from "next/font/google";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  CalendarDays,
-  Check,
-  Clock3,
-  FileText,
-  Luggage,
-  Plane,
-  Users,
-  X,
-} from "lucide-react";
+import { Clock3, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import type { UmrahTrip } from "@/data/mock";
 import { cn } from "@/lib/utils";
 import { resolveTrip, getAvailabilityBadgeLines } from "@/lib/trip-availability";
+import { getLocalizedTripTitle } from "@/lib/trip-localized-copy";
 import { TripPricingCard } from "@/components/umrah/detail/TripPricingCard";
-import { TripOfferHeroSlider } from "@/components/umrah/detail/TripOfferHeroSlider";
-import { TripDetailBreadcrumb } from "@/components/umrah/detail/TripDetailBreadcrumb";
-import { OFFER_HERO_SLIDES } from "@/lib/offer-hero-slides";
+import { OFFER_DETAIL_HERO_IMAGE } from "@/lib/offer-hero-slides";
+import { IQ } from "@/lib/images";
 
-export const OFFER_HERO_IMAGE = OFFER_HERO_SLIDES[0]!.src;
+const heroDisplay = Libre_Baskerville({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
 
-function formatFullDateRange(startIso: string, endIso: string, locale: string) {
-  const start = new Date(`${startIso}T12:00:00`);
-  const end = new Date(`${endIso}T12:00:00`);
-  const loc =
-    locale === "de" ? "de-AT" : locale === "ar" ? "ar-SA" : locale === "bs" ? "bs-BA" : "en-GB";
-  const dayMonth = new Intl.DateTimeFormat(loc, { day: "numeric", month: "long" });
-  const full = new Intl.DateTimeFormat(loc, { day: "numeric", month: "long", year: "numeric" });
-  if (start.getFullYear() === end.getFullYear()) {
-    return `${dayMonth.format(start)} – ${full.format(end)}`;
-  }
-  return `${full.format(start)} – ${full.format(end)}`;
-}
+const heroScript = Caveat({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
 
-const HERO_INCLUSIONS = [
-  { key: "visa", Icon: FileText, line1: "featVisaL1", line2: "featVisaL2" },
-  { key: "flight", Icon: Plane, line1: "featFlightL1", line2: "featFlightL2" },
-  { key: "baggage", Icon: Luggage, line1: "featBaggageL1", line2: "featBaggageL2" },
-  { key: "guide", Icon: Users, line1: "featGuideL1", line2: "featGuideL2" },
-] as const;
-
-const PILL_STYLE = {
-  green: {
-    color: "#178B2D",
-    bg: "#E8F6EC",
-    border: "rgba(23, 139, 45, 0.28)",
-    Icon: Check,
-  },
-  orange: {
-    color: "#C47A00",
-    bg: "#FFF4E5",
-    border: "rgba(196, 122, 0, 0.3)",
-    Icon: Clock3,
-  },
-  red: {
-    color: "#C0392B",
-    bg: "#FDECEA",
-    border: "rgba(192, 57, 43, 0.28)",
-    Icon: X,
-  },
+const OFFER_HERO_ICONS = {
+  destinations: "/brand/icons/offer-hero/destinations.png",
+  guide: "/brand/icons/offer-hero/guide.png",
+  organized: "/brand/icons/offer-hero/shield.png",
+  seats: "/brand/icons/offer-hero/seats.png",
 } as const;
 
-function AvailabilityPill({
-  tone,
-  label,
-}: {
-  tone: keyof typeof PILL_STYLE;
-  label: string;
-}) {
-  const style = PILL_STYLE[tone];
-  const Icon = style.Icon;
+const HERO_FEATURES = [
+  {
+    key: "destinations",
+    icon: OFFER_HERO_ICONS.destinations,
+    line1Key: "offerHeroFeatDestinationsLine1",
+    line2Key: "offerHeroFeatDestinationsLine2",
+  },
+  {
+    key: "guide",
+    icon: OFFER_HERO_ICONS.guide,
+    line1Key: "offerHeroFeatGuideLine1",
+    line2Key: "offerHeroFeatGuideLine2",
+  },
+  {
+    key: "organized",
+    icon: OFFER_HERO_ICONS.organized,
+    line1Key: "offerHeroFeatOrganizedLine1",
+    line2Key: "offerHeroFeatOrganizedLine2",
+  },
+] as const;
 
-  return (
-    <span
-      className="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[12px] font-semibold leading-none sm:text-[13px]"
-      style={{
-        backgroundColor: style.bg,
-        borderColor: style.border,
-        color: style.color,
-      }}
-    >
-      <span
-        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-white"
-        style={{ backgroundColor: style.color }}
-        aria-hidden
-      >
-        <Icon className="h-2.5 w-2.5" strokeWidth={3} />
-      </span>
-      {label}
-    </span>
-  );
+function splitTitle(title: string): { line1: string; line2: string } {
+  const parts = title.trim().split(/\s+/);
+  if (parts.length <= 1) return { line1: title, line2: "" };
+  return { line1: parts[0]!, line2: parts.slice(1).join(" ") };
 }
 
-/** Offer hero — portrait mobile gallery + copy; desktop side-by-side with pricing card. */
+/** Offer hero — reference left copy stack + floating pricing card. */
 export function TripOfferHero({ trip }: { trip: UmrahTrip }) {
   const t = useTranslations("umrah");
-  const tCommon = useTranslations("common");
   const locale = useLocale();
   const [live, setLive] = useState(trip);
 
@@ -113,174 +77,166 @@ export function TripOfferHero({ trip }: { trip: UmrahTrip }) {
     };
   }, [trip]);
 
-  const dateFull = formatFullDateRange(live.startDate, live.endDate, locale);
-  const nightsLabel = tCommon("nights", { count: live.nights }).toUpperCase();
-  const [slide, setSlide] = useState(0);
+  const displayTitle = getLocalizedTripTitle(live, locale, t);
+  const { line1, line2 } = splitTitle(displayTitle);
   const availabilityLines = getAvailabilityBadgeLines(live);
-  const greenAvailability = availabilityLines.find((line) => line.tone === "green");
-  const otherAvailability = availabilityLines.filter((line) => line.tone !== "green");
+  const primaryAvailability = availabilityLines[0];
 
-  const titleParts = live.title.trim().split(/\s+/);
-  const titleFirst = titleParts[0] ?? live.title;
-  const titleRest = titleParts.slice(1).join(" ");
+  const availabilityLabel =
+    primaryAvailability?.labelKey === "available"
+      ? t("availableShort", { count: primaryAvailability.count ?? 0 })
+      : primaryAvailability
+        ? t(primaryAvailability.labelKey)
+        : null;
 
-  const renderAvailabilityPill = (line: (typeof availabilityLines)[number]) => {
-    const label =
-      line.labelKey === "available"
-        ? t("available", { count: line.count ?? 0 })
-        : t(line.labelKey);
-    return (
-      <AvailabilityPill
-        key={`${line.tone}-${line.labelKey}`}
-        tone={line.tone}
-        label={label}
-      />
-    );
-  };
+  const availabilityTone = primaryAvailability?.tone ?? "green";
 
   return (
     <>
       <section
         id="overview"
-        className="offer-hero-bg full-viewport-bleed relative z-10 scroll-mt-24 overflow-hidden lg:overflow-hidden"
-        aria-label={live.title}
+        className="offer-hero-bg full-viewport-bleed relative z-10 scroll-mt-24 overflow-hidden"
+        aria-label={displayTitle}
       >
-        <div className="absolute inset-0 overflow-hidden">
-          <TripOfferHeroSlider active={slide} onChange={setSlide} />
+        <div className="absolute inset-0 overflow-hidden" aria-hidden>
+          <Image
+            src={OFFER_DETAIL_HERO_IMAGE}
+            alt=""
+            fill
+            priority
+            quality={IQ.hero}
+            sizes="100vw"
+            className="offer-hero-image object-cover"
+          />
+          <div className="offer-hero-fade absolute inset-0" />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col pointer-events-none">
-          <div className="pointer-events-auto hidden lg:block">
-            <TripDetailBreadcrumb dateLabel={live.dateLabel} overlay />
-          </div>
-
-          <Container className="flex min-h-0 flex-1 flex-col pointer-events-none pb-8 lg:justify-start lg:pb-5 lg:pt-0">
-            {/* Mobile: green availability sits high on the photo */}
-            {greenAvailability ? (
-              <div
-                id="availability"
-                className="pointer-events-auto pt-5 sm:pt-6 lg:hidden"
-              >
-                {renderAvailabilityPill(greenAvailability)}
-              </div>
-            ) : null}
-
-            {/* Mobile: rest lower; desktop: full stack near top */}
-            <div
-              className={cn(
-                "pointer-events-auto mt-auto max-w-[580px] pt-10 pb-2 sm:pt-12 lg:mt-0 lg:max-w-[580px] lg:py-0 lg:pt-0",
-              )}
+        {/* Handwritten slogan — upper right (mobile + desktop) */}
+        <div
+          className="pointer-events-none absolute z-20"
+          style={{ insetInlineEnd: "min(4%, 1.25rem)", top: "10%" }}
+          aria-hidden
+        >
+          <div className="origin-center rotate-[7deg] md:rotate-[7deg]">
+            <p
+              className={`${heroScript.className} text-end text-[1.15rem] leading-[1.05] font-bold text-black sm:text-[1.45rem] md:text-[1.65rem] xl:text-[1.9rem]`}
             >
-              <div className="flex flex-col items-start gap-5 scroll-mt-28 lg:scroll-mt-28">
-                {/* Desktop keeps all pills together */}
-                <div
-                  id={greenAvailability ? undefined : "availability"}
-                  className="hidden flex-col items-start gap-5 lg:flex"
-                >
-                  {availabilityLines.map(renderAvailabilityPill)}
-                </div>
+              <span className="block">{t("offerHeroSloganLine1")}</span>
+              <span className="block">{t("offerHeroSloganLine2")}</span>
+              <span className="block">{t("offerHeroSloganLine3")}</span>
+            </p>
+            <svg
+              viewBox="0 0 200 18"
+              className="ms-auto mt-0.5 h-auto w-[6.5rem] sm:w-[8.5rem] md:mt-1 md:w-[9.5rem] xl:w-[11rem]"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M4 11C22 6 48 4 78 5.5C112 7.2 142 12 172 9.5C180 8.8 188 7.6 196 7"
+                stroke="#111111"
+                strokeWidth="3.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
 
-                {/* Mobile: waitlist / other pills stay with title block */}
-                {otherAvailability.length > 0 ? (
-                  <div className="flex flex-col items-start gap-5 lg:hidden">
-                    {otherAvailability.map(renderAvailabilityPill)}
-                  </div>
-                ) : null}
+        <div className="relative z-10 flex min-h-[480px] flex-col justify-center lg:min-h-[560px]">
+          <Container className="py-10 sm:py-12 lg:py-12">
+            <div className="relative z-10 max-w-[min(100%,32rem)] lg:max-w-[min(100%,34rem)]">
+              {/* Eyebrow badge */}
+              <span className="inline-flex w-fit items-center rounded-md bg-[#F5E6C8] px-3 py-1.5 text-[11px] font-extrabold tracking-[0.1em] text-[#1A1A1A] uppercase sm:text-[12px] sm:tracking-[0.12em]">
+                {t("offerHeroEyebrow")}
+              </span>
 
-                <span className="inline-flex w-fit shrink-0 items-center rounded-full bg-[#E8F1FF] px-3 py-1.5 text-[11px] font-bold tracking-[0.08em] text-[#09245C] uppercase sm:text-[12px]">
-                  {nightsLabel}
-                </span>
+              {/* Title — two lines */}
+              <h1
+                className={`${heroDisplay.className} mt-4 m-0 text-[2.15rem] leading-[1.05] font-bold tracking-[-0.02em] text-[#111111] sm:text-[2.55rem] lg:text-[3.05rem] xl:text-[3.25rem]`}
+              >
+                <span className="block">{line1}</span>
+                {line2 ? <span className="block">{line2}</span> : null}
+              </h1>
 
-                <h1 className="m-0 text-[36px] leading-[0.98] font-extrabold tracking-[-0.035em] text-white sm:text-[42px] lg:text-[52px] lg:leading-[0.94] xl:text-[56px]">
-                  {titleRest ? (
-                    <>
-                      <span className="lg:hidden">{live.title}</span>
-                      <span className="hidden lg:inline text-[#051033]">{titleFirst}</span>
-                      <br className="hidden lg:block" />
-                      <span className="hidden lg:inline text-[#174DE8]">{titleRest}</span>
-                    </>
-                  ) : (
-                    <span className="lg:text-[#051033]">{live.title}</span>
-                  )}
-                </h1>
+              {/* Equal spacing above & below subtitle */}
+              <p className="mt-4 mb-4 m-0 max-w-[28rem] text-[14px] font-medium leading-[1.35] text-[#111111] sm:text-[15px] lg:text-[16px]">
+                <span className="block">{t("offerHeroSubtitleLine1")}</span>
+                <span className="block">{t("offerHeroSubtitleLine2")}</span>
+              </p>
 
-                <p className="m-0 flex items-center gap-2.5 text-[15px] font-bold text-white sm:text-[17px] lg:text-[color:var(--navy)]">
-                  <CalendarDays
-                    className="h-[18px] w-[18px] shrink-0 text-white lg:text-[color:var(--navy)]"
-                    strokeWidth={2}
-                    aria-hidden
-                  />
-                  <span>{dateFull}</span>
-                </p>
-
-                <div className="flex w-full flex-col items-start gap-3">
-                  <ul
-                    className="m-0 flex w-full max-w-full list-none flex-nowrap items-start justify-between gap-0 p-0 sm:w-fit sm:justify-start"
-                    aria-label={t("inclusions")}
-                  >
-                    {HERO_INCLUSIONS.map(({ key, Icon, line1, line2 }, i) => (
-                      <li
-                        key={key}
-                        className={cn(
-                          "relative flex min-w-0 flex-1 flex-col items-center gap-1.5 px-1.5 text-center sm:flex-none sm:gap-2 sm:px-3.5",
-                          i > 0 &&
-                            "border-s border-white/35 sm:border-s-[1.5px] sm:border-[#C5A35A]/90 lg:border-[#B08D3A]",
-                        )}
-                      >
-                        <Icon
-                          className="h-6 w-6 shrink-0 text-white sm:h-7 sm:w-7 lg:text-[#051033]"
-                          strokeWidth={1.5}
-                          aria-hidden
-                        />
-                        <span className="flex flex-col items-center text-[9px] leading-[1.2] font-semibold text-white sm:whitespace-nowrap sm:text-[12px] sm:leading-[1.25] lg:text-[#051033]">
-                          <span>{t(line1)}</span>
-                          <span>{t(line2)}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Mobile slide dots — under inclusions (desktop keeps arrow only) */}
-                  <div
-                    className="flex w-full items-center justify-center gap-2 sm:w-fit sm:self-center lg:hidden"
-                    role="tablist"
-                    aria-label={t("heroSliderLabel")}
-                  >
-                    {OFFER_HERO_SLIDES.map((item, index) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        role="tab"
-                        aria-selected={index === slide}
-                        aria-label={`${index + 1} / ${OFFER_HERO_SLIDES.length}`}
-                        onClick={() => setSlide(index)}
-                        className={cn(
-                          "h-2 w-2 rounded-full transition",
-                          index === slide ? "bg-white" : "bg-white/40",
-                        )}
+              {/* Features — icon left + 2-line label (reference) */}
+              <ul
+                className="m-0 flex list-none flex-row flex-wrap items-center gap-x-5 gap-y-3 p-0 sm:gap-x-7"
+                aria-label={t("offerHeroFeaturesLabel")}
+              >
+                {HERO_FEATURES.map(({ key, icon, line1Key, line2Key }) => (
+                  <li key={key} className="flex items-center gap-2.5">
+                    <span className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11">
+                      <Image
+                        src={icon}
+                        alt=""
+                        fill
+                        className="object-contain"
+                        sizes="44px"
+                        quality={IQ.thumb}
+                        unoptimized
                       />
-                    ))}
-                  </div>
+                    </span>
+                    <span className="text-[12px] font-bold leading-[1.15] text-[#111111] sm:text-[13px]">
+                      <span className="block whitespace-nowrap">{t(line1Key)}</span>
+                      <span className="block whitespace-nowrap">{t(line2Key)}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {availabilityLabel ? (
+                <div id="availability" className="mt-4 scroll-mt-28">
+                  <span
+                    className={cn(
+                      "inline-flex w-fit items-center gap-2.5 rounded-xl px-4 py-2.5 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(16,137,62,0.28)] sm:text-[15px]",
+                      availabilityTone === "green" && "bg-[#10893E]",
+                      availabilityTone === "orange" && "bg-[#E8890C]",
+                      availabilityTone === "red" && "bg-[#C0392B]",
+                    )}
+                  >
+                    {availabilityTone === "green" ? (
+                      <span className="relative h-5 w-5 shrink-0">
+                        <Image
+                          src={OFFER_HERO_ICONS.seats}
+                          alt=""
+                          fill
+                          className="object-contain brightness-0 invert"
+                          sizes="20px"
+                          quality={IQ.thumb}
+                        />
+                      </span>
+                    ) : availabilityTone === "orange" ? (
+                      <Clock3 className="h-[18px] w-[18px] shrink-0 text-white" strokeWidth={2.25} aria-hidden />
+                    ) : (
+                      <X className="h-[18px] w-[18px] shrink-0 text-white" strokeWidth={2.25} aria-hidden />
+                    )}
+                    <span className="text-white">{availabilityLabel}</span>
+                  </span>
                 </div>
-              </div>
+              ) : null}
             </div>
           </Container>
         </div>
 
-        {/* Desktop card: centered in full 500px hero — equal top & bottom gap */}
+        {/* Desktop pricing card */}
         <div className="pointer-events-none absolute inset-0 z-20 hidden lg:flex lg:items-center">
           <Container className="flex w-full justify-end">
-            <aside id="prices" className="pointer-events-auto w-full max-w-[360px] scroll-mt-24">
+            <aside id="prices" className="pointer-events-auto w-full max-w-[22.5rem] scroll-mt-24 xl:max-w-[24rem]">
               <TripPricingCard trip={live} />
             </aside>
           </Container>
         </div>
       </section>
 
-      {/* Mobile pricing — below hero, before hotels */}
-      <Container className="relative z-20 -mt-6 lg:hidden">
+      <Container className="relative z-20 -mt-5 lg:hidden">
         <aside id="prices" className="scroll-mt-20">
-          <TripPricingCard trip={live} />
+          <TripPricingCard trip={live} ctaMode="moreInfo" />
         </aside>
       </Container>
     </>

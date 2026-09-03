@@ -1,46 +1,30 @@
-import {
-  Award,
-  HeartHandshake,
-  MapPin,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
-const items: {
-  Icon: LucideIcon;
-  titleKey: "trust1Title" | "trust2Title" | "trust3Title" | "trust4Title";
-  bodyKey: "trust1Body" | "trust2Body" | "trust3Body" | "trust4Body";
-}[] = [
-  { Icon: Award, titleKey: "trust1Title", bodyKey: "trust1Body" },
-  { Icon: Users, titleKey: "trust2Title", bodyKey: "trust2Body" },
-  { Icon: MapPin, titleKey: "trust3Title", bodyKey: "trust3Body" },
-  { Icon: HeartHandshake, titleKey: "trust4Title", bodyKey: "trust4Body" },
-];
-
-function TrustIcon({
-  Icon,
-  compact = false,
-  golden = false,
-}: {
-  Icon: LucideIcon;
-  compact?: boolean;
-  golden?: boolean;
-}) {
-  return (
-    <Icon
-      className={cn(
-        "shrink-0",
-        golden ? "text-[#C59D3F]" : "text-[#091B3B]",
-        compact ? "h-5 w-5 md:h-10 md:w-10 lg:h-12 lg:w-12" : "h-12 w-12 sm:h-14 sm:w-14",
-      )}
-      strokeWidth={1.5}
-      aria-hidden
-    />
-  );
-}
+const TRUST_ITEMS = [
+  {
+    icon: "/brand/icons/home/trophy.png",
+    line1Key: "trust1Line1" as const,
+    line2Key: "trust1Line2" as const,
+  },
+  {
+    icon: "/brand/icons/home/people.png",
+    line1Key: "trust2Line1" as const,
+    line2Key: "trust2Line2" as const,
+  },
+  {
+    icon: "/brand/icons/home/shield.png",
+    line1Key: "trust3Line1" as const,
+    line2Key: "trust3Line2" as const,
+  },
+  {
+    icon: "/brand/icons/home/heart.png",
+    line1Key: "trust4Line1" as const,
+    line2Key: "trust4Line2" as const,
+  },
+] as const;
 
 export async function MobarakTrustBar({
   variant = "home",
@@ -52,68 +36,77 @@ export async function MobarakTrustBar({
   if (variant === "listing") {
     return (
       <section
-        className="border-t border-[#EDE6DE] bg-[#FAF6F2] py-8 sm:py-9"
+        className="border-y border-[#E8EAEE] bg-[#FAFBFC] py-4 sm:py-5"
         aria-labelledby="listing-trust-heading"
       >
         <Container>
           <h2 id="listing-trust-heading" className="sr-only">
             {t("trustBarHeading")}
           </h2>
-          <div className="grid grid-cols-2 gap-3 md:gap-x-6 md:gap-y-7 lg:grid-cols-4 lg:gap-0">
-            {items.map((item, index) => (
-              <div
-                key={item.titleKey}
+          <ul className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-0">
+            {TRUST_ITEMS.map((item, index) => (
+              <li
+                key={item.line1Key}
                 className={cn(
-                  "relative flex min-w-0 items-start gap-3 rounded-[14px] border border-[#EFE8E0] bg-white/70 px-3 py-3.5 shadow-[0_2px_10px_rgba(9,30,66,0.04)] backdrop-blur-[2px] md:gap-3.5 md:rounded-none md:border-0 md:bg-transparent md:px-0 md:py-0 md:shadow-none md:backdrop-blur-none lg:px-5 xl:px-6",
-                  index > 0 &&
-                    "lg:before:absolute lg:before:inset-y-1 lg:before:start-0 lg:before:w-px lg:before:bg-[#E4DCD3]",
+                  "flex items-center gap-2.5 px-1 py-1 md:px-3 lg:px-4",
+                  index > 0 && "md:border-s md:border-[#E8EAEE]",
                 )}
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F7F1EA] ring-1 ring-[#E8DFD4]/80 md:h-auto md:w-auto md:bg-transparent md:ring-0">
-                  <TrustIcon Icon={item.Icon} compact />
-                </span>
-                <div className="min-w-0 pt-0.5">
-                  <p className="text-[12.5px] font-extrabold leading-[1.25] tracking-[-0.025em] text-[#091B3B] md:text-[14px] lg:text-[15px]">
-                    {t(item.titleKey)}
-                  </p>
-                  <p className="mt-1.5 text-[11px] font-medium leading-[1.4] text-[#5B6B7C] md:mt-1 md:text-[13px] md:text-[#091B3B]/80">
-                    {t(item.bodyKey)}
-                  </p>
-                </div>
-              </div>
+                <Image
+                  src={item.icon}
+                  alt=""
+                  width={48}
+                  height={48}
+                  className="h-10 w-10 shrink-0 object-contain sm:h-11 sm:w-11"
+                />
+                <p className="min-w-0 text-[12px] font-bold leading-snug text-[#0B2A7A] sm:text-[13px]">
+                  <span className="block">{t(item.line1Key)}</span>
+                  <span className="block font-semibold text-[#0B2A7A]/85">{t(item.line2Key)}</span>
+                </p>
+              </li>
             ))}
-          </div>
+          </ul>
         </Container>
       </section>
     );
   }
 
   return (
-    <section className="bg-[#F7F8FA] pb-5 pt-1 sm:bg-white sm:pb-4">
+    <section
+      className="border-y border-[#E8EAEE] bg-white"
+      aria-labelledby="home-trust-heading"
+    >
       <Container className="lg:px-9">
-        <div className="grid grid-cols-2 gap-2.5 rounded-[18px] border border-[#E9EAEE] bg-white p-2.5 shadow-[0_8px_28px_rgba(9,30,66,0.06)] sm:min-h-31.5 sm:gap-y-6 sm:p-0 sm:px-4 sm:py-5 lg:grid-cols-4 lg:gap-y-0 lg:px-0 lg:py-0">
-          {items.map((item, index) => (
-            <div
-              key={item.titleKey}
+        <h2 id="home-trust-heading" className="sr-only">
+          {t("trustBarHeading")}
+        </h2>
+        <ul className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4">
+          {TRUST_ITEMS.map((item, index) => (
+            <li
+              key={item.line1Key}
               className={cn(
-                "flex min-w-0 flex-col gap-2.5 rounded-[14px] bg-gradient-to-b from-[#FBF8F2] to-[#F7F8FA] px-3 py-3.5 sm:flex-row sm:items-center sm:gap-3.5 sm:rounded-none sm:bg-none sm:bg-transparent sm:px-3 sm:py-0 lg:gap-4 lg:px-6",
-                index < items.length - 1 && "lg:border-e lg:border-[#E6E8EC]",
+                "flex flex-col items-center gap-2 px-1 py-4 text-center",
+                "md:flex-row md:items-center md:gap-3 md:px-3 md:py-5 md:text-start sm:gap-3.5 sm:px-5 sm:py-6 lg:px-6 lg:py-7",
+                index > 0 && "max-md:border-s max-md:border-[#E8EAEE]",
+                index % 2 === 1 && "md:border-s md:border-[#E8EAEE]",
+                index >= 2 && "md:border-t md:border-[#E8EAEE] lg:border-t-0",
+                index > 0 && "lg:border-s lg:border-[#E8EAEE]",
               )}
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(197,157,63,0.18)] sm:h-auto sm:w-auto sm:rounded-none sm:bg-transparent sm:shadow-none">
-                <TrustIcon Icon={item.Icon} golden compact />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[12.5px] leading-[1.25] font-extrabold tracking-[-0.02em] text-[#091B3B] sm:text-[15px] sm:leading-[1.2] sm:tracking-[-0.03em] lg:text-[16px] lg:tracking-[-0.04em]">
-                  {t(item.titleKey)}
-                </p>
-                <p className="mt-1 text-[11px] leading-[1.4] font-medium text-[#445264] sm:mt-2 sm:text-[14px] sm:leading-[1.35] sm:font-semibold sm:tracking-[-0.02em]">
-                  {t(item.bodyKey)}
-                </p>
-              </div>
-            </div>
+              <Image
+                src={item.icon}
+                alt=""
+                width={56}
+                height={56}
+                className="h-9 w-9 shrink-0 object-contain max-md:mx-auto md:h-11 md:w-11 lg:h-14 lg:w-14"
+              />
+              <p className="min-w-0 text-[10px] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#0B2A7A] max-md:mx-auto md:text-[13px] sm:text-[15px] lg:text-[16px]">
+                <span className="block">{t(item.line1Key)}</span>
+                <span className="block font-bold text-[#0B2A7A]/88">{t(item.line2Key)}</span>
+              </p>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

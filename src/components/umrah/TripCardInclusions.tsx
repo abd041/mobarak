@@ -12,31 +12,75 @@ import { cn } from "@/lib/utils";
 
 function InclusionItem({
   item,
-  label,
+  lines,
+  showDivider,
 }: {
   item: TripCardInclusionItem;
-  label: string;
+  lines: string[];
+  showDivider: boolean;
 }) {
   return (
-    <li className="flex min-w-0 items-start gap-[6px]">
-      <div className="relative mt-[1px] h-[18px] w-[18px] shrink-0 md:h-[20px] md:w-[20px]">
+    <li
+      className={cn(
+        "flex min-w-0 items-center gap-1.5 px-1.5 py-0.5 first:ps-0 last:pe-0",
+        showDivider && "border-e border-[#D8E4EE]",
+      )}
+    >
+      <div className="relative h-5 w-5 shrink-0 md:h-6 md:w-6">
         <Image
           src={item.icon}
           alt=""
           fill
-          className="object-contain object-top"
-          sizes="20px"
+          className="object-contain object-center umrah-listing-benefit-icon"
+          sizes="24px"
           quality={IQ.thumb}
         />
       </div>
-      <span className="min-w-0 text-[11px] font-semibold leading-[1.35] text-[#1A1A1A] md:text-[12px]">
-        {label}
+      <span className="min-w-0 leading-[1.15] text-[#001A4B]">
+        {lines.map((line, i) => (
+          <span
+            key={`${item.id}-l-${i}`}
+            className="block text-[8px] font-bold md:text-[9px]"
+          >
+            {line}
+          </span>
+        ))}
       </span>
     </li>
   );
 }
 
-/** Included services — all enabled items kept; layout matches compact reference grid. */
+function InclusionRow({
+  items,
+  cols,
+}: {
+  items: TripCardInclusionItem[];
+  cols: number;
+}) {
+  const t = useTranslations("umrah");
+  if (items.length === 0) return null;
+
+  return (
+    <ul
+      className="grid min-w-0"
+      style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+    >
+      {items.map((item, index) => {
+        const lines = t.raw(item.linesKey) as string[];
+        return (
+          <InclusionItem
+            key={item.id}
+            item={item}
+            lines={lines}
+            showDivider={index < items.length - 1}
+          />
+        );
+      })}
+    </ul>
+  );
+}
+
+/** Included services — rounded panel, 3 + 3 grid with dividers (listing reference). */
 export function TripCardInclusions({
   trip,
   prominence = "default",
@@ -44,27 +88,22 @@ export function TripCardInclusions({
   trip: UmrahTrip;
   prominence?: "listing" | "default";
 }) {
-  const t = useTranslations("umrah");
   const { row1, row2 } = getTripCardInclusionRows(trip);
   const isListing = prominence === "listing";
-  const items = [...row1, ...row2];
 
-  if (items.length === 0) return null;
+  if (row1.length === 0 && row2.length === 0) return null;
 
   return (
     <div
       className={cn(
-        "border-b border-[#EEF0F3] bg-white",
-        isListing
-          ? "px-4 py-3 md:px-[16px] md:py-[14px]"
-          : "ps-[22px] pe-[14px] py-[12px] sm:px-[16px]",
+        "border-b border-[#E8EBEF] bg-white px-3 py-2",
+        isListing && "md:px-3.5 md:py-2.5",
       )}
     >
-      <ul className="grid grid-cols-2 gap-x-[10px] gap-y-[10px] sm:grid-cols-4">
-        {items.map((item) => (
-          <InclusionItem key={item.id} item={item} label={t(item.labelKey)} />
-        ))}
-      </ul>
+      <div className="flex flex-col gap-1.5 rounded-lg bg-[#F4F8FB] px-2.5 py-2 md:px-3 md:py-2.5">
+        <InclusionRow items={row1} cols={3} />
+        <InclusionRow items={row2} cols={3} />
+      </div>
     </div>
   );
 }

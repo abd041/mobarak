@@ -1,94 +1,131 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Libre_Baskerville } from "next/font/google";
 import { useTranslations } from "next-intl";
 import type { UmrahTrip } from "@/data/mock";
-import { getDetailInclusionItems } from "@/lib/trip-inclusions";
-import { IQ } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
-/** Inklusive Leistungen — premium fieldset bar matching offer-page reference. */
+const inclusionsDisplay = Libre_Baskerville({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
+
+/** Offer-detail inclusions — reference order (8 items). Icons reprocessed for white BG. */
+const OFFER_INCLUSION_ITEMS = [
+  {
+    id: "flight",
+    icon: "/brand/icons/offer-inclusions/flight-v2.png",
+    titleKey: "offerInclFlightTitle",
+    subtitleKey: "offerInclFlightSub",
+  },
+  {
+    id: "hotel",
+    icon: "/brand/icons/offer-inclusions/hotel-v2.png",
+    titleKey: "offerInclHotelTitle",
+    subtitleKey: "offerInclHotelSub",
+  },
+  {
+    id: "breakfast",
+    icon: "/brand/icons/offer-inclusions/breakfast-v2.png",
+    titleKey: "offerInclBreakfastTitle",
+    subtitleKey: "offerInclBreakfastSub",
+  },
+  {
+    id: "transfer",
+    icon: "/brand/icons/offer-inclusions/transfer-v2.png",
+    titleKey: "offerInclTransferTitle",
+    subtitleKey: "offerInclTransferSub",
+  },
+  {
+    id: "guide",
+    icon: "/brand/icons/offer-inclusions/guide-v2.png",
+    titleKey: "offerInclGuideTitle",
+    subtitleKey: "offerInclGuideSub",
+  },
+  {
+    id: "religious",
+    icon: "/brand/icons/offer-inclusions/religious-v2.png",
+    titleKey: "offerInclReligiousTitle",
+    subtitleKey: "offerInclReligiousSub",
+  },
+  {
+    id: "visa",
+    icon: "/brand/icons/offer-inclusions/visa-v2.png",
+    titleKey: "offerInclVisaTitle",
+    subtitleKey: null,
+  },
+  {
+    id: "excursions",
+    icon: "/brand/icons/offer-inclusions/excursions-v2.png",
+    titleKey: "offerInclExcursionsTitle",
+    subtitleKey: "offerInclExcursionsSub",
+  },
+] as const;
+
+/** Im Reisepreis inklusive — header + 8-column icon row matching reference. */
 export function TripInclusionsSection({ trip }: { trip: UmrahTrip }) {
   const t = useTranslations("umrah");
-  const [items, setItems] = useState(() => getDetailInclusionItems(trip));
-
-  useEffect(() => {
-    const sync = () => setItems(getDetailInclusionItems(trip));
-    sync();
-    window.addEventListener("mobarak-availability", sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener("mobarak-availability", sync);
-      window.removeEventListener("storage", sync);
-    };
-  }, [trip]);
-
-  if (items.length === 0) return null;
+  const departureCity = trip.outbound.fromCity;
 
   return (
     <section id="inclusions" className="trip-section scroll-mt-24">
-      <div className="relative rounded-[16px] border border-[#E4EAF2] bg-white px-3 pb-6 pt-10 shadow-[0_4px_18px_rgba(9,36,92,0.06)] sm:px-4 sm:pb-7 sm:pt-11">
-        {/* Title interrupts the top border */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-center">
-          <div className="-translate-y-1/2 flex max-w-[min(100%,22rem)] items-center gap-3 bg-white px-3 sm:max-w-md sm:px-4">
-            <span className="h-px flex-1 bg-[#E4EAF2]" aria-hidden />
-            <h2 className="shrink-0 text-[16px] font-bold tracking-[-0.01em] text-[#051033] sm:text-[18px]">
-              {t("inclusions")}
-            </h2>
-            <span className="h-px flex-1 bg-[#E4EAF2]" aria-hidden />
-          </div>
-        </div>
-
-        {/* Mobile / tablet: compact grid */}
-        <ul className="grid grid-cols-3 gap-x-2 gap-y-5 pt-1 sm:grid-cols-5 lg:hidden">
-          {items.map(({ id, icon, labelKey }) => (
-            <li key={id} className="flex flex-col items-center px-1 text-center">
-              <div className="relative h-11 w-11 sm:h-12 sm:w-12">
-                <Image
-                  src={icon}
-                  alt=""
-                  fill
-                  className="object-contain"
-                  sizes="48px"
-                  quality={IQ.thumb}
-                />
-              </div>
-              <p className="mt-2.5 max-w-[7.5rem] text-[10px] font-semibold leading-snug text-[#051033] sm:text-[11px]">
-                {t(labelKey)}
-              </p>
-            </li>
-          ))}
-        </ul>
-
-        {/* Desktop: single premium row with floating mid-height dividers */}
-        <ul className="hidden lg:flex lg:items-stretch lg:justify-between lg:gap-0 lg:px-1 lg:pt-1">
-          {items.map(({ id, icon, labelKey }, idx) => (
-            <li
-              key={id}
-              className={cn(
-                "relative flex min-w-0 flex-1 flex-col items-center px-2 py-3 text-center xl:px-2.5",
-                idx < items.length - 1 &&
-                  "after:absolute after:end-0 after:top-1/2 after:h-[3.25rem] after:w-px after:-translate-y-1/2 after:bg-[#E4EAF2] after:content-['']",
-              )}
-            >
-              <div className="relative h-[52px] w-[52px] xl:h-14 xl:w-14">
-                <Image
-                  src={icon}
-                  alt=""
-                  fill
-                  className="object-contain"
-                  sizes="56px"
-                  quality={IQ.thumb}
-                />
-              </div>
-              <p className="mt-3 max-w-[6.75rem] text-[11px] font-semibold leading-snug text-[#051033] xl:max-w-[7.5rem] xl:text-[12px]">
-                {t(labelKey)}
-              </p>
-            </li>
-          ))}
-        </ul>
+      <div className="mb-9 sm:mb-11">
+        <h2
+          className={cn(
+            inclusionsDisplay.className,
+            "m-0 text-[1.65rem] font-bold tracking-[-0.02em] text-black sm:text-[1.85rem]",
+          )}
+        >
+          {t("offerInclusionsTitle")}
+        </h2>
+        <p className="mt-2.5 m-0 max-w-2xl text-[14px] leading-snug text-[#1A1A1A] sm:text-[15px]">
+          {t("offerInclusionsSubtitle")}
+        </p>
       </div>
+
+      <ul
+        className="grid list-none grid-cols-3 gap-x-2 gap-y-8 p-0 sm:grid-cols-4 sm:gap-x-4 sm:gap-y-9 lg:grid-cols-8 lg:gap-x-3 lg:gap-y-0"
+        aria-label={t("offerInclusionsTitle")}
+      >
+        {OFFER_INCLUSION_ITEMS.map(({ id, icon, titleKey, subtitleKey }) => {
+          const subtitle =
+            id === "flight"
+              ? t("offerInclFlightSub", { city: departureCity })
+              : subtitleKey
+                ? t(subtitleKey)
+                : null;
+
+          return (
+            <li key={id} className="flex flex-col items-center text-center">
+              <span className="relative h-12 w-12 shrink-0 sm:h-16 sm:w-16">
+                <Image
+                  src={icon}
+                  alt=""
+                  fill
+                  className="object-contain object-center"
+                  sizes="64px"
+                  unoptimized
+                  priority
+                />
+              </span>
+              <p className="mt-2.5 m-0 text-[12px] font-bold leading-snug text-black sm:mt-3.5 sm:text-[13px]">
+                {t(titleKey)}
+              </p>
+              {subtitle ? (
+                <p className="mt-1 m-0 max-w-[6.5rem] text-[11px] font-normal leading-snug text-[#5B6B7C] sm:max-w-[9rem] sm:text-[12px] sm:text-[#1A1A1A]">
+                  {subtitle}
+                </p>
+              ) : (
+                <p className="mt-1 m-0 min-h-[1.1rem]" aria-hidden>
+                  &nbsp;
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }

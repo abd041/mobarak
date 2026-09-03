@@ -65,8 +65,6 @@ export default async function TripDetailPage({
   const trip = await getTripBySlugFromStore(slug);
   if (!trip) notFound();
 
-  const t = await getTranslations("umrah");
-  const tCommon = await getTranslations("common");
   const medina = (await getHotelByIdFromStore(trip.medinaHotelId)) ?? getHotel(trip.medinaHotelId);
   const makkah = (await getHotelByIdFromStore(trip.makkahHotelId)) ?? getHotel(trip.makkahHotelId);
 
@@ -74,8 +72,10 @@ export default async function TripDetailPage({
     <TripPageShell>
       <TripFlowProvider trip={trip}>
         <OfferClient trip={trip} medina={medina} makkah={makkah}>
-        <TripOfferHero trip={trip} />
+          <TripOfferHero trip={trip} />
         <TripDetailSectionNav />
+
+        <TripDetailMetaBar trip={trip} />
 
         <Container className="space-y-0">
           <TripDetailHotels
@@ -83,23 +83,18 @@ export default async function TripDetailPage({
             medina={medina}
             makkah={makkah}
             locale={locale}
-            t={t}
-            tCommon={tCommon}
           />
-          <TripDetailMetaBar trip={trip} t={t} tCommon={tCommon} />
-          <div className="hidden lg:block">
-            <TripDetailGallery images={trip.images} />
-          </div>
-          <TripDetailFlights trip={trip} />
           <TripDetailServiceBlocks trip={trip} />
-          <div className="hidden lg:block">
-            <TripDetailServiceDetails trip={trip} t={t} />
-            <TripDetailChildPrices trip={trip} />
+          <TripDetailFlights trip={trip} />
+          <TripDetailItinerary trip={trip} />
+          <div className="space-y-10 pb-4 pt-2 sm:space-y-12">
+            <TripDetailGallery images={trip.images} />
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10">
+              <TripDetailServiceDetails trip={trip} />
+              <TripDetailChildPrices trip={trip} />
+            </div>
           </div>
-          <TripDetailItinerary trip={trip} t={t} />
-          <div className="hidden lg:block">
-            <TripDetailFaq trip={trip} />
-          </div>
+          <TripDetailFaq trip={trip} />
           <TripDetailBookingCta trip={trip} />
         </Container>
         </OfferClient>

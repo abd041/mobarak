@@ -68,16 +68,33 @@ function addDaysIso(iso: string, days: number): string {
   return `${y}-${m}-${day}`;
 }
 
-/** Hotel stay line — e.g. 23. Okt. – 26. Okt. 2026 */
+/** Hotel stay line — e.g. 23. – 26. Oktober 2026 */
 export function formatHotelStayDateRange(startIso: string, endIso: string, locale: string): string {
   const start = new Date(`${startIso}T12:00:00`);
   const end = new Date(`${endIso}T12:00:00`);
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return "";
   const loc = inquiryLocale(locale);
-  const startLabel = new Intl.DateTimeFormat(loc, { day: "numeric", month: "short" }).format(start);
+
+  // Same month + year → "23. – 26. Oktober 2026" (client offer-card style)
+  if (
+    start.getFullYear() === end.getFullYear() &&
+    start.getMonth() === end.getMonth()
+  ) {
+    const dayFmt = new Intl.DateTimeFormat(loc, { day: "numeric" });
+    const monthYear = new Intl.DateTimeFormat(loc, {
+      month: "long",
+      year: "numeric",
+    }).format(end);
+    return `${dayFmt.format(start)}. – ${dayFmt.format(end)}. ${monthYear}`;
+  }
+
+  const startLabel = new Intl.DateTimeFormat(loc, {
+    day: "numeric",
+    month: "long",
+  }).format(start);
   const endLabel = new Intl.DateTimeFormat(loc, {
     day: "numeric",
-    month: "short",
+    month: "long",
     year: "numeric",
   }).format(end);
   return `${startLabel} – ${endLabel}`;

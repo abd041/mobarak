@@ -19,7 +19,7 @@ export function UmrahListingMetaBar({
 }) {
   return (
     <div className="bg-white">
-      <Container className="flex min-w-0 flex-row items-center justify-between gap-3 py-3 sm:gap-4 sm:py-3.5">
+      <Container className="flex min-w-0 flex-row items-center justify-between gap-3 py-2 sm:gap-4 sm:py-2.5">
         <UmrahListingResultCount count={resultCount} className="mt-0 shrink min-w-0" />
         {showSort ? <UmrahListingSort sort={sort} onSortChange={onSortChange} /> : null}
       </Container>

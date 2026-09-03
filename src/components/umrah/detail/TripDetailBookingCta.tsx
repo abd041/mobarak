@@ -77,7 +77,7 @@ export function TripDetailBookingCta({ trip }: { trip: UmrahTrip }) {
 
         <div className="relative grid gap-6 px-5 pb-7 pt-1 sm:gap-7 sm:px-8 sm:pb-8 sm:pt-2 lg:grid-cols-[minmax(0,1.15fr)_minmax(260px,320px)] lg:items-center lg:gap-10 lg:py-9 lg:ps-[36%] lg:pe-9 lg:pt-9 xl:ps-[38%]">
           <div className="min-w-0 max-w-xl">
-            <h2 className="text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-[#051033] sm:text-[26px] lg:text-[28px]">
+            <h2 className="text-[22px] font-bold leading-[1.25] tracking-[-0.02em] text-[#111111] sm:text-[26px] lg:text-[28px]">
               {cta.finalTitle}
             </h2>
             <p className="mt-2.5 text-[14px] leading-relaxed text-[#3D4F5F] sm:mt-3 sm:text-[15px]">
@@ -90,12 +90,12 @@ export function TripDetailBookingCta({ trip }: { trip: UmrahTrip }) {
               href={flow.inquiryPath}
               className={cn(
                 "flex min-h-[50px] w-full items-center justify-center gap-2 rounded-[12px] px-5 py-3.5 text-[14px] font-bold text-white transition sm:min-h-[52px] sm:text-[15px]",
-                "shadow-[0_8px_20px_rgba(30,90,156,0.28)] hover:brightness-[0.97]",
+                "hover:brightness-[0.97]",
                 cta.mode === "waitlist"
                   ? "bg-brand-orange-cta"
                   : cta.mode === "full"
                     ? "bg-navy"
-                    : "bg-[linear-gradient(180deg,#3B82F6_0%,#1E5A9C_100%)]",
+                    : "bg-[#1264F5] shadow-[0_8px_20px_rgba(18,100,245,0.28)]",
               )}
             >
               <span className="inline-flex items-center gap-1.5">

@@ -99,7 +99,7 @@ export function TripDetailSectionNav() {
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 top-16 z-30 hidden border-b border-line bg-white/95 shadow-card backdrop-blur-md transition duration-200 lg:block",
+        "fixed inset-x-0 top-16 z-30 border-b border-line bg-white/95 shadow-card backdrop-blur-md transition duration-200",
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none -translate-y-full opacity-0",
@@ -118,7 +118,7 @@ export function TripDetailSectionNav() {
               "shrink-0 rounded-full px-4 py-2 text-[13px] font-semibold transition",
               active === id
                 ? "bg-brand-cta text-white shadow-sm"
-                : "text-navy hover:bg-surface",
+                : "text-[#111111] hover:bg-surface",
             )}
           >
             {t(labelKey)}

@@ -232,16 +232,384 @@ summary:focus-visible,
 }
 
 /* All marketing heroes: section + background photo band locked to 500px */
-.home-hero-bg,
 .visum-hero-bg,
 .hajj-hero-bg,
 .hajj-prereg-hero,
-.offer-hero-bg,
 .individual-umrah-hero,
 .individual-umrah-final-hero {
   height: 500px;
   min-height: 500px;
   max-height: 500px;
+}
+
+/* Offer detail hero — taller band for reference redesign + floating price card */
+.offer-hero-bg {
+  height: auto;
+  min-height: 480px;
+  max-height: none;
+}
+
+@media (min-width: 1024px) {
+  .offer-hero-bg {
+    min-height: 560px;
+    height: 560px;
+    max-height: 560px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .offer-hero-bg .offer-hero-fade {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 248, 240, 0.35) 42%,
+      rgba(255, 255, 255, 0.88) 78%,
+      #ffffff 100%
+    );
+  }
+}
+
+/* Homepage hero — locked to 500px on desktop (reference) */
+.home-hero-bg {
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+@media (max-width: 767px) {
+  .home-hero-bg {
+    height: clamp(500px, calc(100vw * 1.34), 540px);
+    min-height: 500px;
+    max-height: 540px;
+  }
+
+  .home-hero-photo {
+    /* Kaaba sits ~58% in 2048×768 plate — anchor so it reads on the right */
+    object-position: 54% 48%;
+  }
+
+  [dir="rtl"] .home-hero-photo {
+    object-position: 46% 48%;
+  }
+
+  .home-hero-signature {
+    display: none;
+  }
+
+  .home-hero-copy-inner {
+    max-width: min(100%, 21.5rem);
+  }
+
+  .home-hero-fade {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.98) 22%,
+      rgba(255, 255, 255, 0.8) 38%,
+      rgba(255, 255, 255, 0.35) 52%,
+      rgba(255, 255, 255, 0) 68%
+    );
+  }
+
+  [dir="rtl"] .home-hero-fade {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.98) 22%,
+      rgba(255, 255, 255, 0.8) 38%,
+      rgba(255, 255, 255, 0.35) 52%,
+      rgba(255, 255, 255, 0) 68%
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero-fade {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.98) 20%,
+      rgba(255, 255, 255, 0.85) 35%,
+      rgba(255, 255, 255, 0.55) 48%,
+      rgba(255, 255, 255, 0.15) 60%,
+      rgba(255, 255, 255, 0) 72%
+    );
+  }
+
+  [dir="rtl"] .home-hero-fade {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.98) 20%,
+      rgba(255, 255, 255, 0.85) 35%,
+      rgba(255, 255, 255, 0.55) 48%,
+      rgba(255, 255, 255, 0.15) 60%,
+      rgba(255, 255, 255, 0) 72%
+    );
+  }
+}
+
+/*
+ * Homepage category cards — TL→BR 50/50 diagonal (image top-right, white bottom-left).
+ */
+.home-category-card-grid {
+  gap: 11px;
+}
+
+@media (min-width: 768px) {
+  .home-category-card-grid {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-category-card-grid {
+    gap: 1.5rem;
+  }
+}
+
+.home-category-card {
+  border-radius: 13px;
+  isolation: isolate;
+  background-color: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .home-category-card {
+    aspect-ratio: 811 / 458;
+    border-radius: 1rem;
+  }
+}
+
+.home-category-card-photo-clip {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+/* New sheet: subject already small in top-right; fill card normally. */
+.home-category-card-cover {
+  object-fit: cover;
+  object-position: right center;
+}
+
+.home-category-card--umrah .home-category-card-cover {
+  object-position: 78% 40%;
+}
+
+.home-category-card--individual .home-category-card-cover {
+  object-position: 92% 45%;
+}
+
+.home-category-card--hajj .home-category-card-cover {
+  object-position: 80% 38%;
+}
+
+.home-category-card--visa .home-category-card-cover {
+  object-position: 88% 28%;
+}
+
+.home-category-card-diagonal {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: block;
+  background: #ffffff;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  pointer-events: none;
+}
+
+.home-category-card-body {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: block;
+}
+
+.home-category-card-icon {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: 12px;
+  inset-inline-start: 15px;
+  width: 52px;
+  height: 52px;
+}
+
+.home-category-card-copy {
+  position: absolute;
+  z-index: 3;
+  inset-block-start: auto;
+  inset-block-end: 24px;
+  inset-inline-start: 20px;
+  max-width: 52%;
+  min-width: 0;
+}
+
+.home-category-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #0b2a7a;
+}
+
+@media (min-width: 1024px) {
+  .home-category-card-title {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home-category-card-title {
+    font-size: 17px;
+  }
+}
+
+.home-category-card-subtitle {
+  margin-top: 6px;
+  max-width: 15ch;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: #5b6b7c;
+}
+
+.home-category-card-arrow {
+  position: absolute;
+  z-index: 4;
+  inset-inline-end: 14px;
+  inset-block-end: 14px;
+  display: flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #eef1f5;
+  background-color: #fff;
+  color: #1264f5;
+  box-shadow: 0 6px 16px rgba(11, 44, 74, 0.14);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.group:hover .home-category-card-arrow {
+  border-color: #1264f5;
+  background-color: #1264f5;
+  color: #fff;
+}
+
+.group:hover .home-category-card-arrow-icon {
+  filter: brightness(0) invert(1);
+}
+
+.home-category-card-arrow-icon {
+  display: block;
+  width: 34px;
+  height: auto;
+  max-height: 20px;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .home-category-card {
+    aspect-ratio: auto;
+    height: clamp(155px, calc((100vw - 2rem - 11px) / 2 * 0.83), 165px);
+    box-shadow: 0 5px 16px rgba(11, 44, 74, 0.06);
+  }
+
+  .home-category-card-icon {
+    inset-block-start: 9px;
+    inset-inline-start: 9px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .home-category-card-copy {
+    inset-block-end: 22px;
+    inset-inline-start: 11px;
+    max-width: 54%;
+  }
+
+  .home-category-card-title {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .home-category-card-subtitle {
+    margin-top: 3px;
+    max-width: 9rem;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .home-category-card-arrow {
+    inset-inline-end: 9px;
+    inset-block-end: 9px;
+    height: 36px;
+    width: 36px;
+  }
+
+  .home-category-card-arrow-icon {
+    width: 28px;
+    max-height: 16px;
+  }
+}
+
+/*
+ * Homepage Google reviews — mobile carousel (≤767px).
+ */
+@media (max-width: 767px) {
+  .home-reviews-carousel {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+}
+
+/*
+ * Homepage expert CTA — mobile overlay gradient (≤767px).
+ */
+@media (max-width: 767px) {
+  .home-expert-cta-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(4, 39, 91, 0.95) 0%,
+      rgba(4, 39, 91, 0.82) 35%,
+      rgba(4, 39, 91, 0.45) 65%,
+      rgba(4, 39, 91, 0.2) 100%
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .home-expert-cta-overlay {
+    background: linear-gradient(
+      90deg,
+      #002b5c 0%,
+      #002b5c 24%,
+      rgba(0, 43, 92, 0.94) 34%,
+      rgba(0, 43, 92, 0.72) 46%,
+      rgba(0, 43, 92, 0.35) 58%,
+      rgba(0, 43, 92, 0.08) 72%,
+      transparent 84%
+    );
+  }
+}
+
+/*
+ * Category cards — legacy diagonal panel helper (unused).
+ */
+.home-category-card-panel {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 }
 
 /* Mobile Individuelle Umrah — hug content; icons + form spacing controlled in markup */
@@ -259,10 +627,10 @@ summary:focus-visible,
   }
 }
 
-/* Umrah listing hero — mobile tall band; desktop auto (title + 9 icons) */
+/* Umrah listing hero — compact band; desktop auto (title + 8 icons) */
 .umrah-listing-hero-bg {
   height: auto;
-  min-height: 380px;
+  min-height: 300px;
   max-height: none;
 }
 
@@ -274,82 +642,133 @@ summary:focus-visible,
   }
 }
 
-.home-hero-photo {
-  /* Mobile: frame Kaaba toward center */
-  object-position: 78% -36px;
-}
-
+/* Ultra-wide Makkah plate (2048×768): desktop/tablet focal point only */
 @media (min-width: 768px) {
   .home-hero-photo {
-    /* Desktop unchanged — Kaaba right, text left */
-    object-position: center -100px;
+    object-position: 58% 44%;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .home-hero-photo {
-    object-position: center -120px;
+    object-position: 54% 42%;
   }
-}
-
-[dir="rtl"] .home-hero-photo {
-  object-position: 78% -36px;
 }
 
 @media (min-width: 768px) {
   [dir="rtl"] .home-hero-photo {
-    object-position: right -100px;
+    object-position: 42% 44%;
+  }
+}
+
+@media (min-width: 1200px) {
+  [dir="rtl"] .home-hero-photo {
+    object-position: 46% 42%;
+  }
+}
+
+/* Hero signature — “Gemeinsam näher zu Allah.” */
+.home-hero-signature {
+  inset-inline-end: clamp(0.75rem, 2.8vw, 1.5rem);
+  top: clamp(1rem, 2.8vh, 1.5rem);
+}
+
+@media (min-width: 640px) {
+  .home-hero-signature {
+    inset-inline-end: clamp(1.5rem, 5vw, 3rem);
+    top: clamp(1.25rem, 3.2vh, 1.875rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .home-hero-signature {
+    inset-inline-end: clamp(2rem, 6vw, 3.75rem);
+    top: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  [dir="rtl"] .home-hero-photo {
-    object-position: right -120px;
+  .home-hero-signature {
+    inset-inline-end: clamp(2.75rem, 7vw, 5.25rem);
+    top: 1.625rem;
   }
 }
 
-/* Mobile: premium bottom → top wash (no box). Desktop: left fade. */
-.home-hero-scrim {
-  background: linear-gradient(
-    to top,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0.98) 14%,
-    rgba(255, 255, 255, 0.92) 28%,
-    rgba(255, 255, 255, 0.72) 42%,
-    rgba(255, 255, 255, 0.38) 56%,
-    rgba(255, 255, 255, 0.12) 70%,
-    transparent 84%
-  );
+@media (min-width: 1280px) {
+  .home-hero-signature {
+    inset-inline-end: 5rem;
+    top: 1.875rem;
+  }
+}
+
+.home-hero-signature-inner {
+  transform: rotate(-17deg);
+  transform-origin: 12% 54%;
+}
+
+[dir="rtl"] .home-hero-signature-inner {
+  transform: rotate(17deg);
+  transform-origin: 88% 54%;
+}
+
+.home-hero-signature-text {
+  font-size: clamp(1.72rem, 0.95rem + 1.75vw, 2.72rem);
+  line-height: 0.92;
+  font-weight: 700;
+  color: #0b2a7a;
+  text-align: start;
+  letter-spacing: -0.01em;
+}
+
+.home-hero-signature-line1 {
+  display: block;
+}
+
+.home-hero-signature-line2 {
+  display: block;
+  margin-top: -0.1em;
+  padding-inline-start: 0.54em;
+}
+
+.home-hero-signature-stroke {
+  display: block;
+  margin-top: 0.06em;
+  margin-inline-start: 0.42em;
+  width: 9.5rem;
+  height: auto;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .home-hero-signature-stroke {
+    width: 10.5rem;
+    margin-top: 0.1em;
+    margin-inline-start: 0.48em;
+  }
 }
 
 @media (min-width: 768px) {
-  .home-hero-scrim {
-    background: linear-gradient(
-      to right,
-      #ffffff 0%,
-      #ffffff 24%,
-      rgba(255, 255, 255, 0.96) 34%,
-      rgba(255, 255, 255, 0.6) 44%,
-      rgba(255, 255, 255, 0.12) 54%,
-      transparent 64%
-    );
+  .home-hero-signature-stroke {
+    width: 11.25rem;
   }
+}
 
-  [dir="rtl"] .home-hero-scrim {
-    background: linear-gradient(
-      to left,
-      #ffffff 0%,
-      #ffffff 24%,
-      rgba(255, 255, 255, 0.96) 34%,
-      rgba(255, 255, 255, 0.6) 44%,
-      rgba(255, 255, 255, 0.12) 54%,
-      transparent 64%
-    );
+@media (min-width: 1024px) {
+  .home-hero-signature-stroke {
+    width: 12.5rem;
+    margin-top: 0.14em;
+    margin-inline-start: 0.52em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home-hero-signature-stroke {
+    width: 13.25rem;
   }
 }
 
 .umrah-listing-hero-photo {
-  object-position: 78% 36%;
+  object-position: 72% 42%;
 }
 
 .umrah-listing-hero-scrim {
@@ -373,16 +792,16 @@ summary:focus-visible,
 }
 
 @media (min-width: 768px) {
-  /* Desktop: solid white left, soft fade into clear Kaaba */
+  /* Desktop: solid white left, soft fade into Medina/Makkah plate */
   .umrah-listing-hero-scrim {
     background: linear-gradient(
       to right,
       #ffffff 0%,
-      #ffffff 42%,
-      rgba(255, 255, 255, 0.96) 52%,
-      rgba(255, 255, 255, 0.55) 64%,
-      rgba(255, 255, 255, 0.15) 76%,
-      transparent 88%
+      #ffffff 38%,
+      rgba(255, 255, 255, 0.94) 48%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0.12) 74%,
+      transparent 86%
     );
   }
 }
@@ -392,11 +811,11 @@ summary:focus-visible,
     background: linear-gradient(
       to right,
       #ffffff 0%,
-      #ffffff 44%,
-      rgba(255, 255, 255, 0.97) 54%,
-      rgba(255, 255, 255, 0.55) 66%,
-      rgba(255, 255, 255, 0.12) 78%,
-      transparent 90%
+      #ffffff 40%,
+      rgba(255, 255, 255, 0.95) 50%,
+      rgba(255, 255, 255, 0.5) 62%,
+      rgba(255, 255, 255, 0.1) 76%,
+      transparent 88%
     );
   }
 
@@ -404,11 +823,11 @@ summary:focus-visible,
     background: linear-gradient(
       to left,
       #ffffff 0%,
-      #ffffff 44%,
-      rgba(255, 255, 255, 0.97) 54%,
-      rgba(255, 255, 255, 0.55) 66%,
-      rgba(255, 255, 255, 0.12) 78%,
-      transparent 90%
+      #ffffff 40%,
+      rgba(255, 255, 255, 0.95) 50%,
+      rgba(255, 255, 255, 0.5) 62%,
+      rgba(255, 255, 255, 0.1) 76%,
+      transparent 88%
     );
   }
 }
@@ -437,11 +856,11 @@ summary:focus-visible,
     background: linear-gradient(
       to left,
       #ffffff 0%,
-      #ffffff 42%,
-      rgba(255, 255, 255, 0.96) 52%,
-      rgba(255, 255, 255, 0.55) 64%,
-      rgba(255, 255, 255, 0.15) 76%,
-      transparent 88%
+      #ffffff 38%,
+      rgba(255, 255, 255, 0.94) 48%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0.12) 74%,
+      transparent 86%
     );
   }
 }
@@ -451,11 +870,11 @@ summary:focus-visible,
     background: linear-gradient(
       to left,
       #ffffff 0%,
-      #ffffff 44%,
-      rgba(255, 255, 255, 0.97) 54%,
-      rgba(255, 255, 255, 0.55) 66%,
-      rgba(255, 255, 255, 0.12) 78%,
-      transparent 90%
+      #ffffff 40%,
+      rgba(255, 255, 255, 0.95) 50%,
+      rgba(255, 255, 255, 0.5) 62%,
+      rgba(255, 255, 255, 0.1) 76%,
+      transparent 88%
     );
   }
 }
@@ -865,7 +1284,7 @@ summary:focus-visible,
 
 @media (min-width: 1024px) {
   .umrah-listing-hero-photo {
-    object-position: 68% 40%;
+    object-position: 78% 45%;
   }
 }
 
@@ -898,15 +1317,14 @@ summary:focus-visible,
   margin-inline: calc(50% - 50vw);
 }
 
-/* Offer page hero — softer left wash (less white) so photo stays visible */
+/* Offer page hero — bright left wash so black copy stays readable */
 .offer-hero-fade {
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.55) 12%,
-    rgba(255, 255, 255, 0.32) 28%,
-    rgba(255, 255, 255, 0.12) 42%,
-    rgba(255, 255, 255, 0.04) 55%,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.72) 16%,
+    rgba(255, 255, 255, 0.4) 34%,
+    rgba(255, 255, 255, 0.12) 52%,
     transparent 68%
   );
 }
@@ -914,17 +1332,16 @@ summary:focus-visible,
 [dir="rtl"] .offer-hero-fade {
   background: linear-gradient(
     to left,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.55) 12%,
-    rgba(255, 255, 255, 0.32) 28%,
-    rgba(255, 255, 255, 0.12) 42%,
-    rgba(255, 255, 255, 0.04) 55%,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.72) 16%,
+    rgba(255, 255, 255, 0.4) 34%,
+    rgba(255, 255, 255, 0.12) 52%,
     transparent 68%
   );
 }
 
 .offer-hero-image {
-  filter: contrast(1.08) saturate(1.08) brightness(0.96);
+  filter: none;
 }
 
 /* Mobile: bottom-weighted scrim so hero copy stays readable on the photo */

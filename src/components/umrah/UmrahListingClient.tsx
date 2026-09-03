@@ -2,6 +2,8 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { UmrahListingEmptyState } from "@/components/umrah/UmrahListingEmptyState";
 import { UmrahListingFilters } from "@/components/umrah/UmrahListingFilters";
@@ -14,6 +16,7 @@ import { useHotels } from "@/hooks/useHotels";
 import { useTrips } from "@/hooks/useTrips";
 import { resolveHotel } from "@/lib/hotel-catalog";
 import type { PeriodFilterKey } from "@/lib/listing-period-filters";
+import { LISTING_INITIAL_VISIBLE_TRIPS } from "@/lib/listing-visible-trips";
 import { filterTripsByPeriod } from "@/lib/trip-period-filters";
 import {
   DEFAULT_TRIP_LISTING_SORT,
@@ -34,6 +37,7 @@ function UmrahListingClientInner({
   initialTrips?: UmrahTrip[];
   initialHotels?: Hotel[];
 }) {
+  const t = useTranslations("umrah");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,6 +51,7 @@ function UmrahListingClientInner({
 
   const [filter, setFilter] = useState<PeriodFilterKey>(filterFromUrl);
   const [sort, setSort] = useState<TripListingSortKey>(DEFAULT_TRIP_LISTING_SORT);
+  const [showAllOffers, setShowAllOffers] = useState(false);
   const [dataRevision, setDataRevision] = useState(0);
   /** Defer localStorage trip overrides until after hydration. */
   const [overridesReady, setOverridesReady] = useState(false);
@@ -58,6 +63,10 @@ function UmrahListingClientInner({
   useEffect(() => {
     setFilter(filterFromUrl);
   }, [filterFromUrl]);
+
+  useEffect(() => {
+    setShowAllOffers(false);
+  }, [filter, sort]);
 
   useEffect(() => {
     const sync = () => setDataRevision((value) => value + 1);
@@ -106,6 +115,14 @@ function UmrahListingClientInner({
     return sortTripsForListing(list, sort);
   }, [allTrips, filter, sort, dataRevision, overridesReady]);
 
+  const visibleTrips = useMemo(() => {
+    if (showAllOffers) return filtered;
+    return filtered.slice(0, LISTING_INITIAL_VISIBLE_TRIPS);
+  }, [filtered, showAllOffers]);
+
+  const hasMoreOffers =
+    !showAllOffers && filtered.length > LISTING_INITIAL_VISIBLE_TRIPS;
+
   return (
     <>
       <UmrahListingFilters filter={filter} onFilterChange={onFilterChange} />
@@ -116,16 +133,30 @@ function UmrahListingClientInner({
         showSort={filtered.length > 0}
       />
 
-      <Container className="min-w-0 pb-12 pt-4 sm:pb-12 sm:pt-5">
+      <Container className="min-w-0 pb-8 pt-3 sm:pb-10 sm:pt-3.5">
         {filtered.length === 0 ? (
           <UmrahListingEmptyState filter={filter} onShowAllDates={() => onFilterChange("all")} />
         ) : (
-          <UmrahListingGrid
-            trips={filtered}
-            listingFilter={filter}
-            getMedinaHotel={(trip) => resolveTripHotel(trip, "medina")}
-            getMakkahHotel={(trip) => resolveTripHotel(trip, "makkah")}
-          />
+          <>
+            <UmrahListingGrid
+              trips={visibleTrips}
+              listingFilter={filter}
+              getMedinaHotel={(trip) => resolveTripHotel(trip, "medina")}
+              getMakkahHotel={(trip) => resolveTripHotel(trip, "makkah")}
+            />
+            {hasMoreOffers ? (
+              <div className="mt-6 flex justify-center sm:mt-8">
+                <button
+                  type="button"
+                  onClick={() => setShowAllOffers(true)}
+                  className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-[#D7DEE8] bg-white px-5 py-2.5 text-[14px] font-semibold text-[#0A1B3D] transition hover:border-[#C5CEDA] hover:bg-[#F7F9FB] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1264F5]"
+                >
+                  {t("showMoreTrips")}
+                  <ChevronDown className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+                </button>
+              </div>
+            ) : null}
+          </>
         )}
       </Container>
     </>

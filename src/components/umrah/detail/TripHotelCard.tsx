@@ -1,22 +1,29 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import Image from "next/image";
+import { Libre_Baskerville } from "next/font/google";
 import { useTranslations } from "next-intl";
-import { CalendarDays, ChevronLeft, ChevronRight, MapPin, Star } from "lucide-react";
+import {
+  CalendarDays,
+  MapPin,
+  Star,
+  UtensilsCrossed,
+} from "lucide-react";
 import { DirArrow } from "@/components/ui/DirArrow";
 import { HotelDetailsModal } from "@/components/umrah/detail/HotelDetailsModal";
 import type { Hotel } from "@/data/mock";
-import {
-  formatHotelInfoLabel,
-  getHotelInfoItems,
-  type HotelInfoItem,
-} from "@/lib/hotel-amenities";
 import { IQ } from "@/lib/images";
 import { cn } from "@/lib/utils";
 
-const THUMB_COUNT = 4;
-const SWIPE_THRESHOLD = 48;
+const hotelTitle = Libre_Baskerville({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
+
+const ICON_DARK = "#1A1A1A";
+const THUMB_COUNT = 3;
 
 type Stay = {
   nights: number;
@@ -25,30 +32,10 @@ type Stay = {
   checkOut?: string;
 };
 
-function infoIcon(item: HotelInfoItem) {
-  if (item.id === "walking") return MapPin;
-  return item.Icon;
-}
-
-/** Card footer highlights — walking, breakfast, wifi, reception (reference order). */
-function getHotelCardHighlights(hotel: Hotel): HotelInfoItem[] {
-  const all = getHotelInfoItems(hotel);
-  const prefer = ["walking", "breakfast", "wifi", "reception", "ac", "restaurant"] as const;
-  const picked: HotelInfoItem[] = [];
-  for (const id of prefer) {
-    const item = all.find((entry) => entry.id === id);
-    if (!item) continue;
-    picked.push(item);
-    if (picked.length >= 4) break;
-  }
-  for (const item of all) {
-    if (picked.length >= 4) break;
-    if (!picked.some((entry) => entry.id === item.id)) picked.push(item);
-  }
-  return picked;
-}
-
-/** Hotel card — Medina / Makkah; layout matches approved reference (copy unchanged). */
+/**
+ * Hotel card — always matches reference:
+ * copy left + soft-faded hero right, 3 thumbs + CTA below.
+ */
 export function TripHotelCard({
   hotel,
   stay,
@@ -65,18 +52,30 @@ export function TripHotelCard({
   checkOutLabel?: string;
 }) {
   const t = useTranslations("umrah");
-  const tCommon = useTranslations("common");
   const images = hotel.images.length
     ? hotel.images
     : [{ src: "/brand/hero-bg.png", caption: hotel.name }];
   const [active, setActive] = useState(0);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const touchStartX = useRef<number | null>(null);
 
   const main = images[Math.min(active, images.length - 1)]!;
-  const extraPhotos = Math.max(0, images.length - THUMB_COUNT);
-  const thumbs = images.slice(0, THUMB_COUNT);
-  const infoItems = getHotelCardHighlights(hotel);
+  const thumbs = (images.length > 1 ? images.slice(1) : images).slice(0, THUMB_COUNT);
+
+  const walkingLabel = t("hotelCardWalking", {
+    minutes: hotel.walkingMinutes,
+    mosque: t("mosqueHaramShort"),
+  });
+  const highlightLabel =
+    hotel.city === "makkah" ? t("hotelCardHighlightMakkah") : t("hotelCardHighlightMedina");
+
+  const infoRows = [
+    { id: "dates", Icon: CalendarDays, label: stay.dateLabel, bold: true },
+    { id: "walking", Icon: MapPin, label: walkingLabel, bold: false },
+    ...(hotel.breakfast
+      ? [{ id: "breakfast", Icon: UtensilsCrossed, label: t("breakfast"), bold: false }]
+      : []),
+    { id: "highlight", Icon: Star, label: highlightLabel, bold: false },
+  ] as const;
 
   const closeDetails = useCallback(() => setDetailsOpen(false), []);
 
@@ -87,184 +86,122 @@ export function TripHotelCard({
     [images.length],
   );
 
-  const go = useCallback(
-    (dir: -1 | 1) => goTo(active + dir),
-    [active, goTo],
-  );
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0]?.clientX ?? null;
-  };
-
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current == null) return;
-    const endX = e.changedTouches[0]?.clientX ?? touchStartX.current;
-    const diff = endX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
-    if (diff > 0) go(-1);
-    else go(1);
-  };
-
   return (
     <>
-      <article className="flex h-full flex-col rounded-[20px] border border-[#EEF0F3] bg-white shadow-[0_12px_36px_rgba(9,36,92,0.1)]">
-        {/* Hero image with title overlay (reference layout) */}
-        <div
-          className="relative aspect-[4/3] min-h-[260px] touch-pan-y overflow-hidden rounded-t-[20px] bg-surface sm:aspect-[16/9] sm:min-h-0"
-          aria-roledescription="carousel"
-          aria-label={t("hotelGalleryLabel", { hotel: hotel.name })}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <Image
-            key={main.src}
-            src={main.src}
-            alt={main.caption || hotel.name}
-            fill
-            className="object-cover"
-            sizes="(max-width:1024px) 100vw, 50vw"
-            quality={IQ.content}
-            priority={active === 0}
-          />
-
-          {/* Soft top-left wash for overlay copy */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white via-white/75 to-transparent to-55%"
-            aria-hidden
-          />
-
-          <div className="absolute inset-x-0 top-0 z-10 p-4 sm:p-5 lg:p-6">
-            <span className="inline-flex rounded-full bg-[#1F7A3F] px-3 py-1 text-[11px] font-bold tracking-[0.02em] text-white sm:text-[12px]">
-              {cityLabel} – {nightsLabel}
+      <article className="flex h-full flex-col overflow-hidden rounded-[14px] border border-[#E8ECF0] bg-white shadow-[0_8px_28px_rgba(9,36,92,0.08)]">
+        {/* Top — always side-by-side like reference */}
+        <div className="relative flex min-h-0 flex-1 items-stretch overflow-hidden">
+          <div className="relative z-10 flex w-[54%] min-w-0 flex-col bg-white px-3.5 pt-3.5 pb-2 sm:w-[52%] sm:px-5 sm:pt-5 sm:pb-3 lg:pe-1">
+            <span className="inline-flex w-fit rounded-md bg-[#E8B84B] px-2 py-0.5 text-[10px] font-bold text-black sm:px-2.5 sm:py-1 sm:text-[12px]">
+              {cityLabel} - {nightsLabel}
             </span>
 
-            <h3 className="mt-3 max-w-[min(100%,22rem)] text-[22px] leading-[1.1] font-extrabold tracking-[-0.02em] text-[#051033] sm:mt-3.5 sm:text-[26px] lg:text-[28px]">
+            <h3
+              className={cn(
+                hotelTitle.className,
+                "mt-2 m-0 text-[1.05rem] leading-[1.15] font-bold tracking-[-0.01em] text-[#111111] sm:mt-3 sm:text-[1.45rem] lg:text-[1.55rem]",
+              )}
+            >
               {hotel.name}
             </h3>
 
             <div
-              className="mt-2 flex items-center gap-0.5 text-[#D4A017]"
+              className="mt-1.5 flex items-center gap-0.5 text-[#E8B84B] sm:mt-2"
               aria-label={`${hotel.stars} stars`}
             >
               {Array.from({ length: hotel.stars }).map((_, i) => (
                 <Star
                   key={i}
-                  className="h-[15px] w-[15px] fill-current sm:h-4 sm:w-4"
+                  className="h-3 w-3 fill-current sm:h-[15px] sm:w-[15px]"
                   aria-hidden
                 />
               ))}
             </div>
 
-            <p className="mt-2.5 flex items-center gap-2 text-[13px] font-semibold text-[#051033] sm:text-[14px]">
-              <CalendarDays
-                className="h-4 w-4 shrink-0 text-[#051033]"
-                strokeWidth={1.75}
-                aria-hidden
-              />
-              {stay.dateLabel}
-            </p>
+            <ul className="mt-2.5 space-y-1.5 p-0 sm:mt-4 sm:space-y-2.5">
+              {infoRows.map(({ id, Icon, label, bold }) => (
+                <li key={id} className="flex items-start gap-1.5 sm:gap-2.5">
+                  <Icon
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4"
+                    style={{ color: ICON_DARK }}
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
+                  <span
+                    className={cn(
+                      "min-w-0 text-[11px] leading-snug text-[#111111] sm:text-[13px]",
+                      bold ? "font-bold" : "font-medium",
+                    )}
+                  >
+                    {label}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {images.length > 1 && (
-            <>
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                aria-label={tCommon("previousImage")}
-                className="absolute top-1/2 start-3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-navy shadow-[0_4px_14px_rgba(9,36,92,0.14)] transition hover:bg-white sm:h-11 sm:w-11"
-              >
-                <ChevronLeft className="h-5 w-5 rtl:rotate-180" aria-hidden />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                aria-label={tCommon("nextImage")}
-                className="absolute top-1/2 end-3 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-navy shadow-[0_4px_14px_rgba(9,36,92,0.14)] transition hover:bg-white sm:h-11 sm:w-11"
-              >
-                <ChevronRight className="h-5 w-5 rtl:rotate-180" aria-hidden />
-              </button>
-            </>
-          )}
+          {/* Hero — overlaps under copy so no seam line; soft left fade */}
+          <div className="relative -ms-6 w-[calc(46%+1.5rem)] min-w-0 min-h-[11.5rem] self-stretch overflow-hidden sm:-ms-8 sm:w-[calc(48%+2rem)] sm:min-h-[15rem] lg:min-h-[16rem]">
+            <Image
+              key={main.src}
+              src={main.src}
+              alt={main.caption || hotel.name}
+              fill
+              className="object-cover object-center"
+              sizes="(max-width:640px) 50vw, 50vw"
+              quality={IQ.content}
+              priority={active === 0}
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              aria-hidden
+              style={{
+                background:
+                  "linear-gradient(90deg, #ffffff 0%, #ffffff 10%, rgba(255,255,255,0.85) 22%, rgba(255,255,255,0.4) 38%, rgba(255,255,255,0) 55%)",
+              }}
+            />
+          </div>
         </div>
 
-        {/* Thumbnails + more photos */}
-        <div
-          className={cn(
-            "grid gap-2 px-4 pt-4 sm:gap-2.5 sm:px-5 sm:pt-5",
-            extraPhotos > 0 ? "grid-cols-5" : "grid-cols-4",
-          )}
-        >
-          {thumbs.map((img, i) => (
-            <button
-              key={`${hotel.id}-thumb-${i}`}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={img.caption}
-              aria-current={active === i ? "true" : undefined}
-              className={cn(
-                "relative aspect-[4/3] overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cta",
-                active === i ? "ring-2 ring-brand-cta" : "ring-1 ring-[#E6E9EE]",
-              )}
-            >
-              <Image
-                src={img.src}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="100px"
-                quality={IQ.thumb}
-              />
-            </button>
-          ))}
+        {/* Bottom — 3 thumbs + CTA */}
+        <div className="flex items-center gap-2 px-3.5 pb-3.5 pt-2 sm:gap-3 sm:px-5 sm:pb-5 sm:pt-1">
+          <div className="grid min-w-0 flex-1 grid-cols-3 gap-1.5 sm:gap-2">
+            {thumbs.map((img, i) => {
+              const imageIndex = images.length > 1 ? i + 1 : i;
+              const selected = active === imageIndex;
+              return (
+                <button
+                  key={`${hotel.id}-thumb-${i}`}
+                  type="button"
+                  onClick={() => goTo(imageIndex)}
+                  aria-label={img.caption}
+                  aria-current={selected ? "true" : undefined}
+                  className={cn(
+                    "relative aspect-[4/3] overflow-hidden rounded-[7px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1264F5]",
+                    selected ? "ring-2 ring-[#1264F5]" : "ring-1 ring-[#E6E9EE]",
+                  )}
+                >
+                  <Image
+                    src={img.src}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="100px"
+                    quality={IQ.thumb}
+                  />
+                </button>
+              );
+            })}
+          </div>
 
-          {extraPhotos > 0 ? (
-            <button
-              type="button"
-              onClick={() => goTo(active >= THUMB_COUNT ? active + 1 : THUMB_COUNT)}
-              aria-label={t("morePhotos", { count: extraPhotos })}
-              aria-current={active >= THUMB_COUNT ? "true" : undefined}
-              className={cn(
-                "flex aspect-[4/3] items-center justify-center rounded-xl border bg-white px-1 text-center text-[11px] font-bold text-brand-cta transition hover:bg-[#F5F9FD] sm:text-[12px]",
-                active >= THUMB_COUNT
-                  ? "border-brand-cta ring-2 ring-brand-cta"
-                  : "border-brand-cta/50",
-              )}
-            >
-              {t("morePhotos", { count: extraPhotos })}
-            </button>
-          ) : null}
-        </div>
-
-        {/* Amenities — equal-width columns, uniform horizontal gap */}
-        <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3.5 border-t border-[#EEF0F3] px-4 pt-4 sm:mt-5 sm:gap-x-6 sm:gap-y-4 sm:px-5 sm:pt-5 lg:grid-cols-4">
-          {infoItems.map((item) => {
-            const Icon = infoIcon(item);
-            return (
-              <li key={item.id} className="flex min-w-0 flex-1 items-start gap-2.5">
-                <Icon
-                  className="mt-0.5 h-[18px] w-[18px] shrink-0 text-[#051033]"
-                  strokeWidth={1.75}
-                  aria-hidden
-                />
-                <span className="min-w-0 text-[12px] leading-snug font-semibold text-[#051033] sm:text-[13px]">
-                  {formatHotelInfoLabel(t, item)}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-
-        {/* CTA — Hotelgalerie & Details */}
-        <div className="mt-auto p-4 pt-5 sm:p-5 sm:pt-6">
           <button
             type="button"
             onClick={() => setDetailsOpen(true)}
-            className="inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-[14px] border border-brand-cta bg-white px-4 text-[14px] font-bold text-brand-cta transition hover:bg-[#F5F9FD]"
+            className="inline-flex h-9 shrink-0 items-center justify-center gap-0.5 rounded-[8px] border border-[#1264F5] bg-white px-2 text-[11px] font-bold whitespace-nowrap text-[#1264F5] transition hover:bg-[#F5F9FD] sm:h-[46px] sm:gap-1 sm:px-4 sm:text-[14px]"
           >
-            <span className="inline-flex items-center gap-1">
-              {t("hotelDetails")}
-              <DirArrow />
+            <span className="inline-flex items-center gap-0.5 sm:gap-1">
+              {t("hotelViewCta")}
+              <DirArrow className="ms-0 scale-90 sm:scale-100" />
             </span>
           </button>
         </div>

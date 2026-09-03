@@ -1,5 +1,3 @@
-import { findCountryByCode } from "@/lib/countries";
-
 export type PaxFormData = {
   type: "adult" | "child" | "infant";
   firstName: string;
@@ -36,21 +34,15 @@ export type InquiryValidationMessages = {
   email: string;
 };
 
-function isValidNationality(locale: string, code: string, name: string): boolean {
-  if (!code || !name.trim()) return false;
-  const country = findCountryByCode(locale, code);
-  return Boolean(country && country.name === name);
-}
-
 function isValidEmail(value: string): boolean {
   if (!value.trim()) return true;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
 export function validateInquiryForm(
-  locale: string,
+  _locale: string,
   paxData: PaxFormData[],
-  source: string,
+  _source: string,
   phone: string,
   email: string,
   messages: InquiryValidationMessages,
@@ -67,7 +59,7 @@ export function validateInquiryForm(
     if (!p.lastName.trim()) {
       paxErrors.lastName = messages.lastName;
     }
-    if (!isValidNationality(locale, p.nationalityCode, p.nationality)) {
+    if (!p.nationality.trim()) {
       paxErrors.nationality = messages.nationality;
     }
     if (!p.passportType) {
@@ -80,11 +72,6 @@ export function validateInquiryForm(
     errors.pax[index] = paxErrors;
     if (Object.keys(paxErrors).length > 0) hasError = true;
   });
-
-  if (!source) {
-    errors.source = messages.source;
-    hasError = true;
-  }
 
   if (!phone.trim()) {
     errors.phone = messages.phone;
