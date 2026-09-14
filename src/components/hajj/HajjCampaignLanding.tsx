@@ -1,18 +1,18 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { HajjReviewsSection } from "@/components/hajj/HajjReviewsSection";
-import { HajjExperienceSection } from "@/components/hajj/HajjExperienceSection";
+import { HajjCampaignProvider } from "@/components/hajj/HajjCampaignProvider";
 import { HajjFaqSection } from "@/components/hajj/HajjFaqSection";
 import { HajjFinalCtaSection } from "@/components/hajj/HajjFinalCtaSection";
-import { HajjJourneySection } from "@/components/hajj/HajjJourneySection";
+import { HajjJourneyV2Section } from "@/components/hajj/HajjJourneyV2Section";
 import { HajjLandingHero } from "@/components/hajj/HajjLandingHero";
-import { HajjProcessSection } from "@/components/hajj/HajjProcessSection";
-import { HajjSeoSection } from "@/components/hajj/HajjSeoSection";
-import { HajjStatusBanner } from "@/components/hajj/HajjStatusBanner";
+import { HajjMissionSection } from "@/components/hajj/HajjMissionSection";
+import { HajjNusukSection } from "@/components/hajj/HajjNusukSection";
+import { HajjReviewsSection } from "@/components/hajj/HajjReviewsSection";
 import { HajjStickyCta } from "@/components/hajj/HajjStickyCta";
-import { HajjWhySection } from "@/components/hajj/HajjWhySection";
-import { HajjCampaignProvider } from "@/components/hajj/HajjCampaignProvider";
+import { HajjTrustSection } from "@/components/hajj/HajjTrustSection";
 import type { HajjCampaign } from "@/data/hajj-campaign-types";
+import { getHajjLandingV2 } from "@/data/hajj/landing-v2-content";
+import type { Locale } from "@/i18n/routing";
 import { getHajjContentForCampaign } from "@/lib/hajj-content-store.server";
 import { getGoogleReviewsData } from "@/lib/google-reviews.server";
 
@@ -28,6 +28,7 @@ export async function HajjCampaignLanding({
   }
 
   setRequestLocale(locale);
+  const v2 = getHajjLandingV2(locale as Locale);
   const [content, t, googleReviews] = await Promise.all([
     getHajjContentForCampaign(campaign.slug, locale),
     getTranslations("hajj"),
@@ -39,16 +40,13 @@ export async function HajjCampaignLanding({
   return (
     <HajjCampaignProvider campaign={campaign}>
       {/*
-        §47 page structure (desktop & mobile — same section order):
-        Header (layout) → Hero → Google rating + reviews → Status → Why →
-        Process (desktop: 2×5 grid; mobile: vertical stack) →
-        Journey (desktop: 2-row scroll; mobile: large stacked cards) →
-        SEO → Experience → FAQ → Final CTA.
-        Mobile: single-column layouts, review slider, no inline pre-reg CTAs
-        (one sticky bar via HajjStickyCta). Cards show short copy; full text in modal.
+        Hajj 2027 reference landing (v2):
+        Hero → Trust → Reviews → Mission → Services → Nusuk →
+        Journey intro/phases/chapters → FAQ → Final CTA
       */}
-      <HajjStickyCta ctaLabel={content.hero.cta} campaignSlug={campaign.slug}>
-        <HajjLandingHero content={content.hero} campaignSlug={campaign.slug} />
+      <HajjStickyCta ctaLabel={v2.hero.cta} campaignSlug={campaign.slug}>
+        <HajjLandingHero content={v2.hero} campaignSlug={campaign.slug} />
+        <HajjTrustSection items={v2.trust} />
         {campaign.settings.googleReviewsEnabled ? (
           <HajjReviewsSection
             reviews={googleReviews.reviews}
@@ -56,14 +54,15 @@ export async function HajjCampaignLanding({
             mapsUrl={googleReviews.mapsUrl}
           />
         ) : null}
-        <HajjStatusBanner content={content.status} campaignSlug={campaign.slug} />
-        <HajjWhySection content={content.why} />
-        <HajjProcessSection content={content.process} />
-        <HajjJourneySection content={content.journey} />
-        <HajjSeoSection content={content.seo} />
-        <HajjExperienceSection content={content.experience} />
+        <HajjMissionSection content={v2.mission} services={v2.services} />
+        <HajjNusukSection content={v2.nusuk} />
+        <HajjJourneyV2Section
+          journeyIntro={v2.journeyIntro}
+          journeyPhases={v2.journeyPhases}
+          chapters={v2.chapters}
+        />
+        <HajjFinalCtaSection content={v2.finalCta} campaignSlug={campaign.slug} />
         <HajjFaqSection content={content.faqs} title={t("faqTitle")} />
-        <HajjFinalCtaSection content={content.finalCta} campaignSlug={campaign.slug} />
       </HajjStickyCta>
     </HajjCampaignProvider>
   );

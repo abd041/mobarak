@@ -249,6 +249,118 @@ summary:focus-visible,
   max-height: none;
 }
 
+/* Hajj 2027 landing hero — desktop reference match */
+.hajj-v2-hero {
+  height: 500px;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+/*
+  Whitish effect behind hero copy (reference ChatGPT Image Sep 11, 09_33_42):
+  solid white on the far left, soft milky wash over the text zone,
+  then a smooth fade into the full Kaaba photo.
+*/
+.hajj-v2-hero-fade {
+  background:
+    radial-gradient(
+      ellipse 70% 95% at 12% 48%,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.9) 32%,
+      rgba(255, 255, 255, 0.55) 55%,
+      rgba(255, 255, 255, 0.18) 72%,
+      transparent 86%
+    ),
+    linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #ffffff 30%,
+      rgba(255, 255, 255, 0.97) 38%,
+      rgba(255, 255, 255, 0.85) 44%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.22) 58%,
+      rgba(255, 255, 255, 0.06) 66%,
+      transparent 74%
+    );
+}
+
+[dir="rtl"] .hajj-v2-hero-fade {
+  background:
+    radial-gradient(
+      ellipse 70% 95% at 88% 48%,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.9) 32%,
+      rgba(255, 255, 255, 0.55) 55%,
+      rgba(255, 255, 255, 0.18) 72%,
+      transparent 86%
+    ),
+    linear-gradient(
+      270deg,
+      #ffffff 0%,
+      #ffffff 30%,
+      rgba(255, 255, 255, 0.97) 38%,
+      rgba(255, 255, 255, 0.85) 44%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.22) 58%,
+      rgba(255, 255, 255, 0.06) 66%,
+      transparent 74%
+    );
+}
+
+@media (min-width: 1280px) {
+  .hajj-v2-hero {
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+  }
+
+  .hajj-v2-hero-fade {
+    background:
+      radial-gradient(
+        ellipse 62% 92% at 14% 48%,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 255, 255, 0.9) 34%,
+        rgba(255, 255, 255, 0.52) 56%,
+        rgba(255, 255, 255, 0.16) 72%,
+        transparent 85%
+      ),
+      linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #ffffff 32%,
+        rgba(255, 255, 255, 0.97) 40%,
+        rgba(255, 255, 255, 0.82) 46%,
+        rgba(255, 255, 255, 0.48) 52%,
+        rgba(255, 255, 255, 0.18) 60%,
+        rgba(255, 255, 255, 0.05) 68%,
+        transparent 76%
+      );
+  }
+
+  [dir="rtl"] .hajj-v2-hero-fade {
+    background:
+      radial-gradient(
+        ellipse 62% 92% at 86% 48%,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 255, 255, 0.9) 34%,
+        rgba(255, 255, 255, 0.52) 56%,
+        rgba(255, 255, 255, 0.16) 72%,
+        transparent 85%
+      ),
+      linear-gradient(
+        270deg,
+        #ffffff 0%,
+        #ffffff 32%,
+        rgba(255, 255, 255, 0.97) 40%,
+        rgba(255, 255, 255, 0.82) 46%,
+        rgba(255, 255, 255, 0.48) 52%,
+        rgba(255, 255, 255, 0.18) 60%,
+        rgba(255, 255, 255, 0.05) 68%,
+        transparent 76%
+      );
+  }
+}
+
 @media (min-width: 1024px) {
   .offer-hero-bg {
     min-height: 560px;

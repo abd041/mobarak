@@ -5,7 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, isRtl, type Locale } from "@/i18n/routing";
 import { HeaderSwitcher } from "@/components/layout/HeaderSwitcher";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { FooterSwitcher } from "@/components/layout/FooterSwitcher";
 import { pageMetadata } from "@/lib/page-metadata";
 
 const notoArabic = Noto_Sans_Arabic({
@@ -59,7 +59,7 @@ export default async function LocaleLayout({
       >
         <HeaderSwitcher locale={locale as Locale} />
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <FooterSwitcher />
       </div>
     </NextIntlClientProvider>
   );

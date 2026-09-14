@@ -49,6 +49,9 @@
     "whyMobarak": "Why Mobarak",
     "process": "Process",
     "onSite": "Support on Site",
+    "nusuk": "Nusuk",
+    "preparation": "Preparation",
+    "care": "Our Care",
     "faq": "FAQ"
   },
   "footer": {
@@ -745,6 +748,10 @@
     "faqTitle": "Frequently asked questions",
     "faqEyebrow": "FAQ",
     "basedOnReviews": "Based on {count} reviews",
+    "basedOnReviewsOver": "Based on over {count} reviews",
+    "reviewsHeading": "What our pilgrims say",
+    "reviewsLead": "Hundreds of pilgrims already trust our care.",
+    "ratingOf5": "{rating} out of 5",
     "heroReviewsEyebrow": "What our pilgrims say about us",
     "reviewsBrandWord": "Reviews",
     "allGoogleReviews": "View all Google reviews",

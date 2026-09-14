@@ -1,0 +1,925 @@
+
+
+Ja. Ich würde dem Designer sehr klar sagen, dass kein neues Design erfunden werden soll, sondern die beiden ausgewählten Vorlagen 1:1 als eine zusammenhängende Desktop-Landingpage umgesetzt werden sollen. Folgenden Text kannst du direkt weiterleiten:
+
+Hajj 2027 Landingpage – Final Design Brief
+Please use the two provided reference images as the final design direction.
+I have decided on exactly this design. I do not want a redesign or a different interpretation. The goal is to combine both references into one seamless Hajj 2027 landing page.
+Reference image 1 = upper part of the websiteReference image 2 = continuation / lower part of the website
+The transition between both parts should feel completely natural, as if they were originally designed as one page.
+1. Overall visual direction
+The entire website should feel:
+premium and trustworthy
+modern but not overly minimalistic
+emotional and spiritual
+elegant rather than commercial
+very clean and structured
+easy to understand despite the amount of information
+Please keep the visual language of the references:
+White / very light warm backgroundsDark navy textMobarak blue for CTAs and important interactive elementsWarm gold/beige only as a secondary Hajj accentVery subtle shadowsRounded cardsLarge authentic Hajj/Medina/Makkah photography
+Avoid strong gradients, overly colorful icons, dark sections everywhere, or a typical generic travel-agency look.
+
+2. Header
+Keep the header exactly in the style of reference 1.
+Left:
+Mobarak logo
+Center navigation:
+Hajj 2027AblaufNusukVorbereitungUnsere BetreuungFAQÜber uns
+Right:
+Language selector:
+DE ▾
+Primary blue CTA:
+Für Hajj 2027 vormerken →
+The header should be white, clean and relatively slim.
+Hajj 2027 should be the active navigation item with a subtle blue underline.
+The header can become sticky when scrolling.
+
+3. Hero section
+Please recreate the hero from reference image 1.
+Left side contains the main message.
+Small eyebrow:
+HAJJ 2027 · 1448 AH
+Main headline:
+Eine Reise, die bleibt.
+Subheadline:
+Mit Vertrauen. Mit Erfahrung. Mit dir.
+Supporting copy:
+Von der Nusuk-Registrierung über Medina und Makkah bis zu den Hajj-Tagen in Mina, Arafat und Muzdalifah – wir begleiten dich persönlich durch jeden Schritt.
+Primary CTA:
+Für Hajj 2027 vormerken →
+Below it:
+↓ So funktioniert es
+This should scroll smoothly to the relevant explanation/journey section.
+Hero image
+The right side should feature the Kaaba / Masjid al-Haram exactly in this emotional photographic style.
+Important: the image should gradually fade into the white content area on the left instead of having a hard vertical border.
+Keep the handwritten emotional detail:
+„Mehr als eine Reise.Eine lebensverändernde Erfahrung.“
+Also retain the subtle Quran quotation box on the image.
+The overall hero should feel spacious and premium.
+
+4. Trust benefits directly underneath
+Under the hero, retain the five trust benefits from the selected desktop design:
+Mehr als 30 Jahre Erfahrung
+Seit über drei Jahrzehnten begleiten wir Pilger.
+Keine zusätzlichen Betreuungskosten
+Du zahlst nur über Nusuk. Unsere Betreuung ist inklusive.
+Persönliche Nusuk-Begleitung
+Wir unterstützen dich bei jedem Schritt.
+Religiöse Begleitung
+Erfahrene Imame und islamisch fundierte Betreuung.
+Mehrsprachiges Team
+Deutsch, Arabisch, Bosnisch, Türkisch.
+Use simple line icons.
+The icons should be blue, not multicolored.
+Keep this area very clean and horizontal.
+
+5. Google Reviews – extremely important
+Please keep the Google Reviews area immediately after the trust benefits.
+This is an important conversion and trust section and should not be moved far down the page.
+Left card:
+Was unsere Pilger sagen
+Hunderte Pilger vertrauen bereits auf unsere Betreuung.
+Button:
+Alle Bewertungen ansehen →
+Next:
+Google logo
+★★★★★
+4,9 von 5
+Small supporting line showing the review basis.
+Then display approximately 3 individual review cards on desktop.
+Each review should contain:
+circular initial/avatar
+customer name
+five Google stars
+relative review date
+short review excerpt
+The cards should look authentic and elegant rather than like large testimonials.
+The whole review section should use a very light warm/grey background and subtle card shadows.
+
+6. Unsere Mission
+After Google Reviews, use the section from the selected upper design:
+Small eyebrow:
+UNSERE MISSION
+Hajj ist mehr als eine Buchung
+Copy:
+Eine Hajj-Reise besteht nicht nur aus Flug und Hotel. Bereits Monate vor der Abreise müssen Registrierung, Dokumente, Verifizierung, Paketauswahl und viele weitere Schritte korrekt durchgeführt werden.
+Während der Hajj-Tage folgen zahlreiche zeitlich und organisatorisch genau abgestimmte Abläufe zwischen Makkah, Mina, Arafat und Muzdalifah.
+Bold:
+Genau hier begleiten wir dich.
+Then:
+Von deiner ersten Registrierung bis zur Rückreise – organisatorisch und religiös.
+Image on right
+Use an emotional Islamic/Medina image with rounded corners.
+Overlay a small white quote card:
+„Unser Ziel ist es, dass du dich voll auf deine Ibadah konzentrieren kannst – wir kümmern uns um den Rest.“
+
+7. Four service cards
+Immediately underneath, use the exact four-card layout from reference 1.
+Vor der Buchung
+Nusuk-Registrierung begleiten
+Dokumentenprüfung
+Verifizierung unterstützen
+Pakete erklären & auswählen
+Alle deine Fragen beantworten
+Vor der Reise
+Informationsveranstaltungen
+Religiöse Vorbereitung
+Packliste & Tipps
+Reiseinformationen
+Gruppeneinteilung
+Während der Reise
+Flughafenbetreuung
+Transfers & Hotel Check-in
+Gruppenkoordination
+Laufende Informationen
+Ansprechpartner vor Ort
+Während der Hajj-Tage
+Religiöse Leitung durch Imame
+Mina – Arafat – Muzdalifah
+Jamarat & Tawaf
+Organisation aller Bewegungen
+Unterstützung in jeder Situation
+Use blue icons, white cards, subtle borders/shadows and consistent card heights.
+
+8. Nusuk section
+Next comes:
+Small eyebrow:
+NUSUK HAJJ
+Die Hajj-Registrierung über Nusuk – Schritt für Schritt
+Supporting copy:
+Die offizielle Hajj-Buchung erfolgt über die staatliche Plattform Nusuk. Wir begleiten dich durch den gesamten Prozess.
+On the right:
+Nusuk logo + small blue button:
+Mehr über Nusuk →
+10-step Nusuk process
+Keep the horizontal visual process exactly like the reference:
+01 — Konto erstellen
+→
+02 — Dokumente hochladen
+→
+03 — Antrag ausfüllen
+→
+04 — Verifizierung durch Nusuk
+→
+05 — Paketkategorie auswählen
+→
+06 — eWallet aufladen
+→
+07 — Service Provider wählen
+→
+08 — Hajj-Paket auswählen
+→
+09 — Paket buchen
+→
+10 — Reiseplan prüfen
+Every step should have:
+blue number circle
+simple blue line icon
+short label
+Below the complete process:
+Zur detaillierten Nusuk-Anleitung →
+Blue button centered.
+
+9. Transition into the second reference
+This is important:
+Do not create a new visual break here.
+The lower reference should start immediately after the Nusuk section and feel like the continuation of exactly the same website.
+Small eyebrow:
+VON DER VORMERKUNG BIS ZUR RÜCKREISE
+Deine Hajj-Reise – Schritt für Schritt
+Supporting text:
+Eine Hajj-Reise besteht aus vielen wichtigen Schritten. Wir begleiten dich – organisatorisch und religiös – durch den gesamten Ablauf: von der Vorbereitung über Medina und Makkah bis zu den Hajj-Tagen und der Rückreise.
+On the right, keep the handwritten element:
+„Mit Wissen. Mit Erfahrung. Mit aufrichtigem Herzen.“
+
+10. Main journey navigation
+Under the introduction, create the horizontal journey overview from reference 2:
+Vormerkung & Information
+→
+Nusuk Registrierung
+→
+Medina
+→
+Makkah & Umrah
+→
+Hajj-Tage(Mina, Arafat, Muzdalifah)
+→
+Rückkehr nach Makkah
+→
+Rückreise
+Use elegant round icons connected by a thin dotted/solid line.
+This is a visual overview only. The detailed journey follows immediately underneath.
+
+11. Chapter 1 – Medina
+Large gold circular number:
+1
+Medina
+Subtitle:
+Die Stadt des Propheten ﷺ – ein gesegneter Anfang
+Small explanation on the right:
+Wir beginnen unsere Reise in der Regel mit Medina. Hier hast du Zeit für Gebete, Ziyarat und geistige Vorbereitung – begleitet von unserem Team.
+Then four visual cards:
+01 Abflug & Reise
+Image: airport / airplane
+Gemeinsamer Treffpunkt
+Unterstützung beim Check-in
+Gepäck & Reiseunterlagen
+Ansprechpartner vor Ort
+02 Ankunft in Medina
+Image: Medina / Prophet's Mosque
+Einreise & Gepäck
+Gemeinsamer Transfer
+Hotel Check-in
+Erste Informationen
+03 Aufenthalt in Medina
+Image: Masjid an-Nabawi
+Gebete in der Prophetenmoschee
+Rawdah-Informationen
+Religiöse Vorträge
+Gemeinsame Treffen
+04 Ziyarat in Medina
+Image: Uhud / Medina surroundings
+Masjid Quba
+Uhud
+Weitere historische Orte
+Erklärungen durch unsere Imame
+On the right, retain an elegant quote card:
+„Wer mich in Medina besucht, den werde ich am Tag der Auferstehung seine Fürsprache zuteil werden lassen.“
+The designer should leave the source area editable so the final religious citation can be verified before publication.
+
+12. Chapter 2 – Von Medina nach Makkah
+Gold number:
+2
+Von Medina nach Makkah
+Subtitle:
+Gemeinsam in den Ihram – auf dem Weg zur ersten Umrah
+Four cards:
+Vorbereitung auf den Ihram
+Erklärung der Regeln
+Niyyah und Talbiyah
+Was ist erlaubt / nicht erlaubt
+Praktische Tipps
+Miqat
+Gemeinsamer Stopp am Miqat
+Ihram anlegen
+Niyyah fassen
+Talbiyah sprechen
+Weiterreise nach Makkah
+Gemeinsame Fahrt
+Informationen zur Ankunft
+Organisation vor Ort
+Begleitung durch unser Team
+Ankunft & Check-in
+Einreise & Gepäck / Ankunft
+Hotel Check-in
+Zimmerverteilung
+Wichtige Informationen
+On the right, use the elegant Arabic typography element:
+لَبَّيْكَ اللَّهُمَّ لَبَّيْك
+Underneath:
+Labbayka Allahumma Labbayk
+This should be a beautiful spiritual visual element, not another ordinary card.
+
+13. Chapter 3 – Die erste gemeinsame Umrah
+Gold number:
+3
+Die erste gemeinsame Umrah
+Subtitle:
+Ein besonderer Moment an der Kaaba
+Use the clean horizontal ritual sequence from the reference:
+TawafSieben Runden um die Kaaba
+→
+Maqam IbrahimGebet entsprechend den Möglichkeiten
+→
+ZamzamZamzam trinken
+→
+Sa'iSieben Wege zwischen Safa und Marwah
+→
+Halq / TaqsirHaare rasieren oder kürzen
+→
+Umrah abgeschlossen
+Use circular pictograms and arrows.
+This should be very clean and visually easy to understand.
+
+14. Chapter 4 – Die Tage des Hajj
+This is one of the most important sections of the entire website.
+Gold number:
+4
+Die Tage des Hajj
+Subtitle:
+Von Mina bis Arafat – wir gehen den Weg gemeinsam
+Five large photographic cards:
+08. Dhul-Hijjah
+Mina – Yawm at-Tarwiyah
+Abfahrt nach Mina
+Unterbringung im Camp
+Vorbereitung auf Arafat
+Religiöse Begleitung
+09. Dhul-Hijjah
+Arafat – der Höhepunkt
+Gemeinsame Abfahrt
+Aufenthalt in Arafat
+Dua, Dhikr und Ibadah
+Begleitung durch unsere Imame
+Arafat should visually be one of the strongest cards.
+Nacht 9./10. Dhul-Hijjah
+Muzdalifah
+Gemeinsame Weiterreise
+Maghrib & Isha
+Aufenthalt und Übernachtung entsprechend dem Ablauf
+Vorbereitung auf Jamarat
+10. Dhul-Hijjah
+Jamarat & Eid al-Adha
+Ramy al-Jamarat
+Hady entsprechend der Hajj-Art
+Halq / Taqsir
+Tawaf al-Ifadah und ggf. Sa'i
+11.–13. Dhul-Hijjah
+Tage des Tashriq
+Jamarat an den vorgesehenen Tagen
+Rückkehr nach Mina
+Organisation durch unser Team
+Laufende Informationen
+The photography here is essential.
+Use authentic images of Mina, Arafat, Muzdalifah, Jamarat and the Hajj environment.
+
+15. Chapter 5 – Rückkehr nach Makkah & Abschluss
+Gold number:
+5
+Rückkehr nach Makkah & Abschluss
+Subtitle:
+Zeit für Ibadah, Erholung und den Abschied
+Three cards:
+Rückkehr nach Makkah
+Zeit für Ibadah
+Gemeinsame Treffen
+Religiöse Betreuung
+Erholung
+Tawaf al-Wada'
+Abschieds-Tawaf
+Vorbereitung auf die Abreise
+Begleitung durch unser Team
+Rückreise
+Hotel Check-out
+Transfer zum Flughafen
+Check-in
+Rückflug
+On the right, use a large emotional Makkah skyline.
+Handwritten text:
+„Eine Reise geht zu Ende.Ihre Wirkung soll bleiben.“
+This should create an emotional conclusion to the journey rather than feeling like another informational block.
+
+16. Final conversion section
+Please recreate the dark photographic CTA section at the bottom of reference 2.
+Background:
+Pilgrim overlooking Makkah / sunset / mountains.
+Small eyebrow:
+HAJJ 2027 · 1448 AH
+Headline:
+Möchtest du diesen Weg mit uns gehen?
+Copy:
+Mehr als 30 Jahre Erfahrung, persönliche religiöse und organisatorische Begleitung und keine zusätzlichen Betreuungskosten außerhalb der offiziellen Nusuk-Buchung.
+Large blue CTA:
+Für Hajj 2027 vormerken →
+Under the button:
+Kostenlos & unverbindlich
+and smaller:
+Die offizielle Hajj-Buchung erfolgt über Nusuk Hajj.
+Important: Do not place the registration form on this landing page.
+Clicking the CTA should lead to a separate registration/request page.
+
+17. Footer
+Use the clean footer exactly like reference 2.
+Column 1:
+Mobarak logo + short brand statement.
+Column 2:
+Schnellzugriff
+Hajj 2027AblaufNusukVorbereitung
+Column 3:
+Weitere Links
+Unsere BetreuungFAQÜber unsKontakt
+Column 4:
+Kontakt
+PhoneE-MailWien, Österreich
+Social icons on the right.
+Bottom row:
+© Mobarak Reisen
+plus:
+DatenschutzAGBImpressum
+
+Important: Mobile version
+The mobile version should not simply shrink the desktop website.
+It should feel like a premium modern mobile app.
+The same content and visual identity remain, but cards should become vertically scrollable and information should be easier to consume.
+For the hero:
+Logo + DE + hamburger
+then hero image/headline.
+Two exactly equal-width buttons underneath each other:
+Blue filled:Für Hajj 2027 vormerken →
+White with blue border:So funktioniert es ↓
+The second button must have the same width and approximately the same height as the primary CTA.
+After this, show:
+Warum mit Mobarak?
+As four compact vertical app-style rows:
+Mehr als 30 Jahre Erfahrung →Keine zusätzlichen Kosten außerhalb von Nusuk →Mehrsprachiges Team →Religiöse Begleitung →
+Use elegant warm gold icons on a very pale beige circular background, while interactive arrows and CTA elements remain blue.
+Then Google Reviews.
+After that, continue with Mission → Nusuk → Hajj Journey.
+For the Hajj journey, do not squeeze four or five desktop cards next to each other on mobile.
+Each chapter should instead become a beautiful vertical storytelling section:
+01 Medinalarge image → title → description → details
+↓
+02 Medina → Makkah
+↓
+03 Gemeinsame Umrah
+↓
+04 Die Hajj-Tage
+↓
+05 Rückkehr & Abschluss
+The Hajj days should appear as a vertical timeline:
+8 Dhul-Hijjah — Mina↓9 Dhul-Hijjah — Arafat↓Nacht — Muzdalifah↓10 Dhul-Hijjah — Jamarat↓11–13 Dhul-Hijjah — Tage des Tashriq
+This will make the mobile experience feel significantly more premium and easier to understand.
+
+Most important instruction to the designer
+Please do not redesign the page.
+The attached two desktop references are the approved final design direction.
+We want:
+Image 1 first → Image 2 directly underneath → one continuous landing page.
+Keep the same:
+layout language, typography hierarchy, blue CTA style, gold chapter numbering, white space, card design, photography style, subtle shadows, icon style and overall premium Hajj aesthetic.
+The job now is to clean up, standardize and professionally reproduce this exact concept, not to create a new concept.
+The final result should feel like a premium digital Hajj guide combined with a high-converting landing page — not like a normal travel agency website.
+
+Checkout:
+
+Hajj 2027 Pre-Registration – Final Implementation Brief
+Please implement the desktop and mobile versions exactly according to the two approved reference designs I provided.
+These are now the final design direction. Please do not redesign the page or introduce a different visual concept. The goal is to reproduce this design professionally, responsively, and with the functionality described below.
+The desktop and mobile versions should clearly belong to the same Mobarak brand, but the mobile version should feel like a modern app-style registration flow, not simply a stacked version of the desktop page.
+
+1. Overall Design System
+Please follow the visual language of the approved designs:
+White / warm off-white background
+Dark navy for headlines and important text
+A pleasant, softer Mobarak blue for buttons, active states, progress indicators and links
+Subtle warm gold/beige accents
+White cards
+Very subtle shadows
+Thin light borders
+Rounded corners
+Generous whitespace
+Clean modern icons
+Premium but calm appearance
+Please avoid an overly bright/electric blue.
+The blue should feel premium, calm and trustworthy and must be consistent throughout the entire Hajj website.
+
+DESKTOP VERSION
+The desktop version should remain a single-page registration form, exactly as shown in the approved desktop reference.
+2. Header
+Left:
+Mobarak logo
+Main navigation:
+Hajj 2027
+Ablauf
+Nusuk
+Vorbereitung
+Unsere Betreuung
+FAQ
+Über uns
+Right:
+DE ▾
+Primary CTA:
+Für Hajj 2027 vormerken →
+The header should remain clean and relatively compact.
+
+3. Hero Section
+Please reproduce the approved hero design.
+Left side
+Small label:
+HAJJ 2027 · 1448 AH
+Headline:
+Voranmeldung für Hajj 2027
+Description:
+Mit der Voranmeldung erhältst du unsere Begleitung und Informationen zum Hajj-2027-Prozess – von der Nusuk-Registrierung und Verifizierung bis zu Programmen und den nächsten Schritten.
+Right side
+Use the large emotional Makkah / Kaaba image as shown in the design.
+Keep the handwritten visual text:
+Mit Wissen.Mit Erfahrung.Mit aufrichtigem Herzen.
+The image and left content should blend together naturally rather than look like two separate boxes.
+
+4. Four Benefits in the Hero
+Keep the four benefit blocks shown in the approved design:
+Komplett transparent
+The customer receives access to their own Nusuk account and keeps full control of it.
+Keine weiteren Kosten
+There are no additional service charges from us outside the official Nusuk process.
+Alle verfügbaren Angebote einsehen
+After verification and once the official programs are published, customers can view the available Hajj options.
+Sie entscheiden frei
+The pre-registration is non-binding. Once programs, hotels and dates are available, the customer can decide which official option they want.
+Please keep the icons elegant and consistent with the rest of the design.
+
+5. Step 1 – Number of Travelers
+Title:
+Personenanzahl
+Subtitle:
+Wie viele Personen möchten Sie für Hajj 2027 voranmelden?
+Options:
+1 2 3 4 5 6+
+Each option should be presented as a selectable card.
+Selected state
+When selected:
+very light blue background
+blue border
+blue/white checkmark in the top-right corner
+clearly distinguishable from unselected options
+Only one option can be selected.
+
+6. Step 2 – Preferred Program Duration
+Title:
+Gewünschte Programmdauer
+Subtitle:
+Welche Reisedauer kommt für Ihre Hajj 2027 infrage?
+There must be four possible selections.
+Option 1
+KURZES PROGRAMM
+12–14 Tage
+Kompaktes Hajj-Programm
+Option 2
+MITTLERES PROGRAMM
+16–18 Tage
+Mehr Zeit in Medina & Makkah
+Option 3
+LANGES PROGRAMM
+19–22 Tage
+Ausführliches Hajj-Programm
+Option 4
+Ich bin mir noch unsicher – bitte beraten
+Important: the fourth option is a real selectable option, not just informational text.
+Only one program-duration option can be selected at a time.
+
+7. Step 3 – Traveler Details
+Title:
+Angaben zu den Personen
+Subtitle:
+Bitte füllen Sie die Angaben für alle Reisenden aus.
+For each traveler collect:
+First name
+Last name
+Nationality
+Country of residence
+Passport type
+The number of traveler forms must be dynamically generated according to the number selected in Step 1.
+
+IMPORTANT: Nationality Must Be Free Text
+Please change the current implementation.
+Nationality must NOT be a dropdown/select field.
+It must always be a normal text input.
+Label:
+Nationalität
+Placeholder:
+Nationalität eingeben
+For example, the customer may freely enter:
+Österreichisch
+Deutsch
+Bosnisch
+Türkisch
+Syrisch
+etc.
+Do not restrict nationality to a predefined list.
+
+8. Country of Residence
+Wohnsitzland may remain a dropdown/select field.
+
+9. Passport Type
+Passport type remains a selectable field.
+However, the default value must already be:
+Normaler Reisepass
+The customer should therefore not be required to manually select the normal passport option.
+Possible additional options can include:
+Normaler Reisepass
+Diplomatenpass
+Dienstpass
+Sonstiger Pass
+But:
+Default = Normaler Reisepass
+
+10. Step 4 – Contact Details
+Title:
+Kontaktdaten
+The form should contain:
+Phone Number
+Country code selector + telephone number.
+Example:
+AT +43 | Ihre Telefonnummer
+
+REMOVE THE EMAIL FIELD
+The email address field should be removed completely.
+Instead, this position should be used for:
+Gewünschter Abflughafen
+However, there is an important functionality requirement here.
+
+11. Departure Airports – Free Text + Multiple Airports
+The departure airport must NOT be a predefined dropdown.
+The user must be able to freely type the airport or city.
+Label:
+Gewünschter Abflughafen
+Placeholder:
+Abflughafen eingeben
+For example:
+Wien
+München
+Frankfurt
+Zürich
+Bratislava
+etc.
+Multiple departure airports must be possible.
+A customer may be flexible and want to indicate several possible departure airports.
+Therefore, after entering an airport, convert it into a removable chip/tag.
+Example:
+Wien × München × Bratislava ×
+Then show:
++ Weiteren Abflughafen hinzufügen
+The customer should be able to add and remove airports freely.
+Technically, please store this as an array/list of departure airports, not one single string.
+For example:
+["Wien", "München", "Bratislava"]
+There should be no artificial limit of one airport.
+
+12. Step 5 – “Where Did You Find Us?”
+Title:
+Wo haben Sie uns gefunden?
+Subtitle:
+Wie sind Sie auf Mobarak aufmerksam geworden?
+Please use the modern card design shown in the final reference.
+Options:
+Instagram
+Use the proper recognizable Instagram logo with its original brand colors.
+Google
+Use the proper multicolor Google logo.
+Facebook
+Use the recognizable Facebook logo in its appropriate brand presentation.
+ChatGPT
+Use the proper recognizable ChatGPT/OpenAI logo.
+Empfehlung
+Use a modern recommendation/people icon consistent with our UI.
+Ich kenne Mobarak bereits
+Use a suitable heart/returning-customer icon.
+And underneath:
+Andere Quelle
+
+Selection behavior
+Do not use old-fashioned visible radio buttons outside the cards.
+The entire card should be clickable.
+Normal state:
+white
+subtle border
+Hover state:
+slightly tinted background
+stronger border
+Selected state:
+very light blue background
+blue border
+small checkmark in the top-right corner
+Only one source can be selected.
+“Andere Quelle”
+If the customer selects Andere Quelle, dynamically show an additional free-text input underneath:
+Bitte Quelle eingeben
+
+13. Privacy / Security Area
+Keep the security card underneath the form.
+Headline:
+Ihre Daten sind bei uns sicher
+Text:
+Wir verwenden Ihre Angaben ausschließlich für die Hajj-Voranmeldung sowie die damit verbundene Kommunikation und Betreuung.
+Small trust indicators:
+SSL verschlüsselt
+Datenschutzkonform
+Please keep this visually subtle. It should build trust without dominating the page.
+
+14. Final Desktop CTA
+Headline:
+Jetzt für Hajj 2027 voranmelden
+Text:
+Die Voranmeldung ist kostenlos und unverbindlich – sie ist keine Buchung oder Reservierung eines Hajj-Pakets. Sobald die offiziellen Programme, Hotels und Termine veröffentlicht sind, informieren wir Sie über die verfügbaren Optionen. Anschließend können Sie entscheiden, ob Sie unser Programm wählen möchten.
+Primary button:
+Jetzt für Hajj 2027 voranmelden →
+
+MOBILE VERSION – IMPORTANT
+The mobile version should follow the approved app-style design.
+Please do NOT simply stack all desktop sections into one very long mobile form.
+After the introduction screen, the registration should become a step-by-step mobile flow.
+This is important for usability and conversion.
+
+15. Mobile Start Screen
+Top bar:
+Mobarak logo | DE ▾ | Menu
+Then the emotional Hajj/Makkah hero image.
+Keep the handwritten visual:
+Mit Wissen.Mit Erfahrung.Mit aufrichtigem Herzen.
+Below the image, show the four main benefits in a compact 2 × 2 card grid.
+Then one large primary button:
+Jetzt Hajj 2027 voranmelden →
+Underneath:
+🔒 Kostenlos & unverbindlich
+The CTA should start the registration flow.
+
+16. Mobile Progress Indicator
+Once the user starts the form, show a minimal progress indicator at the top.
+Example:
+Step 1
+● — ○ — ○ — ○ — ○ 1/5
+Step 2
+● — ● — ○ — ○ — ○ 2/5
+and so on until:
+● — ● — ● — ● — ● 5/5
+The user should always understand where they are in the process.
+There should also be a back arrow in the top-left.
+
+17. Mobile Step 1/5 – Number of Travelers
+Title:
+Personenanzahl
+Subtitle:
+Wie viele Personen möchten Sie für Hajj 2027 voranmelden?
+Display:
+1 | 2 | 3
+4 | 5 | 6+
+as a 3 × 2 card grid.
+Selected card:
+light blue background
+blue border
+checkmark
+Bottom button:
+Weiter →
+
+18. Mobile Step 2/5 – Program Duration
+Title:
+Gewünschte Programmdauer
+Show four vertically stacked cards.
+Kurzes Programm
+12–14 Tage
+Kompaktes Hajj-Programm
+Mittleres Programm
+16–18 Tage
+Mehr Zeit in Medina & Makkah
+Langes Programm
+19–22 Tage
+Ausführliches Hajj-Programm
+Unsure option
+Ich bin mir noch unsicher – bitte beraten
+All four must behave as selectable cards.
+Bottom:
+Weiter →
+
+19. Mobile Step 3/5 – Traveler Information
+Title:
+Angaben zu den Personen
+Please do not use the desktop table on mobile.
+Use an accordion/card system instead.
+Example:
+Person 1 ∧
+Expanded:
+Vorname[text input]
+Nachname[text input]
+Nationalität[free-text input]
+Then:
+Wohnsitzland | Reisepass-Art
+Passport type should already display:
+Normaler Reisepass
+Then:
+Person 2 ∨
+Person 3 ∨
+etc.
+Only the currently edited traveler needs to be expanded.
+This is especially important when a family registers several people.
+
+20. Mobile Step 4/5 – Contact Details
+Title:
+Kontaktdaten
+First:
+Telefonnummer
+AT +43 | Telefonnummer
+Then:
+Gewünschte Abflughäfen
+Please note the plural on mobile because several airports can be entered.
+Input:
+Abflughafen eingeben
+When the customer adds one:
+Wien ×
+Then they can enter another one:
+Wien × München ×
+and another:
+Wien × München × Bratislava ×
+Each chip must be removable.
+Add:
++ Weiteren Abflughafen hinzufügen
+Again:
+Do not use a predefined dropdown.
+The user must be allowed to type any departure airport freely.
+Bottom:
+Weiter →
+
+21. Mobile Step 5/5 – Acquisition Source
+Title:
+Wo haben Sie uns gefunden?
+Subtitle:
+Wie sind Sie auf Mobarak aufmerksam geworden?
+Use a two-column app-style grid:
+Instagram
+Google
+Facebook
+ChatGPT
+Empfehlung
+Ich kenne Mobarak bereits
+Then one full-width option:
+Andere Quelle
+The Instagram, Google, Facebook and ChatGPT cards should use their recognizable logos as shown in the approved design.
+Selected card receives the same blue selected state as elsewhere in the application.
+If Andere Quelle is selected, show:
+Bitte Quelle eingeben
+as a free-text field.
+
+22. Final Mobile Submission
+Under the source selection show the compact security card:
+Ihre Daten sind bei uns sicher
+Then the main full-width CTA:
+Voranmeldung absenden →
+The button should have sufficient height for mobile touch interaction and remain visually consistent with all previous Weiter buttons.
+
+23. Form State & UX Requirements
+This part is technically important.
+Please make sure that:
+Going back to a previous step does not delete entered information.
+Going forward again keeps all previously entered values.
+The page should not perform a full reload between steps.
+The form state should be maintained throughout the entire flow.
+Selected program duration remains saved.
+All traveler details remain saved.
+All entered departure airports remain saved.
+Acquisition source remains saved.
+Clear validation errors appear directly underneath the relevant field.
+Do not wipe the entire form when one field has an error.
+Disable duplicate submissions after the customer presses submit.
+Show a loading state while the form is being submitted.
+After successful submission, show a dedicated success/confirmation state.
+
+24. 6+ Travelers
+Please pay special attention to the 6+ option.
+If the customer chooses 6+ Personen, we still need to know the actual number of travelers.
+Therefore, after selecting 6+, show an additional field:
+Wie viele Personen möchten Sie anmelden?
+The user can then enter the exact number.
+The system should dynamically generate the corresponding number of traveler sections.
+For example:
+8 travelers selected → Person 1 through Person 8.
+
+25. Responsive Behavior
+Desktop
+Use the full single-page form shown in the approved desktop reference.
+Tablet
+The layout can gradually collapse, but it should retain the desktop visual language where space allows.
+Mobile
+Switch to the dedicated 5-step app experience shown in the approved mobile reference.
+Do not try to force the desktop table or large horizontal layouts onto a small screen.
+
+Final Required Field Logic
+Please use this as the definitive implementation reference:
+Field
+Type / Behavior
+Number of travelers
+Single selection
+6+ travelers
+Ask for exact number
+Program duration
+Single selection
+Unsure / consultation
+Valid program selection
+First name
+Free text
+Last name
+Free text
+Nationality
+Free text – NO dropdown
+Country of residence
+Dropdown
+Passport type
+Dropdown, default: “Normaler Reisepass”
+Phone number
+Country code + number
+Email
+Remove completely
+Departure airport
+Free text – NO fixed dropdown
+Departure airports
+Multiple entries allowed
+Acquisition source
+Single selection
+Other source
+Conditional free text
+Most important points
+Please consider the two screenshots I sent as the approved visual reference. Do not redesign them.
+The main changes compared with the current version are:
+1. Nationality must always be free text.2. Departure airport must always allow free text.3. Multiple departure airports must be possible.4. “Normaler Reisepass” must be preselected by default.5. Remove the email field completely.6. “Ich bin mir noch unsicher – bitte beraten” must be selectable.7. Use the proper recognizable Instagram, Google, Facebook and ChatGPT logos.8. Desktop remains a single-page form; mobile uses the approved 5-step app flow.9. Keep the softer, pleasant blue from the final design rather than a harsh/electric blue.
+The finished experience should feel like one premium Mobarak Hajj product from the landing page through to the final pre-registration confirmation, with the mobile experience feeling especially polished and app-like.
+

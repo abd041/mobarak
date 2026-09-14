@@ -49,6 +49,9 @@
     "whyMobarak": "Warum Mobarak",
     "process": "Ablauf",
     "onSite": "Betreuung vor Ort",
+    "nusuk": "Nusuk",
+    "preparation": "Vorbereitung",
+    "care": "Unsere Betreuung",
     "faq": "FAQ"
   },
   "footer": {
@@ -745,6 +748,10 @@
     "faqTitle": "Häufige Fragen",
     "faqEyebrow": "FAQ",
     "basedOnReviews": "Basierend auf {count} Bewertungen",
+    "basedOnReviewsOver": "Basierend auf über {count} Bewertungen",
+    "reviewsHeading": "Was unsere Pilger sagen",
+    "reviewsLead": "Hunderte Pilger vertrauen bereits auf unsere Betreuung.",
+    "ratingOf5": "{rating} von 5",
     "heroReviewsEyebrow": "Was unsere Pilger über uns sagen",
     "reviewsBrandWord": "Bewertungen",
     "allGoogleReviews": "Alle Google Bewertungen ansehen",

@@ -1,133 +1,237 @@
+"use client";
+
 import Image from "next/image";
+import { Caveat, Libre_Baskerville } from "next/font/google";
+import { Building2, ChevronDown, FileText, Layers, UserRound, Users } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { DirArrow } from "@/components/ui/DirArrow";
-import { HajjBenefitCheck } from "@/components/hajj/HajjBenefitCheck";
-import type { HajjPageContent } from "@/data/hajj-content-defaults";
 import { hajjCampaignPreRegPath } from "@/data/hajj-campaign-types";
-import { HAJJ_DESKTOP_CTA_BLOCK } from "@/lib/hajj-cta";
+import type { HajjLandingV2 } from "@/data/hajj/landing-v2-content";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import { IQ } from "@/lib/images";
 
-export async function HajjLandingHero({
+const CTA_BLUE = "#1264F5";
+const NAVY = "#0A1F3D";
+
+const heroDisplay = Libre_Baskerville({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+
+const heroScript = Caveat({
+  subsets: ["latin", "latin-ext"],
+  weight: ["700"],
+  display: "swap",
+});
+
+const MOBILE_TRUST: {
+  id: string;
+  label: string;
+  icon: typeof UserRound;
+}[] = [
+  { id: "t1", label: "30+ Jahre Erfahrung", icon: UserRound },
+  { id: "t2", label: "Keine Zusatzkosten", icon: FileText },
+  { id: "t3", label: "Persönliche Reiseleitung", icon: Layers },
+  { id: "t4", label: "Religiöse Begleitung", icon: Building2 },
+  { id: "t5", label: "Mehrsprachig", icon: Users },
+];
+
+export function HajjLandingHero({
   content,
   campaignSlug = "hajj-2027",
 }: {
-  content: HajjPageContent["hero"];
+  content: HajjLandingV2["hero"];
   campaignSlug?: string;
 }) {
+  const handwrittenLines = content.handwritten.split("\n");
+
   return (
-    <section id="top" className="hajj-hero relative bg-white lg:overflow-hidden">
-      {/* ── Mobile / tablet — full-bleed photo + whitish wash (do not affect lg+) ── */}
-      <div className="relative overflow-x-clip lg:hidden">
+    <section id="top" className="relative overflow-hidden bg-white">
+      {/* ── Desktop — reference-faithful layout ── */}
+      <div className="hajj-v2-hero relative hidden lg:block">
         <div className="absolute inset-0" aria-hidden>
           <Image
             src={content.imageSrc}
             alt=""
             fill
             priority
-            quality={IQ.hero}
+            quality={95}
             sizes="100vw"
-            className="object-cover object-[center_32%]"
+            className="object-cover object-[72%_40%]"
           />
-          <div className="hajj-hero-mobile-whitish absolute inset-0" />
+          {/* Whitish effect: solid left + soft wash behind text → photo */}
+          <div className="hajj-v2-hero-fade pointer-events-none absolute inset-0 z-[1]" />
         </div>
 
-        <Container className="relative pt-8 pb-5">
-          <span className="mb-4 inline-block rounded-md bg-[#C4A35A] px-3 py-1.5 text-[11px] font-bold tracking-[0.12em] text-white">
-            {content.label}
-          </span>
-
-          <h1 className="font-serif text-[32px] font-semibold leading-[1.12] tracking-[-0.02em] text-navy sm:text-[36px]">
-            {content.title}
-            <br />
-            {content.titleLine2}
-          </h1>
-
-          <p className="mt-4 max-w-[34rem] text-[15px] leading-[1.65] text-[#2F3F4F]">
-            {content.body}
-          </p>
-
-          <ul className="mt-6 flex flex-col gap-3">
-            {content.benefits.map((benefit) => (
-              <li
-                key={benefit}
-                className="flex items-center gap-2.5 text-[14px] font-semibold leading-snug text-navy"
-              >
-                <HajjBenefitCheck filled />
-                <span>{benefit}</span>
-              </li>
+        {/* Handwritten — navy, slight tilt, upper-right over sky */}
+        <div className="pointer-events-none absolute end-[5%] top-[11%] z-20 max-w-[17rem] xl:end-[6.5%] xl:top-[12%] xl:max-w-[19rem]">
+          <p
+            className={`${heroScript.className} origin-bottom-left -rotate-[8deg] text-end text-[28px] leading-[1.15] tracking-[-0.01em] xl:text-[32px]`}
+            style={{ color: NAVY }}
+          >
+            {handwrittenLines.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
             ))}
-          </ul>
-        </Container>
-
-        {/* Photo band — reviews card overlaps this from the next section */}
-        <div className="relative h-[min(62vw,300px)] w-full pb-16" aria-hidden />
-      </div>
-
-      {/* ── Desktop — locked layout (unchanged) ── */}
-      <div className="hajj-hero-bg relative hidden overflow-hidden lg:block">
-        <div className="absolute inset-0" aria-hidden>
-          <Image
-            src={content.imageSrc}
-            alt=""
-            fill
-            priority
-            quality={IQ.hero}
-            sizes="100vw"
-            className="hajj-hero-photo object-cover"
-          />
-          <div className="hajj-hero-scrim absolute inset-0" />
+          </p>
         </div>
 
-        <Container className="relative flex h-full min-h-[inherit] items-center py-10 md:py-8">
-          <div className="w-full max-w-xl lg:max-w-2xl">
-            <span className="mb-4 inline-block rounded-full border border-brand-orange/45 bg-[#FFF8EE] px-3.5 py-1 text-[10px] font-bold tracking-[0.14em] text-brand-orange-ink sm:text-[11px]">
-              {content.label}
-            </span>
+        {/* Quote card — bottom-right over courtyard */}
+        <div className="absolute bottom-10 end-10 z-20 max-w-[20rem] rounded-2xl bg-white px-5 py-4 shadow-[0_10px_32px_rgba(10,31,61,0.14)] xl:bottom-12 xl:end-14 xl:max-w-[22rem]">
+          <p className="text-[13px] leading-[1.55] text-[#3D4F5F] xl:text-[14px]">
+            {content.quote}
+          </p>
+        </div>
 
-            <h1 className="text-[32px] font-bold leading-[1.08] tracking-[-0.025em] text-navy sm:text-[38px] lg:text-[46px]">
+        <Container className="relative z-10 flex h-full min-h-[inherit] items-center py-10">
+          <div className="relative w-full max-w-[34rem] xl:max-w-[36rem]">
+            {/* Extra soft white veil under copy so text stays crisp */}
+            <div
+              className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10 rounded-[40px]"
+              style={{
+                background:
+                  "radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.7) 45%, rgba(255,255,255,0) 78%)",
+              }}
+              aria-hidden
+            />
+            <p className="text-[12px] font-semibold tracking-[0.14em] text-[#7A8796] xl:text-[13px]">
+              {content.label}
+            </p>
+
+            <h1
+              className={`${heroDisplay.className} mt-5 text-[46px] font-bold leading-[1.08] tracking-[-0.02em] xl:text-[52px]`}
+              style={{ color: NAVY }}
+            >
               {content.title}
-              <br />
-              {content.titleLine2}
             </h1>
 
-            <p className="mt-4 max-w-[34rem] text-[15px] leading-[1.65] text-[#3D4F5F] md:text-[16px]">
+            <p
+              className={`${heroDisplay.className} mt-4 text-[20px] font-bold leading-snug xl:text-[22px]`}
+              style={{ color: NAVY }}
+            >
+              {content.subtitle}
+            </p>
+
+            <p className="mt-5 max-w-[30rem] text-[15px] leading-[1.7] text-[#4A5A6A] xl:text-[16px]">
               {content.body}
             </p>
 
-            <ul className="mt-7 grid gap-x-10 gap-y-3 sm:grid-cols-2">
-              {content.benefits.map((benefit) => (
-                <li
-                  key={benefit}
-                  className="flex items-center gap-2 text-[13px] font-semibold leading-snug text-navy md:text-[14px]"
-                >
-                  <HajjBenefitCheck />
-                  <span>{benefit}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className={`mt-9 ${HAJJ_DESKTOP_CTA_BLOCK}`}>
+            <div className="mt-9 flex flex-col items-start gap-4">
               <Link
                 href={hajjCampaignPreRegPath(campaignSlug)}
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-cta px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_4px_16px_rgba(30,90,156,0.3)] transition hover:bg-navy"
+                className="inline-flex items-center gap-2.5 rounded-[10px] px-7 py-[15px] text-[15px] font-bold text-white shadow-[0_8px_24px_rgba(18,100,245,0.28)] transition hover:brightness-95"
+                style={{ backgroundColor: CTA_BLUE }}
               >
                 {content.cta}
-                <DirArrow />
+                <DirArrow className="h-4 w-4" />
               </Link>
-              <ul className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[12px] text-muted md:text-[13px]">
-                <li className="inline-flex items-center gap-1.5">
-                  <HajjBenefitCheck className="h-3.5 w-3.5" />
-                  {content.ctaFree}
-                </li>
-                <li className="inline-flex items-center gap-1.5">
-                  <HajjBenefitCheck className="h-3.5 w-3.5" />
-                  {content.ctaNoPay}
-                </li>
-              </ul>
+
+              <button
+                type="button"
+                onClick={() => scrollToSection("ablauf", 72)}
+                className="inline-flex items-center gap-2.5 text-[15px] font-semibold transition hover:opacity-80"
+                style={{ color: NAVY }}
+              >
+                <span
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border-[1.5px]"
+                  style={{ borderColor: NAVY }}
+                  aria-hidden
+                >
+                  <ChevronDown className="h-4 w-4" strokeWidth={2.25} />
+                </span>
+                {content.secondaryCta}
+              </button>
             </div>
           </div>
         </Container>
+      </div>
+
+      {/* ── Mobile / tablet ── */}
+      <div className="lg:hidden">
+        <div className="relative h-[22rem] overflow-hidden sm:h-[26rem]">
+          <Image
+            src="/brand/hajj-2027-hero-mobile-v2.png"
+            alt=""
+            fill
+            priority
+            quality={IQ.hero}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-16"
+            style={{
+              background:
+                "linear-gradient(to top, #ffffff 0%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0) 100%)",
+            }}
+            aria-hidden
+          />
+        </div>
+
+        <div className="px-5 pb-10 pt-3">
+          <p className="text-[11px] font-semibold tracking-[0.14em] text-[#7A8796]">
+            {content.label}
+          </p>
+          <h1
+            className={`${heroDisplay.className} mt-1.5 text-[30px] font-bold leading-[1.08] tracking-[-0.02em] sm:text-[36px]`}
+            style={{ color: NAVY }}
+          >
+            {content.title}
+          </h1>
+          <p
+            className={`${heroDisplay.className} mt-1.5 max-w-[24ch] text-[16px] font-bold leading-[1.35] sm:max-w-none sm:text-[20px]`}
+            style={{ color: NAVY }}
+          >
+            {content.subtitle}
+          </p>
+          <p className="mt-3 text-[13px] leading-[1.6] text-[#4A5A6A] sm:text-[15px]">{content.body}</p>
+          <Link
+            href={hajjCampaignPreRegPath(campaignSlug)}
+            className="mt-6 inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full text-[15px] font-bold text-white"
+            style={{ backgroundColor: CTA_BLUE }}
+          >
+            {content.cta}
+            <DirArrow />
+          </Link>
+          <button
+            type="button"
+            onClick={() => scrollToSection("ablauf", 72)}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2.5 text-[15px] font-semibold"
+            style={{ color: NAVY }}
+          >
+            <span
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border-[1.5px]"
+              style={{ borderColor: NAVY }}
+              aria-hidden
+            >
+              <ChevronDown className="h-4 w-4" strokeWidth={2.25} />
+            </span>
+            {content.secondaryCta}
+          </button>
+
+          <ul className="mt-8 grid grid-cols-5 gap-1">
+            {MOBILE_TRUST.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.id} className="flex min-w-0 flex-col items-center text-center">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EAF2FF]">
+                    <Icon className="h-5 w-5" style={{ color: CTA_BLUE }} strokeWidth={1.75} />
+                  </span>
+                  <p className="mt-1.5 text-[9px] font-semibold leading-tight text-navy">
+                    {item.label}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+
+          <blockquote className="mt-6 rounded-2xl bg-[#F4F6F8] px-4 py-4 text-[14px] leading-relaxed text-[#2F3F4F]">
+            {content.quote}
+          </blockquote>
+        </div>
       </div>
     </section>
   );

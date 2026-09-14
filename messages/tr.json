@@ -49,6 +49,9 @@
     "whyMobarak": "Neden Mobarak",
     "process": "Süreç",
     "onSite": "Yerinde destek",
+    "nusuk": "Nusuk",
+    "preparation": "Hazırlık",
+    "care": "Bakımımız",
     "faq": "SSS"
   },
   "footer": {
@@ -745,6 +748,10 @@
     "faqTitle": "Sıkça sorulan sorular",
     "faqEyebrow": "SSS",
     "basedOnReviews": "{count} değerlendirmeye dayalı",
+    "basedOnReviewsOver": "{count}+ değerlendirmeye dayalı",
+    "reviewsHeading": "Hacılarımız ne diyor",
+    "reviewsLead": "Yüzlerce hacı zaten bakımımıza güveniyor.",
+    "ratingOf5": "5 üzerinden {rating}",
     "heroReviewsEyebrow": "Hacılarımız bizim hakkında ne diyor",
     "reviewsBrandWord": "Değerlendirmeler",
     "allGoogleReviews": "Tüm Google değerlendirmelerini gör",

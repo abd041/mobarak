@@ -49,6 +49,9 @@
     "whyMobarak": "Zašto Mobarak",
     "process": "Tok",
     "onSite": "Podrška na licu mjesta",
+    "nusuk": "Nusuk",
+    "preparation": "Priprema",
+    "care": "Naša podrška",
     "faq": "Česta pitanja"
   },
   "footer": {
@@ -745,6 +748,10 @@
     "faqTitle": "Česta pitanja",
     "faqEyebrow": "FAQ",
     "basedOnReviews": "Na osnovu {count} recenzija",
+    "basedOnReviewsOver": "Na osnovu više od {count} recenzija",
+    "reviewsHeading": "Šta kažu naši hodočasnici",
+    "reviewsLead": "Stotine hodočasnika već vjeruje našoj podršci.",
+    "ratingOf5": "{rating} od 5",
     "heroReviewsEyebrow": "Šta naši hodočasnici kažu o nama",
     "reviewsBrandWord": "Recenzije",
     "allGoogleReviews": "Pogledaj sve Google recenzije",

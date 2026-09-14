@@ -49,6 +49,9 @@
     "whyMobarak": "لماذا مبارك",
     "process": "المسار",
     "onSite": "الدعم في الموقع",
+    "nusuk": "نسك",
+    "preparation": "التحضير",
+    "care": "رعايتنا",
     "faq": "الأسئلة الشائعة"
   },
   "footer": {
@@ -745,6 +748,10 @@
     "faqTitle": "أسئلة شائعة",
     "faqEyebrow": "الأسئلة الشائعة",
     "basedOnReviews": "بناءً على {count} تقييماً",
+    "basedOnReviewsOver": "بناءً على أكثر من {count} تقييماً",
+    "reviewsHeading": "ماذا يقول حجاجنا",
+    "reviewsLead": "مئات الحجاج يثقون بالفعل برعايتنا.",
+    "ratingOf5": "{rating} من 5",
     "heroReviewsEyebrow": "ماذا يقول حجاجنا عنا",
     "reviewsBrandWord": "التقييمات",
     "allGoogleReviews": "عرض جميع تقييمات Google",
