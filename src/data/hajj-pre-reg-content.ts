@@ -8,7 +8,7 @@ import deMessages from "../../messages/de.json";
 import enMessages from "../../messages/en.json";
 import trMessages from "../../messages/tr.json";
 
-export type HajjPreRegBenefitIcon = "shield" | "users" | "clipboard" | "award";
+export type HajjPreRegBenefitIcon = "shield" | "users" | "clipboard" | "coins";
 
 export type HajjPreRegBenefit = {
   id: string;
@@ -31,6 +31,21 @@ export type HajjPreRegResidenceCountry = {
   label?: string;
 };
 
+/** Section 2 — requested programme length (short / medium / long). */
+export type HajjPreRegProgramDuration = {
+  id: string;
+  label: string;
+  range: string;
+  note: string;
+  /** Pre-selected on first render */
+  recommended?: boolean;
+};
+
+export type HajjPreRegAirport = {
+  id: string;
+  label: string;
+};
+
 export type HajjPreRegContent = {
   hero: {
     label: string;
@@ -39,12 +54,19 @@ export type HajjPreRegContent = {
     titleLine2?: string;
     body: string;
     imageSrc: string;
+    /** Small caps line above the headline, e.g. "HAJJ 2027 · 1448 AH" */
+    eyebrow: string;
+    /** Script overlay on the photo; `\n` separates lines */
+    handwritten: string;
+    /** Quran quote shown in the floating card */
+    quote: string;
   };
   benefits: HajjPreRegBenefit[];
   benefitsAriaLabel: string;
   formAriaLabel: string;
   sections: {
     travellerCount: { title: string; hint: string };
+    programDuration: { title: string; hint: string };
     travellerDetails: { title: string; hint: string };
     contact: { title: string; hint: string };
     source: { title: string; hint: string };
@@ -72,7 +94,15 @@ export type HajjPreRegContent = {
     emailPlaceholder: string;
     fieldOptional: string;
     sourceOtherPlaceholder: string;
+    departureAirport: string;
+    departureAirportPlaceholder: string;
+    addDepartureAirport: string;
+    programChoose: string;
+    programChosen: string;
+    programUnsure: string;
   };
+  programDurations: HajjPreRegProgramDuration[];
+  departureAirports: HajjPreRegAirport[];
   sourceOptions: HajjPreRegSourceOption[];
   residenceCountries: HajjPreRegResidenceCountry[];
   passportTypes: HajjPassportTypeOption[];
@@ -89,12 +119,24 @@ export type HajjPreRegContent = {
     infoTitle: string;
     infoLead: string;
     infoFollowUp: string;
+    /** Script line under the CTA button */
+    handwritten: string;
   };
   trust: string[];
   success: {
     title: string;
     body: string;
     backToHajj: string;
+  };
+  mobile: {
+    startCta: string;
+    continue: string;
+    submit: string;
+    back: string;
+    familyWelcome: string;
+    airportInfo: string;
+    addPerson: string;
+    handwritten: string;
   };
   validation: {
     firstName: string;
@@ -131,12 +173,13 @@ const SEO_MESSAGES: Record<Locale, SeoNs> = {
   tr: trMessages.seo,
 };
 
+/** Order mirrors the 3×2 grid in the design reference; `other` is the full-width row below it. */
 export const HAJJ_SOURCE_OPTION_VALUES = [
   "instagram",
-  "facebook",
   "google",
-  "chatgpt",
+  "facebook",
   "friend",
+  "chatgpt",
   "know",
   "other",
 ] as const;
@@ -151,7 +194,7 @@ const SOURCE_LABEL_KEYS: Record<(typeof HAJJ_SOURCE_OPTION_VALUES)[number], keyo
   other: "sourceOther",
 };
 
-const DEFAULT_HERO_IMAGE = "/brand/hero-bg.png";
+const DEFAULT_HERO_IMAGE = "/brand/hajj-2027-hero.png";
 export const HAJJ_YEAR_PLACEHOLDER = "{year}";
 export const DEFAULT_HAJJ_CAMPAIGN_YEAR = 2027;
 
@@ -187,6 +230,9 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
       titleLine2: h.preRegTitleLine2,
       body: h.preRegBody,
       imageSrc: DEFAULT_HERO_IMAGE,
+      eyebrow: h.preRegEyebrow,
+      handwritten: h.preRegHandwritten,
+      quote: h.preRegQuote,
     },
     benefits: [
       {
@@ -197,7 +243,7 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
       },
       {
         id: "benefit-no-cost",
-        icon: "users",
+        icon: "coins",
         title: h.benefitNoCost,
         body: h.benefitNoCostBody,
       },
@@ -209,7 +255,7 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
       },
       {
         id: "benefit-decide",
-        icon: "award",
+        icon: "users",
         title: h.benefitDecide,
         body: h.benefitDecideBody,
         emphasis: h.benefitDecideNote,
@@ -220,6 +266,7 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
     formAriaLabel: h.formAriaLabel,
     sections: {
       travellerCount: { title: h.travellerCount, hint: h.travellerCountHint },
+      programDuration: { title: h.programDuration, hint: h.programDurationHint },
       travellerDetails: { title: h.travellerDetails, hint: h.travellerDetailsHint },
       contact: { title: h.contactDetails, hint: h.contactHint },
       source: { title: h.sourceTitle, hint: h.sourceHint },
@@ -247,7 +294,41 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
       emailPlaceholder: h.emailPlaceholder,
       fieldOptional: h.fieldOptional,
       sourceOtherPlaceholder: h.sourceOtherPlaceholder,
+      departureAirport: h.departureAirport,
+      departureAirportPlaceholder: h.departureAirportPlaceholder,
+      addDepartureAirport: h.addDepartureAirport,
+      programChoose: h.programChoose,
+      programChosen: h.programChosen,
+      programUnsure: h.programUnsure,
     },
+    programDurations: [
+      {
+        id: "short",
+        label: h.programShortLabel,
+        range: h.programShortRange,
+        note: h.programShortNote,
+      },
+      {
+        id: "medium",
+        label: h.programMediumLabel,
+        range: h.programMediumRange,
+        note: h.programMediumNote,
+        recommended: true,
+      },
+      {
+        id: "long",
+        label: h.programLongLabel,
+        range: h.programLongRange,
+        note: h.programLongNote,
+      },
+    ],
+    departureAirports: [
+      { id: "vie", label: h.airportVienna },
+      { id: "szg", label: h.airportSalzburg },
+      { id: "muc", label: h.airportMunich },
+      { id: "bud", label: h.airportBudapest },
+      { id: "flexible", label: h.airportFlexible },
+    ],
     sourceOptions: HAJJ_SOURCE_OPTION_VALUES.map((value) => ({
       value,
       label: h[SOURCE_LABEL_KEYS[value]],
@@ -271,12 +352,23 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
       infoTitle: h.preRegInfoTitle,
       infoLead: h.preRegInfoLead,
       infoFollowUp: h.preRegInfoFollowUp,
+      handwritten: h.preRegCtaHandwritten,
     },
     trust: [h.preRegTrust1, h.preRegTrust2, h.preRegTrust3, h.preRegTrust4, h.preRegTrust5],
     success: {
       title: h.successTitle,
       body: h.successBody,
       backToHajj: h.backToHajj,
+    },
+    mobile: {
+      startCta: h.mobileStartCta,
+      continue: h.mobileContinue,
+      submit: h.mobileSubmit,
+      back: h.mobileBack,
+      familyWelcome: h.familyWelcome,
+      airportInfo: h.airportInfo,
+      addPerson: h.addPerson,
+      handwritten: h.preRegHandwrittenMobile,
     },
     validation: {
       firstName: h.validationFirstName,
@@ -297,7 +389,7 @@ export function buildDefaultPreRegContent(locale: Locale, year = DEFAULT_HAJJ_CA
   return applyHajjYear(content, year);
 }
 
-function useStoredArray<T>(stored: T[] | undefined, defaults: T[]): T[] {
+function storedArrayOr<T>(stored: T[] | undefined, defaults: T[]): T[] {
   return stored?.length ? stored : defaults;
 }
 
@@ -319,23 +411,27 @@ export function mergePreRegContent(
 
   return {
     hero: { ...defaults.hero, ...patch.hero },
-    benefits: useStoredArray(patch.benefits, defaults.benefits),
+    benefits: storedArrayOr(patch.benefits, defaults.benefits),
     benefitsAriaLabel: patch.benefitsAriaLabel ?? defaults.benefitsAriaLabel,
     formAriaLabel: patch.formAriaLabel ?? defaults.formAriaLabel,
     sections: {
       travellerCount: { ...defaults.sections.travellerCount, ...patch.sections?.travellerCount },
+      programDuration: { ...defaults.sections.programDuration, ...patch.sections?.programDuration },
       travellerDetails: { ...defaults.sections.travellerDetails, ...patch.sections?.travellerDetails },
       contact: { ...defaults.sections.contact, ...patch.sections?.contact },
       source: { ...defaults.sections.source, ...patch.sections?.source },
     },
     fields: { ...defaults.fields, ...patch.fields },
+    programDurations: mergeByKey(defaults.programDurations, patch.programDurations, "id"),
+    departureAirports: storedArrayOr(patch.departureAirports, defaults.departureAirports),
     sourceOptions: mergeByKey(defaults.sourceOptions, patch.sourceOptions, "value"),
     residenceCountries: mergeByKey(defaults.residenceCountries, patch.residenceCountries, "code"),
     passportTypes: mergePassportTypes(defaults.passportTypes, patch.passportTypes),
     privacy: { ...defaults.privacy, ...patch.privacy },
     cta: { ...defaults.cta, ...patch.cta },
-    trust: useStoredArray(patch.trust, defaults.trust),
+    trust: storedArrayOr(patch.trust, defaults.trust),
     success: { ...defaults.success, ...patch.success },
+    mobile: { ...defaults.mobile, ...patch.mobile },
     validation: { ...defaults.validation, ...patch.validation },
     seo: { ...defaults.seo, ...patch.seo },
   };

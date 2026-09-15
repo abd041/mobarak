@@ -6,7 +6,7 @@ import type { HajjPreRegBenefit, HajjPreRegBenefitIcon, HajjPreRegSourceOption }
 import { HAJJ_SOURCE_OPTION_VALUES, HAJJ_YEAR_PLACEHOLDER } from "@/data/hajj-pre-reg-content";
 import { RESIDENCE_COUNTRIES } from "@/lib/residence-countries";
 
-const BENEFIT_ICONS: HajjPreRegBenefitIcon[] = ["shield", "users", "clipboard", "award"];
+const BENEFIT_ICONS: HajjPreRegBenefitIcon[] = ["shield", "coins", "clipboard", "users"];
 
 function Field({
   label,
@@ -340,7 +340,10 @@ export function HajjPreRegAdminSections({
       </Section>
 
       <Section title="Voranmeldung — Reisepass-Arten">
-        <p className="md:col-span-2 text-sm text-muted">IDs (normal, convention, travel, diplomatic) sind fest.</p>
+        <p className="md:col-span-2 text-sm text-muted">
+          IDs (normal, diplomatic, service, other) sind fest. Default für neue Reisende: normal
+          (Normaler Reisepass).
+        </p>
         {content.preReg.passportTypes.map((option: { id: string; label: string }, index: number) => (
           <Field
             key={option.id}

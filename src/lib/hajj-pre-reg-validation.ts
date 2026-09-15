@@ -1,5 +1,3 @@
-import { findCountryByCode } from "@/lib/countries";
-
 export type HajjPersonFormData = {
   firstName: string;
   lastName: string;
@@ -35,12 +33,6 @@ export type HajjPreRegValidationMessages = {
   email: string;
 };
 
-function isValidNationality(locale: string, code: string, name: string): boolean {
-  if (!code || !name.trim()) return false;
-  const country = findCountryByCode(locale, code);
-  return Boolean(country && country.name === name);
-}
-
 function isValidEmail(value: string): boolean {
   if (!value.trim()) return true;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -56,6 +48,7 @@ export function validateHajjPreRegForm(
   messages: HajjPreRegValidationMessages,
   allowedResidenceCodes?: Set<string>,
 ): HajjPreRegFormErrors {
+  void locale;
   const errors: HajjPreRegFormErrors = { persons: [] };
   let hasError = false;
 
@@ -68,7 +61,8 @@ export function validateHajjPreRegForm(
     if (!person.lastName.trim()) {
       personErrors.lastName = messages.lastName;
     }
-    if (!isValidNationality(locale, person.nationalityCode, person.nationality)) {
+    // Free-text nationality — no predefined country list
+    if (!person.nationality.trim()) {
       personErrors.nationality = messages.nationality;
     }
     if (!person.residence || (allowedResidenceCodes && !allowedResidenceCodes.has(person.residence))) {

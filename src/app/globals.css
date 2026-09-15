@@ -233,8 +233,6 @@ summary:focus-visible,
 
 /* All marketing heroes: section + background photo band locked to 500px */
 .visum-hero-bg,
-.hajj-hero-bg,
-.hajj-prereg-hero,
 .individual-umrah-hero,
 .individual-umrah-final-hero {
   height: 500px;
@@ -996,118 +994,75 @@ summary:focus-visible,
   opacity: 0.9;
 }
 
-/* Hajj landing — hero photo + left-to-right readability scrim */
-.hajj-hero-photo {
-  object-position: center 42%;
+/* Hajj pre-registration — warm ivory form page (design reference) */
+.hajj-prereg {
+  background-color: #f8f6f1;
 }
 
-/* Mobile landing: soft white wash over full-bleed photo */
-.hajj-hero-mobile-whitish {
+@media (max-width: 1023px) {
+  .hajj-prereg {
+    background-color: #ffffff;
+  }
+
+  body.hajj-prereg-wizard header {
+    display: none;
+  }
+}
+
+.hajj-prereg-mobile-hero-photo {
+  object-position: 46% 38%;
+}
+
+/*
+  Pre-reg hero: Kaaba photo full-bleed on the RIGHT, soft cream/ivory ONLY on
+  the LEFT. Right ~45–50% stays rich and saturated (no wash-out over Kaaba).
+*/
+.hajj-prereg-hero-photo {
+  object-position: 78% 42%;
+}
+
+[dir="rtl"] .hajj-prereg-hero-photo {
+  object-position: 22% 42%;
+}
+
+.hajj-prereg-hero-fade {
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.97) 0%,
-    rgba(255, 255, 255, 0.94) 22%,
-    rgba(255, 255, 255, 0.88) 36%,
-    rgba(255, 255, 255, 0.55) 48%,
-    rgba(255, 255, 255, 0.18) 58%,
-    transparent 68%
-  );
-}
-
-/* Pre-reg mobile: high-key washed Makkah backdrop (reference) + readable text */
-.hajj-prereg-mobile-wash {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.94) 0%,
-    rgba(255, 255, 255, 0.88) 16%,
-    rgba(255, 255, 255, 0.78) 34%,
-    rgba(255, 255, 255, 0.82) 52%,
-    rgba(255, 255, 255, 0.94) 72%,
-    #ffffff 100%
-  );
-}
-
-.hajj-prereg-mobile-photo {
-  object-position: 72% 32%;
-  filter: brightness(1.06) saturate(0.65) contrast(0.9);
-}
-
-[dir="rtl"] .hajj-prereg-mobile-photo {
-  object-position: 28% 32%;
-}
-
-.hajj-hero-scrim {
-  background: linear-gradient(
-    to right,
-    #ffffff 0%,
-    #ffffff 16%,
-    rgba(255, 255, 255, 0.94) 26%,
-    rgba(255, 255, 255, 0.68) 36%,
-    rgba(255, 255, 255, 0.22) 46%,
-    transparent 54%
-  );
-}
-
-[dir="rtl"] .hajj-hero-scrim {
-  background: linear-gradient(
-    to left,
-    #ffffff 0%,
-    #ffffff 16%,
-    rgba(255, 255, 255, 0.94) 26%,
-    rgba(255, 255, 255, 0.68) 36%,
-    rgba(255, 255, 255, 0.22) 46%,
-    transparent 54%
+    rgba(248, 246, 241, 0.96) 0%,
+    rgba(248, 246, 241, 0.88) 40%,
+    rgba(248, 246, 241, 0.94) 100%
   );
 }
 
 @media (min-width: 1024px) {
-  .hajj-hero-scrim {
+  .hajj-prereg-hero-fade {
     background: linear-gradient(
       to right,
-      #ffffff 0%,
-      #ffffff 28%,
-      rgba(255, 255, 255, 0.9) 38%,
-      rgba(255, 255, 255, 0.42) 46%,
-      transparent 52%
+      #f8f6f1 0%,
+      #f8f6f1 30%,
+      rgba(248, 246, 241, 0.97) 42%,
+      rgba(248, 246, 241, 0.82) 52%,
+      rgba(248, 246, 241, 0.48) 60%,
+      rgba(248, 246, 241, 0.18) 68%,
+      transparent 78%
     );
   }
 
-  [dir="rtl"] .hajj-hero-scrim {
+  [dir="rtl"] .hajj-prereg-hero-fade {
     background: linear-gradient(
       to left,
-      #ffffff 0%,
-      #ffffff 28%,
-      rgba(255, 255, 255, 0.9) 38%,
-      rgba(255, 255, 255, 0.42) 46%,
-      transparent 52%
+      #f8f6f1 0%,
+      #f8f6f1 30%,
+      rgba(248, 246, 241, 0.97) 42%,
+      rgba(248, 246, 241, 0.82) 52%,
+      rgba(248, 246, 241, 0.48) 60%,
+      rgba(248, 246, 241, 0.18) 68%,
+      transparent 78%
     );
   }
 }
 
-@media (min-width: 1024px) {
-  .hajj-hero-photo {
-    object-position: 58% center;
-  }
-}
-
-/* Hajj pre-registration — warm premium form page */
-.hajj-prereg {
-  --hajj-prereg-warm: #fffcf8;
-  --hajj-prereg-warm-deep: #f7f4ef;
-  background-color: var(--hajj-prereg-warm);
-  background-image: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    var(--hajj-prereg-warm) 14rem,
-    var(--hajj-prereg-warm-deep) 100%
-  );
-}
-
-/* §32 — Hajj pre-reg RTL: mirror hero focal point; keep phone/email fields LTR */
-[dir="rtl"] .hajj-prereg .hajj-hero-photo {
-  object-position: 42% center;
-}
-
+/* §32 — Hajj pre-reg RTL: keep phone fields LTR */
 [dir="rtl"] .hajj-prereg form .dir-ltr-keep {
   text-align: start;
 }

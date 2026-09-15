@@ -5,40 +5,43 @@ export type HajjPassportTypeOption = {
   label: string;
 };
 
-export const HAJJ_PASSPORT_TYPE_IDS = ["normal", "convention", "travel", "diplomatic"] as const;
+/** Brief §9 — default must be Normaler Reisepass */
+export const DEFAULT_HAJJ_PASSPORT_TYPE_ID = "normal";
+
+export const HAJJ_PASSPORT_TYPE_IDS = ["normal", "diplomatic", "service", "other"] as const;
 
 export type HajjPassportTypeId = (typeof HAJJ_PASSPORT_TYPE_IDS)[number];
 
 const LABELS: Record<Locale, Record<HajjPassportTypeId, string>> = {
   de: {
     normal: "Normaler Reisepass",
-    convention: "Konventionspass",
-    travel: "Reisedokument",
     diplomatic: "Diplomatenpass",
+    service: "Dienstpass",
+    other: "Sonstiger Pass",
   },
   en: {
     normal: "Regular Passport",
-    convention: "Convention Passport",
-    travel: "Travel Document",
     diplomatic: "Diplomatic Passport",
+    service: "Service Passport",
+    other: "Other Passport",
   },
   ar: {
     normal: "جواز سفر عادي",
-    convention: "جواز اتفاقية",
-    travel: "وثيقة سفر",
     diplomatic: "جواز دبلوماسي",
+    service: "جواز خدمة",
+    other: "جواز آخر",
   },
   bs: {
     normal: "Običan pasoš",
-    convention: "Konvencijski pasoš",
-    travel: "Putni dokument",
     diplomatic: "Diplomatski pasoš",
+    service: "Službeni pasoš",
+    other: "Drugi pasoš",
   },
   tr: {
     normal: "Normal pasaport",
-    convention: "Konvansiyonel pasaport",
-    travel: "Seyahat belgesi",
     diplomatic: "Diplomatik pasaport",
+    service: "Hizmet pasaportu",
+    other: "Diğer pasaport",
   },
 };
 

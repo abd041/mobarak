@@ -52,7 +52,7 @@ const HAJJ_NAV: Array<
 const HEADER_OFFSET = 72;
 const CTA_BLUE = "#1264F5";
 
-export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
+export function HajjPageHeader({ locale: _locale, compact = false }: { locale: Locale; compact?: boolean }) {
   const t = useTranslations("nav");
   const tLang = useTranslations("language");
   const tCommon = useTranslations("common");
@@ -115,17 +115,29 @@ export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E8EAEE] bg-white">
-      <div className="relative mx-auto flex h-14 max-w-page items-center gap-3 px-4 sm:h-[4.25rem] sm:px-5 md:px-8 lg:px-9">
+      <div
+        className={cn(
+          "relative mx-auto flex max-w-page items-center",
+          compact
+            ? "h-14 gap-2 px-4 lg:h-[4.5rem] lg:gap-3 lg:px-9"
+            : "h-16 gap-3 px-4 sm:h-[4.5rem] sm:px-5 md:px-8 lg:px-9",
+        )}
+      >
         <Link href={landingPath} className="flex shrink-0 items-center" aria-label="Mobarak">
           <BrandLogo
-            height={88}
+            height={96}
             priority
-            className="!h-12 !max-h-12 w-auto sm:!h-12 sm:!max-h-12"
+            className={cn(
+              "w-auto",
+              compact
+                ? "!h-11 !max-h-11 lg:!h-14 lg:!max-h-14"
+                : "!h-[3.25rem] !max-h-[3.25rem] sm:!h-14 sm:!max-h-14",
+            )}
           />
         </Link>
 
         <nav
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 xl:gap-6 min-[1100px]:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 xl:gap-7 min-[1100px]:flex"
           aria-label={tCommon("menu")}
         >
           {HAJJ_NAV.map((item) => {
@@ -134,7 +146,7 @@ export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="whitespace-nowrap pb-1 text-[13px] font-medium text-[#3D4F5F] transition hover:text-navy xl:text-[14px]"
+                  className="whitespace-nowrap pb-1 text-[14px] font-medium text-[#3D4F5F] transition hover:text-navy xl:text-[14.5px]"
                 >
                   {t(item.labelKey)}
                 </Link>
@@ -147,7 +159,7 @@ export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
                 type="button"
                 onClick={() => goToSection(item.id)}
                 className={cn(
-                  "relative whitespace-nowrap pb-1 text-[13px] font-medium transition xl:text-[14px]",
+                  "relative whitespace-nowrap pb-1 text-[14px] font-medium transition xl:text-[14.5px]",
                   active ? "font-semibold text-navy" : "text-[#3D4F5F] hover:text-navy",
                 )}
               >
@@ -164,12 +176,12 @@ export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
           })}
         </nav>
 
-        <div className="ms-auto flex items-center gap-2 sm:gap-3">
+        <div className={cn("ms-auto flex items-center", compact ? "gap-1.5 lg:gap-3.5" : "gap-2.5 sm:gap-3.5")}>
           <div className="relative">
             <button
               type="button"
               onClick={() => setLangOpen((v) => !v)}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-[13px] font-semibold text-navy"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-[14px] font-semibold text-navy"
               aria-expanded={langOpen}
             >
               {current.toUpperCase()}
@@ -196,7 +208,7 @@ export function HajjPageHeader({ locale: _locale }: { locale: Locale }) {
 
           <Link
             href={hajjCampaignPreRegPath(campaignSlug)}
-            className="hidden items-center gap-1.5 rounded-lg px-4 py-2.5 text-[13px] font-bold text-white transition hover:brightness-95 min-[1100px]:inline-flex"
+            className="hidden items-center gap-1.5 rounded-[10px] px-5 py-3 text-[14px] font-bold text-white transition hover:brightness-95 min-[1100px]:inline-flex"
             style={{ backgroundColor: CTA_BLUE }}
           >
             Für Hajj 2027 vormerken
